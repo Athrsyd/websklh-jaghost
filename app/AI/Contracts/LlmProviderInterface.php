@@ -18,9 +18,10 @@ interface LlmProviderInterface
      * @param array<int, array{role: string, content: string}> $messages The conversation messages.
      * @param float $temperature The generation temperature.
      * @param int $maxTokens The maximum number of tokens to generate.
+     * @param array<int, array<string, mixed>>|null $tools Optional OpenAI tool definitions for function calling.
      * @return LlmResponse The response from the model.
      */
-    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048): LlmResponse;
+    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048, ?array $tools = null): LlmResponse;
 
     /**
      * Stream a chat completion request from the LLM.

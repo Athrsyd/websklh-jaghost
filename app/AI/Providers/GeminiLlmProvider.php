@@ -13,7 +13,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Provides LLM integration using Gemini API.
+ * Provides LLM integration using Gemini API with Function Calling support.
  */
 readonly class GeminiLlmProvider implements LlmProviderInterface
 {
@@ -24,7 +24,7 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
     public function __construct()
     {
         $this->apiKey = config('rag.llm.providers.gemini.api_key', '');
-        $this->model = config('rag.llm.providers.gemini.model', 'gemini-3.1-flash-lite');
+        $this->model = config('rag.llm.providers.gemini.model', 'gemini-1.5-flash');
         $this->baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
     }
 
@@ -33,15 +33,16 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
         return $this->model;
     }
 
-    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048): LlmResponse
+    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048, ?array $tools = null): LlmResponse
     {
         $url = "{$this->baseUrl}/{$this->model}:generateContent?key={$this->apiKey}";
         
         try {
-            $payload = $this->buildPayload($messages, $temperature, $maxTokens);
+            $payload = $this->buildPayload($messages, $temperature, $maxTokens, $tools);
+            
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-            ])->post($url, $payload);
+            ])->timeout(60)->post($url, $payload);
 
             if ($response->failed()) {
                 Log::channel('rag')->error('Gemini API Error', [
@@ -52,18 +53,44 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
             }
 
             $data = $response->json();
+            $candidate = $data['candidates'][0] ?? [];
+            $parts = $candidate['content']['parts'] ?? [];
 
-            $content = $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
+            $content = '';
+            $toolCalls = null;
+
+            foreach ($parts as $part) {
+                if (isset($part['text'])) {
+                    $content .= $part['text'];
+                }
+
+                if (isset($part['functionCall'])) {
+                    $fnCall = $part['functionCall'];
+                    $fnName = $fnCall['name'] ?? '';
+                    $fnArgs = $fnCall['args'] ?? [];
+
+                    $toolCalls[] = [
+                        'id' => 'call_' . uniqid(),
+                        'type' => 'function',
+                        'function' => [
+                            'name' => $fnName,
+                            'arguments' => json_encode($fnArgs),
+                        ],
+                    ];
+                }
+            }
+
             $promptTokens = $data['usageMetadata']['promptTokenCount'] ?? 0;
             $completionTokens = $data['usageMetadata']['candidatesTokenCount'] ?? 0;
-            $finishReason = $data['candidates'][0]['finishReason'] ?? 'STOP';
+            $finishReason = !empty($toolCalls) ? 'tool_calls' : ($candidate['finishReason'] ?? 'STOP');
 
             return new LlmResponse(
-                content: $content,
+                content: trim($content),
                 model: $this->model,
                 promptTokens: $promptTokens,
                 completionTokens: $completionTokens,
-                finishReason: $finishReason,
+                finishReason: strtolower($finishReason),
+                toolCalls: $toolCalls,
                 metadata: $data
             );
         } catch (Throwable $e) {
@@ -81,7 +108,7 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
         yield $response->content;
     }
 
-    private function buildPayload(array $messages, float $temperature, int $maxTokens): array
+    private function buildPayload(array $messages, float $temperature, int $maxTokens, ?array $tools = null): array
     {
         $systemInstructions = [];
         $contents = [];
@@ -113,6 +140,27 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
             $payload['systemInstruction'] = [
                 'parts' => $systemInstructions,
             ];
+        }
+
+        // Format OpenAI tools to Gemini functionDeclarations format
+        if (!empty($tools)) {
+            $functionDeclarations = [];
+            foreach ($tools as $tool) {
+                if (($tool['type'] ?? '') === 'function' && isset($tool['function'])) {
+                    $fn = $tool['function'];
+                    $functionDeclarations[] = [
+                        'name' => $fn['name'],
+                        'description' => $fn['description'] ?? '',
+                        'parameters' => $fn['parameters'] ?? [],
+                    ];
+                }
+            }
+
+            if (!empty($functionDeclarations)) {
+                $payload['tools'] = [
+                    ['functionDeclarations' => $functionDeclarations]
+                ];
+            }
         }
 
         return $payload;

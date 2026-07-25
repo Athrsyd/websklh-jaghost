@@ -7,6 +7,7 @@ namespace App\RAG\Generation;
 use App\AI\Contracts\LlmProviderInterface;
 use App\DTO\GenerationResult;
 use App\DTO\HybridRetrievalResult;
+use App\RAG\Tools\NavigationTool;
 use Illuminate\Support\Facades\Log;
 
 class AnswerGenerator
@@ -22,11 +23,13 @@ class AnswerGenerator
     {
         if (!$retrieval->gateResult->passed) {
             return new GenerationResult(
-                config('rag.messages.no_answer', 'Informasi tersebut tidak ditemukan dalam basis pengetahuan.'),
+                config('rag.confidence.no_answer_message', 'Informasi tersebut tidak ditemukan dalam basis pengetahuan.'),
                 [],
                 $retrieval->gateResult->topScore,
                 $retrieval->latencyMs,
-                $traceId
+                $traceId,
+                null,
+                'stop'
             );
         }
 
@@ -35,14 +38,22 @@ class AnswerGenerator
         
         $messages = $this->promptBuilder->build($sanitizedQuery, $retrieval->parentChunks, $sanitizedResults);
         
-        $llmResponse = $this->llm->chat($messages);
+        // Sediakan NavigationTool definition ke LLM
+        $tools = [
+            NavigationTool::getDefinition()
+        ];
+
+        $llmResponse = $this->llm->chat($messages, 0.1, 2048, $tools);
         $answerText = $llmResponse->content;
+        $toolCalls = $llmResponse->toolCalls;
+        $finishReason = $llmResponse->finishReason;
         
         $citations = $this->citationFormatter->extractCitations($answerText, $sanitizedResults);
 
         Log::channel('rag')->info('Answer generated', [
             'trace_id' => $traceId,
-            'citations_count' => count($citations)
+            'citations_count' => count($citations),
+            'has_tool_calls' => !empty($toolCalls)
         ]);
 
         return new GenerationResult(
@@ -50,7 +61,9 @@ class AnswerGenerator
             $citations,
             $retrieval->gateResult->topScore,
             $retrieval->latencyMs,
-            $traceId
+            $traceId,
+            $toolCalls,
+            $finishReason
         );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
@@ -27,6 +28,15 @@ class ChatCompletionController extends Controller
 
         $result = $pipeline->query($query);
 
+        $messagePayload = [
+            'role' => 'assistant',
+            'content' => $result->answer,
+        ];
+
+        if (!empty($result->toolCalls)) {
+            $messagePayload['tool_calls'] = $result->toolCalls;
+        }
+
         return response()->json([
             'id' => 'rag-' . Str::uuid()->toString(),
             'object' => 'chat.completion',
@@ -35,23 +45,20 @@ class ChatCompletionController extends Controller
             'choices' => [
                 [
                     'index' => 0,
-                    'message' => [
-                        'role' => 'assistant',
-                        'content' => $result->answer
-                    ],
-                    'finish_reason' => 'stop'
+                    'message' => $messagePayload,
+                    'finish_reason' => $result->finishReason,
                 ]
             ],
             'usage' => [
                 'prompt_tokens' => 0,
                 'completion_tokens' => 0,
-                'total_tokens' => 0
+                'total_tokens' => 0,
             ],
             'citations' => $result->citations,
             'retrieval_metadata' => [
                 'trace_id' => $result->traceId,
                 'confidence_score' => $result->confidenceScore,
-                'retrieval_latency_ms' => $result->retrievalLatencyMs
+                'retrieval_latency_ms' => $result->retrievalLatencyMs,
             ]
         ]);
     }

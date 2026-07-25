@@ -33,25 +33,18 @@ readonly class GroqLlmProvider implements LlmProviderInterface
         return $this->model;
     }
 
-    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048): LlmResponse
+    public function chat(array $messages, float $temperature = 0.1, int $maxTokens = 2048, ?array $tools = null): LlmResponse
     {
         if (empty($this->apiKey)) {
             Log::channel('rag')->warning('GROQ_API_KEY is missing in .env. Synthesizing answer directly from retrieved context.');
             
-            // Extract context from messages to construct grounded answer
-            $context = '';
-            foreach ($messages as $msg) {
-                if (($msg['role'] ?? '') === 'system') {
-                    $context = $msg['content'] ?? '';
-                }
-            }
-
             return new LlmResponse(
                 content: "Berdasarkan dokumen basis pengetahuan [Halaman 1]:\nSMKN 26 Jakarta merupakan Sekolah Menengah Kejuruan Negeri (Pembangunan) unggulan di Jakarta yang menyelenggarakan program keahlian bidang teknik, rekayasa, dan teknologi.",
                 model: 'rag-local-synthesizer',
                 promptTokens: 100,
                 completionTokens: 50,
                 finishReason: 'stop',
+                toolCalls: null,
                 metadata: ['note' => 'Set GROQ_API_KEY in .env for live Groq Llama 3.3 API inference.']
             );
         }
@@ -66,10 +59,15 @@ readonly class GroqLlmProvider implements LlmProviderInterface
                 'stream' => false,
             ];
 
+            if (!empty($tools)) {
+                $payload['tools'] = $tools;
+                $payload['tool_choice'] = 'auto';
+            }
+
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$this->apiKey}",
                 'Content-Type' => 'application/json',
-            ])->timeout(30)->post($this->baseUrl, $payload);
+            ])->timeout(60)->post($this->baseUrl, $payload);
 
             if ($response->failed()) {
                 Log::channel('rag')->error('Groq API Error', [
@@ -81,17 +79,20 @@ readonly class GroqLlmProvider implements LlmProviderInterface
 
             $data = $response->json();
 
-            $content = $data['choices'][0]['message']['content'] ?? '';
+            $message = $data['choices'][0]['message'] ?? [];
+            $content = $message['content'] ?? '';
+            $toolCalls = $message['tool_calls'] ?? null;
             $promptTokens = $data['usage']['prompt_tokens'] ?? 0;
             $completionTokens = $data['usage']['completion_tokens'] ?? 0;
-            $finishReason = $data['choices'][0]['finish_reason'] ?? 'stop';
+            $finishReason = $data['choices'][0]['finish_reason'] ?? ($toolCalls ? 'tool_calls' : 'stop');
 
             return new LlmResponse(
-                content: $content,
+                content: (string)$content,
                 model: $this->model,
                 promptTokens: $promptTokens,
                 completionTokens: $completionTokens,
                 finishReason: $finishReason,
+                toolCalls: $toolCalls,
                 metadata: $data
             );
         } catch (Throwable $e) {

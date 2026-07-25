@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 return [
     'embedding' => [
-        'provider' => env('RAG_EMBEDDING_PROVIDER', 'local'),
+        'provider' => env('RAG_EMBEDDING_PROVIDER', 'huggingface'),
         'model' => env('RAG_EMBEDDING_MODEL', 'paraphrase-multilingual-MiniLM-L12-v2'),
         'dimensions' => env('RAG_EMBEDDING_DIMENSIONS', 384),
-        'batch_size' => (int) env('RAG_EMBEDDING_BATCH_SIZE', 50),
+        'batch_size' => (int) env('RAG_EMBEDDING_BATCH_SIZE', 32),
+        'huggingface_api_key' => env('HUGGINGFACE_API_KEY'),
     ],
     
     'llm' => [
@@ -47,11 +48,6 @@ return [
         'queue' => env('RAG_INGESTION_QUEUE', 'rag-ingestion'),
         'retry' => (int) env('RAG_INGESTION_RETRY', 3),
         'backoff' => [30, 60, 120],
-    ],
-    
-    'pdf_parser' => [
-        'python_path' => env('PDF_PARSER_PYTHON', 'python'),
-        'script_path' => env('PDF_PARSER_SCRIPT_PATH', 'scripts/pdf_parser.py'),
     ],
     
     'logging' => [

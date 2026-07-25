@@ -10,6 +10,7 @@ Platform ini dibangun dengan **$0 Budget Stack** (bebas biaya operasional) dan *
 
 - [Fitur Utama](#-fitur-utama)
 - [Arsitektur Sistem ($0 Budget Stack)](#-arsitektur-sistem-0-budget-stack)
+- [Entity-Relationship Diagram (ERD)](#-entity-relationship-diagram-erd)
 - [Struktur Sitemap Website Sekolah](#-struktur-sitemap-website-sekolah)
 - [Cara Kerja Agentic AI & Cara Membedakan Respon](#-cara-kerja-agentic-ai--cara-membedakan-respon)
 - [Panduan Instalasi & Setup Lokal](#-panduan-instalasi--setup-lokal)
@@ -62,6 +63,103 @@ Platform ini dibangun dengan **$0 Budget Stack** (bebas biaya operasional) dan *
 │ pgvector     │          │ navigation.php   │        │ JSON Response    │
 └──────────────┘          └──────────────────┘        └──────────────────┘
 ```
+
+---
+
+## 📊 Entity-Relationship Diagram (ERD)
+
+Diagram berikut menjelaskan struktur entitas dan relasi database `rag_knowledge` pada PostgreSQL `pgvector`:
+
+```mermaid
+erDiagram
+    documents ||--o{ document_versions : "has many"
+    document_versions ||--o{ chunks : "contains"
+    chunks ||--o| chunks : "parent-child hierarchy"
+    chunks ||--|| embeddings : "has vector"
+
+    documents {
+        uuid id PK
+        string name
+        string source_file
+        string content_hash
+        string status
+        json metadata
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    document_versions {
+        uuid id PK
+        uuid document_id FK
+        integer version_number
+        string content_hash
+        string extraction_method
+        float extraction_confidence
+        integer total_pages
+        integer total_chunks
+        string status
+        timestamp processed_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    chunks {
+        uuid id PK
+        uuid document_version_id FK
+        uuid parent_chunk_id FK
+        integer chunk_index
+        string chunk_type
+        text original_text
+        text contextual_header
+        string heading
+        string section
+        text breadcrumb
+        integer page_start
+        integer page_end
+        string language
+        string content_hash
+        integer token_count
+        boolean is_parent
+        tsvector search_vector
+        json metadata
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    embeddings {
+        uuid id PK
+        uuid chunk_id FK "UNIQUE"
+        string model
+        string model_version
+        integer dimensions
+        vector_384 embedding "HNSW Index"
+        timestamp created_at
+    }
+
+    retrieval_logs {
+        uuid id PK
+        string trace_id
+        text query
+        json retrieved_chunk_ids
+        json dense_scores
+        json sparse_scores
+        json rrf_scores
+        json reranker_scores
+        float confidence_score
+        boolean passed_gate
+        text generated_answer
+        integer latency_ms
+        json metadata
+        timestamp created_at
+    }
+```
+
+### 🔑 Penjelasan Relasi Entitas:
+- **`documents` (1) ── (N) `document_versions`**: Satu dokumen dapat memiliki beberapa versi proses ingestion.
+- **`document_versions` (1) ── (N) `chunks`**: Satu versi dokumen dipecah menjadi banyak potongan teks (chunks).
+- **`chunks` (1) ── (N) `chunks` (Self-Referencing)**: `parent_chunk_id` merujuk ke chunk induk (`is_parent = true`) untuk menjaga integritas konteks paragraf.
+- **`chunks` (1) ── (1) `embeddings`**: Setiap child chunk memiliki 1 vektor embedding `vector(384)` dengan indeks HNSW (`vector_cosine_ops`).
+- **`retrieval_logs`**: Tabel independen untuk merekam observabilitas, latensi, confidence score, dan trace log setiap query.
 
 ---
 

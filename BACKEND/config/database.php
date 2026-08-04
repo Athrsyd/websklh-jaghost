@@ -93,7 +93,7 @@ return [
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => env('DB_SCHEMA', 'public'),  // ← tambahkan ini
-            'sslmode'  => 'require',                   // ← ubah ke require
+            'sslmode'  => env('DB_SSLMODE', 'prefer'),
         ],
 
         'sqlsrv' => [

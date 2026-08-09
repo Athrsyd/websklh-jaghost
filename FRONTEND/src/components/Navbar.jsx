@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import logo26 from '../assets/logo26.png';
 
-export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
+export default function Navbar() {
+  const [lang, setLang] = useState('ID');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const headerRef = useRef(null);
+  
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (headerRef.current) {
@@ -18,25 +23,73 @@ export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
   }, []);
 
   const navItems = [
-    { name: 'Beranda', pageKey: 'Beranda', hasDropdown: false },
+    { name: 'Beranda', path: '/', hasDropdown: false },
     {
       name: 'Tentang Kami',
-      pageKey: 'Profil Sekolah',
+      path: '/tentang-kami',
       hasDropdown: true,
       children: [
-        { name: 'Profil Sekolah', pageKey: 'Profil Sekolah' },
+        { name: 'Profil Sekolah', path: '/tentang-kami/profil-sekolah' },
+        { name: 'Guru & Staf', path: '/tentang-kami/guru-dan-staf' },
+        { name: 'Prestasi', path: '/tentang-kami/prestasi' },
+        { name: 'Sejarah', path: '/tentang-kami/sejarah' },
+        { name: 'Hubungan Industri', path: '/tentang-kami/hubungan-industri' },
       ],
     },
-    { name: 'Program', pageKey: 'Program', hasDropdown: true },
-    { name: 'Informasi', pageKey: 'Informasi', hasDropdown: true },
-    { name: 'Dokumentasi', pageKey: 'Dokumentasi', hasDropdown: true },
-    { name: 'Portal', pageKey: 'Portal', hasDropdown: true },
+    {
+      name: 'Program',
+      path: '/program',
+      hasDropdown: true,
+      children: [
+        { name: 'Profil Jurusan', path: '/program/jurusan' },
+        { name: 'Ekstrakurikuler', path: '/program/ekskul' },
+        { name: 'BKK', path: '/program/bkk' },
+        { name: 'LSP', path: '/program/lsp' },
+      ],
+    },
+    {
+      name: 'Informasi',
+      path: '/informasi',
+      hasDropdown: true,
+      children: [
+        { name: 'Berita', path: '/informasi/berita' },
+        { name: 'Pengumuman', path: '/informasi/pengumuman' },
+        { name: 'Kalender Akademik', path: '/informasi/kalender-akademik' },
+      ],
+    },
+    {
+      name: 'Dokumentasi',
+      path: '/dokumentasi',
+      hasDropdown: true,
+      children: [
+        { name: 'Galeri Foto', path: '/dokumentasi/galeri-photo' },
+        { name: 'Galeri Video', path: '/dokumentasi/galeri-video' },
+        { name: 'Kegiatan Sekolah', path: '/dokumentasi/kegiatan-sekolah' },
+        { name: 'Virtual Tour', path: '/dokumentasi/virtual-tour' },
+      ],
+    },
+    {
+      name: 'Portal',
+      path: '/portal',
+      hasDropdown: true,
+      children: [
+        { name: 'SPMB', path: '/portal/spmb' },
+        { name: 'KJP', path: '/portal/kjp' },
+        { name: 'PIP', path: '/portal/pip' },
+      ],
+    },
   ];
 
-  const handleNavClick = (pageKey) => {
-    setActiveTab(pageKey);
+  const handleNavClick = (path) => {
+    navigate(path);
     setMobileMenuOpen(false);
     setDropdownOpen(null);
+  };
+
+  const isCurrentActive = (item) => {
+    if (location.pathname === item.path) return true;
+    if (item.children && item.children.some(child => location.pathname === child.path)) return true;
+    return false;
   };
 
   return (
@@ -45,7 +98,7 @@ export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
         
         {/* Logo & Brand Name */}
         <div 
-          onClick={() => handleNavClick('Beranda')}
+          onClick={() => handleNavClick('/')}
           className="flex items-center gap-2 cursor-pointer group"
         >
           <img 
@@ -60,53 +113,56 @@ export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
 
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 text-xs sm:text-sm font-medium">
-          {navItems.map((item) => (
-            <div 
-              key={item.name}
-              className="relative group"
-              onMouseEnter={() => item.hasDropdown && setDropdownOpen(item.name)}
-              onMouseLeave={() => item.hasDropdown && setDropdownOpen(null)}
-            >
+          {navItems.map((item) => {
+            const active = isCurrentActive(item);
+            return (
               <div 
-                onClick={() => !item.hasDropdown && handleNavClick(item.pageKey)}
-                className={`relative flex items-center gap-1 py-1 cursor-pointer transition-colors duration-200 ${
-                  activeTab === item.pageKey || (item.children && item.children.some(c => c.pageKey === activeTab))
-                    ? 'text-blue-500 font-bold' 
-                    : 'text-slate-600 hover:text-slate-900 font-medium'
-                }`}
+                key={item.name}
+                className="relative group"
+                onMouseEnter={() => item.hasDropdown && setDropdownOpen(item.name)}
+                onMouseLeave={() => item.hasDropdown && setDropdownOpen(null)}
               >
-                <span>{item.name}</span>
-                {item.hasDropdown && (
-                  <svg className="w-3 h-3 text-slate-400 fill-current mt-0.5" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                )}
+                <div 
+                  onClick={() => handleNavClick(item.path)}
+                  className={`relative flex items-center gap-1 py-1 cursor-pointer transition-colors duration-200 ${
+                    active 
+                      ? 'text-blue-500 font-bold' 
+                      : 'text-slate-600 hover:text-slate-900 font-medium'
+                  }`}
+                >
+                  <span>{item.name}</span>
+                  {item.hasDropdown && (
+                    <svg className="w-3 h-3 text-slate-400 fill-current mt-0.5" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  )}
 
-                {(activeTab === item.pageKey || (item.children && item.children.some(c => c.pageKey === activeTab))) && (
-                  <span className="absolute bottom-[-3px] left-0 right-0 h-[2px] bg-blue-500 rounded-full" />
+                  {active && (
+                    <span className="absolute bottom-[-3px] left-0 right-0 h-[2px] bg-blue-500 rounded-full" />
+                  )}
+                </div>
+
+                {/* Sub-menu Dropdown */}
+                {item.hasDropdown && item.children && dropdownOpen === item.name && (
+                  <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-fadeIn">
+                    {item.children.map((child) => (
+                      <div
+                        key={child.name}
+                        onClick={() => handleNavClick(child.path)}
+                        className={`px-4 py-2 text-xs font-semibold cursor-pointer transition-colors ${
+                          location.pathname === child.path
+                            ? 'bg-blue-50 text-blue-600 font-bold'
+                            : 'text-slate-700 hover:bg-slate-50 hover:text-blue-500'
+                        }`}
+                      >
+                        {child.name}
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
-
-              {/* Sub-menu Dropdown */}
-              {item.hasDropdown && item.children && dropdownOpen === item.name && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-fadeIn">
-                  {item.children.map((child) => (
-                    <div
-                      key={child.name}
-                      onClick={() => handleNavClick(child.pageKey)}
-                      className={`px-4 py-2 text-xs font-semibold cursor-pointer transition-colors ${
-                        activeTab === child.pageKey
-                          ? 'bg-blue-50 text-blue-600 font-bold'
-                          : 'text-slate-700 hover:bg-slate-50 hover:text-blue-500'
-                      }`}
-                    >
-                      {child.name}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </nav>
 
         {/* Controls: Language Switcher + Mobile Toggle */}
@@ -162,10 +218,10 @@ export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
           {navItems.map((item) => (
             <React.Fragment key={item.name}>
               <div
-                onClick={() => !item.hasDropdown && handleNavClick(item.pageKey)}
+                onClick={() => handleNavClick(item.path)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center justify-between cursor-pointer transition-colors ${
-                  activeTab === item.pageKey
-                    ? 'bg-blue-50 text-blue-600'
+                  isCurrentActive(item)
+                    ? 'bg-blue-50 text-blue-600 font-bold'
                     : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -176,9 +232,9 @@ export default function Navbar({ activeTab, setActiveTab, lang, setLang }) {
                   {item.children.map((child) => (
                     <div
                       key={child.name}
-                      onClick={() => handleNavClick(child.pageKey)}
+                      onClick={() => handleNavClick(child.path)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer ${
-                        activeTab === child.pageKey
+                        location.pathname === child.path
                           ? 'text-blue-600 font-bold bg-blue-50'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}

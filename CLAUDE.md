@@ -5,9 +5,37 @@
 
 ---
 
-## 🏫 Apa Ini?
+## 🏫 Tentang Proyek Ini
 
-Website resmi **SMK Negeri 26 Jakarta** — terdiri dari 2 folder utama:
+### Apa ini?
+Ini adalah proyek **website resmi SMK Negeri 26 Jakarta** (sekolah menengah kejuruan negeri di Jakarta, Indonesia). Proyek ini dibuat oleh **tim siswa** sebagai proyek sekolah/tugas kelompok.
+
+### Untuk siapa?
+Website ini akan dipakai oleh:
+- **Calon siswa & orang tua** — untuk cari info tentang sekolah, jurusan, pendaftaran (SPMB), beasiswa (KJP/PIP)
+- **Siswa aktif** — untuk lihat pengumuman, kalender akademik, kegiatan, dan info BKK (Bursa Kerja Khusus)
+- **Guru & staf** — sebagai portal informasi sekolah
+- **Masyarakat umum** — untuk mengenal SMKN 26 Jakarta
+
+### Apa yang bikin proyek ini spesial?
+Bukan cuma website sekolah biasa. Proyek ini punya **AI chatbot** yang terintegrasi langsung ke website. Chatbot ini:
+- Menjawab pertanyaan tentang sekolah berdasarkan **dokumen PDF resmi sekolah** (brosur, profil, panduan PPDB, dll)
+- Bisa **mengarahkan user ke halaman yang tepat** (misal user tanya "Dimana info jurusan?" → AI otomatis navigasi ke halaman jurusan)
+- Menggunakan teknologi **RAG (Retrieval-Augmented Generation)** — artinya AI cari dulu info relevan dari dokumen, baru generate jawaban. Bukan asal ngarang.
+
+### Tim & Pembagian Kerja
+- **Frontend** dikerjakan oleh beberapa orang (ada yang bikin routing/halaman, ada yang bikin desain UI + animasi)
+- **Backend AI RAG** dikerjakan terpisah
+- Kedua bagian ini **terhubung via REST API** — frontend kirim pertanyaan, backend jawab
+
+### Budget & Constraint
+- **$0 budget** — semua pakai API gratis (Gemini free tier, Groq free tier)
+- **Hosting**: belum di-deploy, masih development lokal
+- **Database**: PostgreSQL lokal (Laragon) dengan extension pgvector untuk vector search
+
+---
+
+## 🗂️ Dua Folder Utama
 
 | Folder | Stack | Fungsi |
 |---|---|---|
@@ -15,6 +43,45 @@ Website resmi **SMK Negeri 26 Jakarta** — terdiri dari 2 folder utama:
 | `FRONTEND/` | React 19 + Vite 8 + TailwindCSS v4 + GSAP | **Landing page & UI** — halaman publik sekolah dengan animasi premium |
 
 Keduanya **terpisah total** (decoupled). Frontend memanggil Backend lewat REST API.
+
+### Halaman Website yang Direncanakan (dari `pages.txt`):
+```
+Beranda (landing page)
+
+Tentang Kami
+├── Profil Sekolah        ← sudah di-design + animasi GSAP
+├── Hubungan Industri     ← placeholder
+├── Sejarah               ← placeholder
+├── Fasilitas             ← placeholder
+├── Prestasi              ← placeholder
+└── Profil Guru & Staff   ← placeholder
+
+Program
+├── Profil Jurusan        ← placeholder
+├── Ekstrakurikuler       ← placeholder
+├── BKK                   ← placeholder
+├── LSP                   ← placeholder
+└── BLUD                  ← placeholder
+
+Informasi
+├── Berita                ← placeholder
+├── Pengumuman            ← placeholder
+├── Kalender Akademik     ← placeholder
+└── FAQ                   ← belum ada
+
+Dokumentasi
+├── Galeri Foto           ← placeholder
+├── Galeri Video          ← placeholder
+├── Kegiatan Sekolah      ← placeholder
+└── Virtual Tour          ← placeholder
+
+Portal
+├── SPMB (Pendaftaran)    ← placeholder
+├── KJP (Beasiswa)        ← placeholder
+└── PIP (Beasiswa)        ← placeholder
+```
+
+> "placeholder" = file JSX sudah ada tapi isinya cuma `<div>NamaHalaman</div>`, belum di-design.
 
 ---
 

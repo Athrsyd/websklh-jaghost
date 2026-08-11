@@ -74,9 +74,9 @@ const Navbar = () => {
     const currentPage = hoveredPage || activePage;
 
     return (
-        <div className="w-full fixed ">
+        <div className="w-full fixed z-9999">
             <div className="container  border-t-white  bg-white backdrop-blur-sm flex justify-between shadow-xl items-center
-                rounded-full px-8 mt-4 w-19/20 mx-auto py-4">
+                rounded-full px-8 mt-4 w-19/20 mx-auto py-2">
 
                 <a href="">
                     <div className="flex justify-center items-center gap-4 ">
@@ -102,7 +102,7 @@ const Navbar = () => {
                                 ${currentPage === link.name.toLowerCase() ? 'text-blue-500 after:scale-100' : 'text-gray-700'}`}>
                                 {link.name}
                             </Link>
-                            <div className={`absolute left-0 top-full mt-0.5 pt-2 ${openMenu === link.name ? 'block' : 'hidden'} bg-white shadow-xl rounded-lg`}>
+                            <div className={`absolute left-0 top-full mt-0.5 pt-2 ${openMenu === link.name ? 'block' : 'hidden'} bg-white shadow-xl transition-all duration-300 ease-in-out rounded-lg`}>
                                 {subnavlinks
                                     .filter((sublink) => sublink.parentName === link.name)
                                     .map((sublink) => (

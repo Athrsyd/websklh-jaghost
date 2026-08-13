@@ -97,8 +97,8 @@ const Navbar = () => {
                         >
                             <Link
                                 to={link.href} className={` text-md  hover:text-blue-500
-                                after:absolute after:top-6 after:left-0 after:h-0.5 after:w-full after:scale-0
-                                after:bg-blue-500 after:transition-all after:duration-300 hover:after:scale-100
+                                after:absolute after:top-6 after:left-0 after:h-0.5 after:w-0
+                                after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full
                                 ${currentPage === link.name.toLowerCase() ? 'text-blue-500 after:scale-100' : 'text-gray-700'}`}>
                                 {link.name}
                             </Link>

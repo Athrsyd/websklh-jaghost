@@ -102,7 +102,8 @@ const Navbar = () => {
                                 ${currentPage === link.name.toLowerCase() ? 'text-blue-500 after:scale-100' : 'text-gray-700'}`}>
                                 {link.name}
                             </Link>
-                            <div className={`absolute left-0 top-full mt-0.5 pt-2 ${openMenu === link.name ? 'block' : 'hidden'} bg-white shadow-xl transition-all duration-300 ease-in-out rounded-lg`}>
+                            <div className={`absolute left-0 top-full mt-0.5 pt-2 ${openMenu === link.name ? 'block' : 'hidden'} bg-white shadow-xl 
+                                transition-all duration-300 ease-in-out rounded-lg`}>
                                 {subnavlinks
                                     .filter((sublink) => sublink.parentName === link.name)
                                     .map((sublink) => (

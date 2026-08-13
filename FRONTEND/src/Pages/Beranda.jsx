@@ -234,21 +234,7 @@ const Beranda = () => {
             </div>
             <div className="w-full text-justify border-l-2 border-tertiary pl-4">
               {/* <div className="bg-tertiary w-0.5 h-full"></div> */}
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Commodi recusandae culpa porro reiciendis eius molestiae quam
-                eum voluptatem dolorum non laudantium totam veniam quo, aperiam
-                magni mollitia molestias itaque cum velit pariatur minima illum
-                quaerat cumque? Pariatur quae dolores, facere perferendis
-                recusandae, praesentium quo aliquid omnis repellat maxime itaque
-                voluptatem quidem obcaecati optio perspiciatis. Maiores est
-                accusantium recusandae cupiditate voluptatum dolor deleniti? Eum
-                maiores in voluptatum laudantium reprehenderit quis, vitae ad
-                corrupti ipsa iure neque laborum non itaque recusandae ipsum
-                harum aperiam corporis tempore? Voluptates, maiores voluptatum
-                ut modi reprehenderit sed sit, reiciendis hic magnam veritatis
-                blanditiis saepe, aut adipisci.
-              </p>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi recusandae culpa porro reiciendis eius molestiae quam eum voluptatem dolorum non laudantium totam veniam quo, aperiam magni mollitia molestias itaque cum velit pariatur minima illum quaerat cumque? Pariatur quae dolores, facere perferendis recusandae, praesentium quo aliquid omnis repellat maxime itaque voluptatem quidem obcaecati optio perspiciatis. Maiores est accusantium recusandae cupiditate voluptatum dolor deleniti? Eum maiores in voluptatum laudantium reprehenderit quis, vitae ad corrupti ipsa iure neque laborum non itaque recusandae ipsum harum aperiam corporis tempore? Voluptates, maiores voluptatum ut modi reprehenderit sed sit, reiciendis hic magnam veritatis blanditiis saepe, aut adipisci.</p>
             </div>
           </div>
         </div>

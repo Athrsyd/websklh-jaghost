@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const TentangKami = () => {
 
@@ -120,4 +120,4 @@ const TentangKami = () => {
   )
 }
 
-export default TentangKami
+export default TentangKami;

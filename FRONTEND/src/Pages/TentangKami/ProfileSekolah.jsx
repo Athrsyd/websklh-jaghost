@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import ProfilSekolah from '../../pages/ProfilSekolah';
 
 const ProfileSekolah = () => {
-  return (
-    <div>ProfileSekolah</div>
-  )
-}
+  return <ProfilSekolah />;
+};
 
-export default ProfileSekolah
+export default ProfileSekolah;

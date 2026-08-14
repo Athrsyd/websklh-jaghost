@@ -49,9 +49,9 @@ body {
 
 @keyframes fadeIn {
   from {
-    transform: translate(1500px);
+    transform: translateX(1570px);
   }
   to {
-    transform: translateX(-1500px);
+    transform: translateX(-1590px);
   }
 }

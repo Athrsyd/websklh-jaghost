@@ -64,7 +64,7 @@ const BUBBLE_HOVERED = "p-3 rotate-0";
 const BUBBLE_DEFAULT = "p-2 rotate-360";
 
 const PANEL_BASE =
-  "container pr-8 pl-4 py-3 flex gap-4 flex-row bg-secondary/30 backdrop-blur-xs rounded-l-full -mr-4 shadow-lg transition-all duration-300 ease-in-out items-center";
+  "container pr-8 pl-4 py-3 flex gap-4 flex-row bg-secondary/30 backdrop-blur-xs rounded-l-full -mr-5 shadow-lg transition-all duration-300 ease-in-out items-center";
 
 const INITIAL_MESSAGES = [
   { id: 1, text: "Halo! Ada yang bisa saya bantu?", isUser: false },
@@ -117,9 +117,11 @@ const ChatBotBubble = () => {
   }, [inputValue]);
 
   const handleKeyDown = useCallback(
+
     (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
+        setIsActive(true); // Pastikan chat terbuka saat mengirim pesan
         handleSend();
       }
     },
@@ -129,12 +131,12 @@ const ChatBotBubble = () => {
   return (
     <div onMouseLeave={isActive ? handleMouseLeave : undefined}>
       {/* Chat container — hanya bagian ini yang ditambahkan: scroll area + bubbles */}
-      {isActive ||
+      {
         (isHovered && (
           <div
-            className="container fixed bottom-32 right-12 z-50 flex flex-col
-          bg-secondary/30 backdrop-blur-xs rounded-lg -mr-4 shadow-lg transition-all
-          duration-300 ease-in-out w-80 h-100 overflow-hidden"
+                className={`container fixed bottom-32 right-12 z-50 flex flex-col
+            bg-secondary/30 backdrop-blur-xs rounded-lg -mr-4 shadow-lg transition-all
+            duration-300 ease-in-out w-80 h-100 overflow-hidden ${isActive ? "opacity-100" : "opacity-0"}`}
           >
             {/* Message list */}
             <div
@@ -169,7 +171,7 @@ const ChatBotBubble = () => {
         </button>
 
         <div
-          className={`${PANEL_BASE} ${isHovered ? "opacity-100" : "opacity-0"}`}
+          className={`${PANEL_BASE} ${isHovered ? "w-full opacity-100" : "w-0 opacity-0"}`}
         >
           <svg
           onClick={()=> setIsHovered(false)}
@@ -185,12 +187,13 @@ const ChatBotBubble = () => {
             />
           </svg>
           <input
+
             className="bg-white rounded-full p-1 text-black placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Ketik pesan..."
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handleKeyDown }
           />
         </div>
       </div>

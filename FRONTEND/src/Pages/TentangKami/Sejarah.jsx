@@ -4,21 +4,27 @@ const Sejarah = () => {
   return (
     <>
       <section className="w-full min-h-screen bg-white py-20">
-        <div className="flex absolute mt-8 w-full justify-center items-center z-10">
+        <div className="flex flex-row absolute mt-8 w-full justify-center gap-52 items-center z-10">
           <h1
             className="sejarahTitle text-9xl text-tertiary/40 tracking-wide font-black
           opacity-40 text-center"
           >
-            SEJARAH
+            SEJARAH      
+          </h1>
+          <h1
+            className="sejarahTitle text-9xl text-tertiary/40 tracking-wide font-black
+          opacity-40 text-center"
+          >
+            SEJARAH      
           </h1>
         </div>
 
-        <div className="flex mt-8 h-100 w-4/5 mx-auto justify-center flex-col items-start relative z-20">
-          <h1 className="text-6xl text-start font-black ">
+        <div className="flex mt-32 h-100 w-5/8 ml-36 justify-center flex-col items-start relative z-20">
+          <h1 className="text-7xl text-start font-black ">
             MELANGKAH DARI <span className="text-secondary">MASA</span> KE{" "}
             <span className="text-tertiary">MASA</span>
           </h1>
-          <p>
+          <p className="text-2xl text-start mt-4 font-medium">
             Menelusuri perjalanan, perubahan, dan langkah SMK Negeri 26 Jakarta
             dalam membangun pendidikan vokasi.
           </p>

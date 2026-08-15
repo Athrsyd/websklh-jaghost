@@ -274,7 +274,7 @@ const Beranda = () => {
           className="container w-3/10 opacity-70  mx-auto flex flex-col gap-4 bg-white/50 border border-white
         rounded-full py-2 px-4 shadow-2xl items-center justify-center "
         >
-          <h1 className="text-3xl font-bold text-center pb-2 text-black">
+          <h1 className="text-3xl font-bold text-center font-poppins  text-black">
             • Program Keahlian •
           </h1>
         </div>

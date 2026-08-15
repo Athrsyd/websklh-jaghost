@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TentangKami = () => {
 
@@ -93,9 +94,12 @@ const TentangKami = () => {
 
           {/* Placeholder Frame Video */}
           <div className="w-full max-w-3xl mx-auto aspect-video bg-gray-300 rounded-2xl flex items-center justify-center shadow-inner">
-            <span className="text-xl font-extrabold text-black tracking-wide">
-              NANTI VIDEO MARS 26
-            </span>
+            <iframe className="w-full h-full rounded-2xl"
+              src="https://www.youtube.com/embed/Ox5y2cs38cU?si=am2MgtdevgpZa7Wj"
+              title="YouTube video player" frameborder="0" allow="accelerometer; 
+            autoplay; clipboard-write; encrypted-media; gyroscope; 
+            picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
           </div>
         </div>
 
@@ -106,12 +110,12 @@ const TentangKami = () => {
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="bg-white text-blue-600 font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-gray-100 transition-colors text-sm w-full sm:w-auto">
+            <Link to="/tentang-kami/programs" className="bg-white text-blue-600 font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-gray-100 transition-colors text-sm w-full sm:w-auto">
               Lihat Program
-            </button>
-            <button className="bg-transparent border border-white/60 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/10 transition-colors text-sm w-full sm:w-auto">
+            </Link>
+            <Link to="/tentang-kami/contact" className="bg-transparent border border-white/60 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/10 transition-colors text-sm w-full sm:w-auto">
               Hubungi Kami
-            </button>
+            </Link>
           </div>
         </div>
 

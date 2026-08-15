@@ -9,57 +9,100 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\RAG\Pipeline\RagPipeline;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ChatCompletionController extends Controller
 {
     public function store(Request $request, RagPipeline $pipeline): JsonResponse
     {
         $validated = $request->validate([
-            'messages' => 'required|array',
-            'model' => 'nullable|string',
-            'temperature' => 'nullable|numeric',
-            'max_tokens' => 'nullable|integer',
+            'messages' => 'required|array|min:1',
+            'messages.*.role' => 'required|string|in:user,assistant,system',
+            'messages.*.content' => 'required|string|max:1000',
+            'model' => 'nullable|string|max:100',
+            'temperature' => 'nullable|numeric|min:0|max:2',
+            'max_tokens' => 'nullable|integer|min:1|max:4096',
             'stream' => 'nullable|boolean',
         ]);
 
-        $messages = $validated['messages'];
-        $lastMessage = end($messages);
-        $query = $lastMessage['content'] ?? '';
+        try {
+            $messages = $validated['messages'];
+            
+            // Find the last user message
+            $userMessages = array_filter($messages, fn($m) => ($m['role'] ?? '') === 'user');
+            $lastUserMessage = end($userMessages);
+            $query = trim($lastUserMessage['content'] ?? '');
 
-        $result = $pipeline->query($query);
+            if (empty($query)) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Pesan pengguna tidak boleh kosong.',
+                        'type' => 'invalid_request_error',
+                        'code' => 422,
+                    ]
+                ], 422);
+            }
 
-        $messagePayload = [
-            'role' => 'assistant',
-            'content' => $result->answer,
-        ];
+            $result = $pipeline->query($query);
 
-        if (!empty($result->toolCalls)) {
-            $messagePayload['tool_calls'] = $result->toolCalls;
-        }
+            $messagePayload = [
+                'role' => 'assistant',
+                'content' => $result->answer,
+            ];
 
-        return response()->json([
-            'id' => 'rag-' . Str::uuid()->toString(),
-            'object' => 'chat.completion',
-            'created' => time(),
-            'model' => $validated['model'] ?? 'rag-sekolah',
-            'choices' => [
-                [
-                    'index' => 0,
-                    'message' => $messagePayload,
-                    'finish_reason' => $result->finishReason,
+            if (!empty($result->toolCalls)) {
+                $messagePayload['tool_calls'] = $result->toolCalls;
+            }
+
+            return response()->json([
+                'id' => 'rag-' . Str::uuid()->toString(),
+                'object' => 'chat.completion',
+                'created' => time(),
+                'model' => $validated['model'] ?? 'technobot-rag-v1',
+                'choices' => [
+                    [
+                        'index' => 0,
+                        'message' => $messagePayload,
+                        'finish_reason' => $result->finishReason,
+                    ]
+                ],
+                'usage' => [
+                    'prompt_tokens' => 0,
+                    'completion_tokens' => 0,
+                    'total_tokens' => 0,
+                ],
+                'citations' => $result->citations,
+                'retrieval_metadata' => [
+                    'trace_id' => $result->traceId,
+                    'confidence_score' => $result->confidenceScore,
+                    'retrieval_latency_ms' => $result->retrievalLatencyMs,
                 ]
-            ],
-            'usage' => [
-                'prompt_tokens' => 0,
-                'completion_tokens' => 0,
-                'total_tokens' => 0,
-            ],
-            'citations' => $result->citations,
-            'retrieval_metadata' => [
-                'trace_id' => $result->traceId,
-                'confidence_score' => $result->confidenceScore,
-                'retrieval_latency_ms' => $result->retrievalLatencyMs,
-            ]
-        ]);
+            ]);
+        } catch (Throwable $e) {
+            Log::channel('rag')->error('Unhandled exception in ChatCompletionController', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'id' => 'rag-err-' . Str::uuid()->toString(),
+                'object' => 'chat.completion',
+                'created' => time(),
+                'model' => 'technobot-rag-v1',
+                'choices' => [
+                    [
+                        'index' => 0,
+                        'message' => [
+                            'role' => 'assistant',
+                            'content' => 'Maaf, terjadi kendala teknis sementara. Silakan coba ajukan pertanyaan Anda kembali.',
+                        ],
+                        'finish_reason' => 'error',
+                    ]
+                ],
+                'citations' => [],
+                'error_detail' => app()->environment('local') ? $e->getMessage() : null,
+            ], 200);
+        }
     }
 }

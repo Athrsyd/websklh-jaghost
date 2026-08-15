@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 /**
  * Class SemanticChunker
  * 
- * Chunks documents by structural boundaries.
+ * Chunks documents by structural boundaries and token limits.
  */
 class SemanticChunker
 {
@@ -23,7 +23,6 @@ class SemanticChunker
     public function chunk(DocumentStructure $structure): array
     {
         $maxTokens = (int)config('rag.chunking.max_tokens', 512);
-        $minTokens = (int)config('rag.chunking.min_tokens', 100);
         $chunks = [];
         $chunkIndex = 0;
 
@@ -38,7 +37,8 @@ class SemanticChunker
             $pageStart = $section['pageStart'] ?? 1;
             $pageEnd = $section['pageEnd'] ?? 1;
 
-            $paragraphs = explode("\n\n", $sectionText);
+            // Split by double newlines or single newlines
+            $paragraphs = preg_split('/(\r\n|\n){1,2}/', $sectionText);
             $currentChunkText = '';
 
             foreach ($paragraphs as $para) {
@@ -47,7 +47,7 @@ class SemanticChunker
                     continue;
                 }
 
-                $combinedText = empty($currentChunkText) ? $para : $currentChunkText . "\n\n" . $para;
+                $combinedText = empty($currentChunkText) ? $para : $currentChunkText . "\n" . $para;
                 $tokenCount = (int)ceil(str_word_count($combinedText) * 1.3);
 
                 if ($tokenCount > $maxTokens && !empty($currentChunkText)) {

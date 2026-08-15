@@ -3,6 +3,38 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 
+export const ROUTE_MAP = {
+  'beranda': '/',
+  'home': '/',
+  'tentang-kami': '/tentang-kami',
+  'tentang': '/tentang-kami',
+  'guru-dan-staf': '/tentang-kami/guru-dan-staf',
+  'guru': '/tentang-kami/guru-dan-staf',
+  'prestasi': '/tentang-kami/prestasi',
+  'sejarah': '/tentang-kami/sejarah',
+  'profil-sekolah': '/tentang-kami/profil-sekolah',
+  'hubungan-industri': '/tentang-kami/hubungan-industri',
+  'program': '/program',
+  'bkk': '/program/bkk',
+  'jurusan': '/program/jurusan',
+  'ekskul': '/program/ekskul',
+  'lsp': '/program/lsp',
+  'informasi': '/informasi',
+  'berita': '/informasi/berita',
+  'kalender-akademik': '/informasi/kalender-akademik',
+  'pengumuman': '/informasi/pengumuman',
+  'dokumentasi': '/dokumentasi',
+  'galeri-photo': '/dokumentasi/galeri-photo',
+  'galeri-video': '/dokumentasi/galeri-video',
+  'kegiatan-sekolah': '/dokumentasi/kegiatan-sekolah',
+  'virtual-tour': '/dokumentasi/virtual-tour',
+  'portal': '/portal',
+  'spmb': '/portal/spmb',
+  'ppdb': '/portal/spmb',
+  'kjp': '/portal/kjp',
+  'pip': '/portal/pip',
+};
+
 /**
  * Sends messages to Laravel RAG Backend API
  * @param {Array<{role: string, content: string}>} messages 
@@ -11,7 +43,10 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 export async function sendChatMessage(messages) {
   const response = await fetch(`${API_URL}/chat/completions`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
     body: JSON.stringify({ messages, stream: false }),
   });
 
@@ -38,6 +73,7 @@ export function useChat() {
   const navigate = useNavigate();
 
   const handleToolCalls = useCallback((toolCalls) => {
+    if (!Array.isArray(toolCalls)) return;
     for (const tool of toolCalls) {
       if (tool.function?.name === 'navigate_to_page') {
         try {
@@ -45,13 +81,15 @@ export function useChat() {
             ? JSON.parse(tool.function.arguments)
             : tool.function.arguments;
           
-          const pagePath = args.path || args.page_key || args.page;
-          if (pagePath) {
-            const formattedPath = pagePath.startsWith('/') ? pagePath : `/${pagePath}`;
-            navigate(formattedPath);
+          const target = args.path || ROUTE_MAP[args.page] || args.page;
+          if (target) {
+            const formattedPath = target.startsWith('/') ? target : `/${target}`;
+            setTimeout(() => {
+              navigate(formattedPath);
+            }, 300);
           }
         } catch (e) {
-          // ponytail: JSON parse ceiling for invalid model output; upgrade: robust schema validator
+          console.error('Error executing navigation tool:', e);
         }
       }
     }

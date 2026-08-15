@@ -13,7 +13,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Provides LLM integration using Groq API.
+ * Provides LLM integration using Groq API with Function Calling support.
  */
 readonly class GroqLlmProvider implements LlmProviderInterface
 {
@@ -24,7 +24,7 @@ readonly class GroqLlmProvider implements LlmProviderInterface
     public function __construct()
     {
         $this->apiKey = (string) config('rag.llm.providers.groq.api_key', '');
-        $this->model = (string) config('rag.llm.model', 'llama-3.3-70b-versatile');
+        $this->model = (string) config('rag.llm.providers.groq.model', 'llama-3.3-70b-versatile');
         $this->baseUrl = 'https://api.groq.com/openai/v1/chat/completions';
     }
 
@@ -67,7 +67,7 @@ readonly class GroqLlmProvider implements LlmProviderInterface
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$this->apiKey}",
                 'Content-Type' => 'application/json',
-            ])->timeout(60)->post($this->baseUrl, $payload);
+            ])->connectTimeout(15)->timeout(60)->retry(3, 1000)->post($this->baseUrl, $payload);
 
             if ($response->failed()) {
                 Log::channel('rag')->error('Groq API Error', [

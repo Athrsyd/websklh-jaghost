@@ -35,6 +35,7 @@ const App = () => {
       document.documentElement.style.scrollBehavior = "";
     };
   }, []);
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-white text-slate-900 font-sans antialiased flex flex-col justify-between">

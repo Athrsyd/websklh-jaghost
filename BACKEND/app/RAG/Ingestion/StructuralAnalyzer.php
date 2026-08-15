@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\RAG\Ingestion;
 
 use App\DTO\ParsedDocument;
-use Illuminate\Support\Str;
 
 /**
  * Class StructuralAnalyzer
  * 
- * Analyzes parsed document to identify structure.
+ * Analyzes parsed document to identify page-by-page structure and sections.
  */
 readonly class StructuralAnalyzer
 {
@@ -18,73 +17,40 @@ readonly class StructuralAnalyzer
     {
         $sections = [];
         $headingHierarchy = [];
-        $currentHeading = $document->title ?: 'Dokumen';
-        $currentBreadcrumb = $currentHeading;
-        
-        $currentElements = [];
-        $currentText = '';
-        $pageStart = 1;
-        $pageEnd = 1;
+        $docTitle = $document->title ?: 'Dokumen SMKN 26 Jakarta';
 
+        $pageNum = 0;
         foreach ($document->pages as $page) {
-            $pageNum = $page['page_number'] ?? $page['pageNumber'] ?? 1;
-            $elements = $page['elements'] ?? [];
-            $pageText = $page['text'] ?? '';
-
-            if (empty($elements)) {
-                $elements = [['type' => 'paragraph', 'text' => $pageText]];
+            $pageNum++;
+            $pageText = trim($page['text'] ?? '');
+            if (empty($pageText)) {
+                continue;
             }
 
-            foreach ($elements as $elem) {
-                $type = $elem['type'] ?? 'paragraph';
-                $text = trim($elem['text'] ?? '');
+            // Detect heading from first non-empty line
+            $lines = array_values(array_filter(array_map('trim', explode("\n", $pageText))));
+            $firstLine = $lines[0] ?? "Halaman {$pageNum}";
+            $heading = mb_strlen($firstLine) < 80 ? $firstLine : "Informasi Halaman {$pageNum}";
 
-                if (empty($text)) {
-                    continue;
-                }
-
-                if ($type === 'heading') {
-                    if (!empty($currentText)) {
-                        $sections[] = [
-                            'heading' => $currentHeading,
-                            'level' => 1,
-                            'breadcrumb' => $currentBreadcrumb,
-                            'elements' => $currentElements,
-                            'text' => trim($currentText),
-                            'pageStart' => $pageStart,
-                            'pageEnd' => $pageEnd,
-                        ];
-                    }
-
-                    $currentHeading = $text;
-                    $currentBreadcrumb = ($document->title ? $document->title . ' > ' : '') . $text;
-                    $currentElements = [$elem];
-                    $currentText = $text . "\n";
-                    $pageStart = $pageNum;
-                    $pageEnd = $pageNum;
-                    $headingHierarchy[] = ['heading' => $text, 'level' => 1, 'page' => $pageNum];
-                } else {
-                    $currentElements[] = $elem;
-                    $currentText .= $text . "\n";
-                    $pageEnd = $pageNum;
-                }
-            }
-        }
-
-        if (!empty(trim($currentText))) {
             $sections[] = [
-                'heading' => $currentHeading,
+                'heading' => $heading,
                 'level' => 1,
-                'breadcrumb' => $currentBreadcrumb,
-                'elements' => $currentElements,
-                'text' => trim($currentText),
-                'pageStart' => $pageStart,
-                'pageEnd' => $pageEnd,
+                'breadcrumb' => "{$docTitle} > {$heading}",
+                'elements' => [['type' => 'paragraph', 'text' => $pageText]],
+                'text' => $pageText,
+                'pageStart' => $pageNum,
+                'pageEnd' => $pageNum,
+            ];
+
+            $headingHierarchy[] = [
+                'heading' => $heading,
+                'level' => 1,
+                'page' => $pageNum,
             ];
         }
 
         return new DocumentStructure(
-            $document->title ?: 'Dokumen',
+            $docTitle,
             $sections,
             [],
             [],

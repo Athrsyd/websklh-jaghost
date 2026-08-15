@@ -10,11 +10,9 @@ use App\AI\Contracts\LlmProviderInterface;
 use App\AI\Contracts\RerankerProviderInterface;
 use App\AI\Contracts\PdfParserInterface;
 use App\AI\Providers\GeminiEmbeddingProvider;
-use App\AI\Providers\GroqLlmProvider;
-use App\AI\Providers\GeminiLlmProvider;
+use App\AI\Providers\FallbackLlmProvider;
 use App\AI\Providers\PhpCosineRerankerProvider;
 use App\AI\Providers\PhpPdfParserProvider;
-use RuntimeException;
 
 /**
  * Service Provider for RAG infrastructure.
@@ -29,35 +27,17 @@ class RagServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/rag.php', 'rag');
 
-        // Embedding: HuggingFace free Inference API (pure HTTP)
-        $this->app->singleton(EmbeddingProviderInterface::class, function ($app) {
-            return $app->make(GeminiEmbeddingProvider::class);
-        });
+        // Embedding: Gemini Embedding API (384 dimensions)
+        $this->app->singleton(EmbeddingProviderInterface::class, GeminiEmbeddingProvider::class);
 
-        // LLM: Groq or Gemini
-        $this->app->singleton(LlmProviderInterface::class, function ($app) {
-            $provider = config('rag.llm.provider');
-            
-            if ($provider === 'groq') {
-                return $app->make(GroqLlmProvider::class);
-            }
-            
-            if ($provider === 'gemini') {
-                return $app->make(GeminiLlmProvider::class);
-            }
-            
-            throw new RuntimeException("Unsupported LLM provider: {$provider}");
-        });
+        // LLM: Resilient High-Availability Fallback LLM (Groq + Gemini)
+        $this->app->singleton(LlmProviderInterface::class, FallbackLlmProvider::class);
 
         // Reranker: Pure PHP cosine similarity
-        $this->app->singleton(RerankerProviderInterface::class, function ($app) {
-            return $app->make(PhpCosineRerankerProvider::class);
-        });
+        $this->app->singleton(RerankerProviderInterface::class, PhpCosineRerankerProvider::class);
 
         // PDF Parser: Pure PHP smalot/pdfparser
-        $this->app->singleton(PdfParserInterface::class, function ($app) {
-            return $app->make(PhpPdfParserProvider::class);
-        });
+        $this->app->singleton(PdfParserInterface::class, PhpPdfParserProvider::class);
     }
 
     /**

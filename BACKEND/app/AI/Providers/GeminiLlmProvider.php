@@ -42,7 +42,7 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
             
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-            ])->timeout(60)->post($url, $payload);
+            ])->connectTimeout(15)->timeout(60)->retry(3, 1000)->post($url, $payload);
 
             if ($response->failed()) {
                 Log::channel('rag')->error('Gemini API Error', [

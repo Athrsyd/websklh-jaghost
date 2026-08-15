@@ -1,4 +1,40 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+
+const ROUTE_MAP = {
+  "beranda": "/",
+  "home": "/",
+  "tentang-kami": "/tentang-kami",
+  "tentang": "/tentang-kami",
+  "guru-dan-staf": "/tentang-kami/guru-dan-staf",
+  "guru": "/tentang-kami/guru-dan-staf",
+  "prestasi": "/tentang-kami/prestasi",
+  "sejarah": "/tentang-kami/sejarah",
+  "profil-sekolah": "/tentang-kami/profil-sekolah",
+  "hubungan-industri": "/tentang-kami/hubungan-industri",
+  "program": "/program",
+  "bkk": "/program/bkk",
+  "jurusan": "/program/jurusan",
+  "ekskul": "/program/ekskul",
+  "lsp": "/program/lsp",
+  "informasi": "/informasi",
+  "berita": "/informasi/berita",
+  "kalender-akademik": "/informasi/kalender-akademik",
+  "pengumuman": "/informasi/pengumuman",
+  "dokumentasi": "/dokumentasi",
+  "galeri-photo": "/dokumentasi/galeri-photo",
+  "galeri-foto": "/dokumentasi/galeri-photo",
+  "galeri-video": "/dokumentasi/galeri-video",
+  "kegiatan-sekolah": "/dokumentasi/kegiatan-sekolah",
+  "virtual-tour": "/dokumentasi/virtual-tour",
+  "portal": "/portal",
+  "spmb": "/portal/spmb",
+  "ppdb": "/portal/spmb",
+  "kjp": "/portal/kjp",
+  "pip": "/portal/pip",
+};
 
 // --- Icons ---
 
@@ -76,8 +112,11 @@ const ChatBotBubble = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const [history, setHistory] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
   const messagesEndRef = useRef(null);
 
   // Auto-scroll ke pesan terbaru
@@ -94,30 +133,103 @@ const ChatBotBubble = () => {
     [],
   );
 
-  const handleSend = useCallback(() => {
+  // Agentic Auto Navigation
+  const handleAgenticNavigation = useCallback((toolCalls) => {
+    if (!Array.isArray(toolCalls)) return;
+
+    for (const tool of toolCalls) {
+      const fn = tool.function || {};
+      if (fn.name === "navigate_to_page") {
+        try {
+          const args = typeof fn.arguments === "string" ? JSON.parse(fn.arguments) : fn.arguments;
+          const directPath = args.path || args.page;
+          const mappedPath = ROUTE_MAP[args.page] || ROUTE_MAP[directPath] || directPath;
+
+          if (mappedPath) {
+            const targetUrl = mappedPath.startsWith("/") ? mappedPath : `/${mappedPath}`;
+            setTimeout(() => {
+              navigate(targetUrl);
+            }, 300);
+          }
+        } catch (err) {
+          console.error("Navigation error:", err);
+        }
+      }
+    }
+  }, [navigate]);
+
+  // Connect to Live RAG Backend API
+  const handleSend = useCallback(async () => {
     const trimmed = inputValue.trim();
-    if (!trimmed) return;
+    if (!trimmed || isLoading) return;
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now(), text: trimmed, isUser: true },
-    ]);
+    const userMsg = { id: Date.now(), text: trimmed, isUser: true };
+    setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
+    setIsLoading(true);
 
-    setTimeout(() => {
+    const updatedHistory = [
+      ...history,
+      { role: "user", content: trimmed }
+    ];
+    setHistory(updatedHistory);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/chat/completions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          messages: updatedHistory,
+          stream: false,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const choice = data.choices?.[0] || {};
+      const assistantMessage = choice.message || {};
+      const content = assistantMessage.content || "Informasi telah diproses.";
+      const toolCalls = assistantMessage.tool_calls || [];
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
-          text: "Terima kasih! Pesan Anda telah diterima.",
+          text: content,
           isUser: false,
         },
       ]);
-    }, 800);
-  }, [inputValue]);
+
+      setHistory((prev) => [
+        ...prev,
+        { role: "assistant", content }
+      ]);
+
+      if (toolCalls.length > 0) {
+        handleAgenticNavigation(toolCalls);
+      }
+    } catch (error) {
+      console.error("API error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          text: "Maaf, terjadi kendala saat menghubungkan ke AI Server.",
+          isUser: false,
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [inputValue, isLoading, history, handleAgenticNavigation]);
 
   const handleKeyDown = useCallback(
-
     (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
@@ -131,12 +243,12 @@ const ChatBotBubble = () => {
   return (
     <div onMouseLeave={isActive ? handleMouseLeave : undefined}>
       {/* Chat container — hanya bagian ini yang ditambahkan: scroll area + bubbles */}
-      {
+      {isActive ||
         (isHovered && (
           <div
-                className={`container fixed bottom-32 right-12 z-50 flex flex-col
-            bg-secondary/30 backdrop-blur-xs rounded-lg -mr-4 shadow-lg transition-all
-            duration-300 ease-in-out w-80 h-100 overflow-hidden ${isActive ? "opacity-100" : "opacity-0"}`}
+            className="container fixed bottom-32 right-12 z-50 flex flex-col
+          bg-secondary/30 backdrop-blur-xs rounded-lg -mr-4 shadow-lg transition-all
+          duration-300 ease-in-out w-80 h-100 overflow-hidden"
           >
             {/* Message list */}
             <div
@@ -171,7 +283,7 @@ const ChatBotBubble = () => {
         </button>
 
         <div
-          className={`${PANEL_BASE} ${isHovered ? "w-full opacity-100" : "w-0 opacity-0"}`}
+          className={`${PANEL_BASE} ${isHovered ? "opacity-100" : "opacity-0"}`}
         >
           <svg
           onClick={()=> setIsHovered(false)}
@@ -187,13 +299,12 @@ const ChatBotBubble = () => {
             />
           </svg>
           <input
-
             className="bg-white rounded-full p-1 text-black placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Ketik pesan..."
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown }
+            onKeyDown={handleKeyDown}
           />
         </div>
       </div>

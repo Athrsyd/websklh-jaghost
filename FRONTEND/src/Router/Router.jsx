@@ -1,5 +1,5 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import TentangKami from '../Pages/TentangKami'
 import HubunganIndustri from '../Pages/TentangKami/HubunganIndustri'
 import Beranda from '../Pages/Beranda'
@@ -25,48 +25,57 @@ import SPMB from '../Pages/portal/SPMB'
 import KJP from '../Pages/portal/KJP'
 import PIP from '../Pages/portal/PIP'
 import KegiatanSekolah from '../Pages/dokum/KegiatanSekola'
+import Lenis from "lenis";
+
 
 const Router = () => {
-    return (
-        <Routes>
-            {/* Beranda */}
-            <Route path="/" element={<Beranda />} />
+    const location = useLocation();
+        useEffect(() => {
+            const lenis = new Lenis();
 
-            {/* Tentang Kami */}
-            <Route path="/tentang-kami" element={<TentangKami />} />
-            <Route path="/tentang-kami/guru-dan-staf" element={<GuruStaf />} />
-            <Route path="/tentang-kami/prestasi" element={<Prestasi />} />
-            <Route path="/tentang-kami/sejarah" element={<Sejarah />} />
-            <Route path="/tentang-kami/profil-sekolah" element={<ProfileSekolah />} />
-            <Route path="/tentang-kami/hubungan-industri" element={<HubunganIndustri />} />
+            lenis.scrollTo(0, { immediate: true });
+        }, [location.pathname]);
 
-            {/* program */}
-            <Route path="/program" element={<Program />} />
-            <Route path="/program/bkk" element={<BKK />} />
-            <Route path="/program/jurusan" element={<Jurusan />} />
-            <Route path="/program/ekskul" element={<Ekskul />} />
-            <Route path="/program/lsp" element={<LSP />} />
+        return (
+            <Routes>
+                {/* Beranda */}
+                <Route path="/" element={<Beranda />} />
 
-            {/* Informasi */}
-            <Route path="/informasi" element={<Informasi />} />
-            <Route path="/informasi/berita" element={<Berita />} />
-            <Route path="/informasi/kalender-akademik" element={<KalenderAkademik />} />
-            <Route path="/informasi/pengumuman" element={<Pengumuman />} />
+                {/* Tentang Kami */}
+                <Route path="/tentang-kami" element={<TentangKami />} />
+                <Route path="/tentang-kami/guru-dan-staf" element={<GuruStaf />} />
+                <Route path="/tentang-kami/prestasi" element={<Prestasi />} />
+                <Route path="/tentang-kami/sejarah" element={<Sejarah />} />
+                <Route path="/tentang-kami/profil-sekolah" element={<ProfileSekolah />} />
+                <Route path="/tentang-kami/hubungan-industri" element={<HubunganIndustri />} />
 
-            {/* Dokumentasi */}
-            <Route path="/dokumentasi" element={<Dokumentasi />} />
-            <Route path="/dokumentasi/galeri-photo" element={<GaleriFoto />} />
-            <Route path="/dokumentasi/galeri-video" element={<GaleriVideo />} />
-            <Route path="/dokumentasi/kegiatan-sekolah" element={<KegiatanSekolah />} />
-            <Route path="/dokumentasi/virtual-tour" element={<VirtualTour />} />
+                {/* program */}
+                <Route path="/program" element={<Program />} />
+                <Route path="/program/bkk" element={<BKK />} />
+                <Route path="/program/jurusan" element={<Jurusan />} />
+                <Route path="/program/ekskul" element={<Ekskul />} />
+                <Route path="/program/lsp" element={<LSP />} />
 
-            {/* Portal */}
-            <Route path="/portal" element={<Portal />} />
-            <Route path="/portal/spmb" element={<SPMB />} />
-            <Route path="/portal/kjp" element={<KJP />} />
-            <Route path="/portal/pip" element={<PIP />} />
-        </Routes>
-    )
-}
+                {/* Informasi */}
+                <Route path="/informasi" element={<Informasi />} />
+                <Route path="/informasi/berita" element={<Berita />} />
+                <Route path="/informasi/kalender-akademik" element={<KalenderAkademik />} />
+                <Route path="/informasi/pengumuman" element={<Pengumuman />} />
+
+                {/* Dokumentasi */}
+                <Route path="/dokumentasi" element={<Dokumentasi />} />
+                <Route path="/dokumentasi/galeri-photo" element={<GaleriFoto />} />
+                <Route path="/dokumentasi/galeri-video" element={<GaleriVideo />} />
+                <Route path="/dokumentasi/kegiatan-sekolah" element={<KegiatanSekolah />} />
+                <Route path="/dokumentasi/virtual-tour" element={<VirtualTour />} />
+
+                {/* Portal */}
+                <Route path="/portal" element={<Portal />} />
+                <Route path="/portal/spmb" element={<SPMB />} />
+                <Route path="/portal/kjp" element={<KJP />} />
+                <Route path="/portal/pip" element={<PIP />} />
+            </Routes>
+        )
+    }
 
 export default Router

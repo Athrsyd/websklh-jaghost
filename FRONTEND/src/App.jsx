@@ -7,12 +7,13 @@ import ChatBotBubble from "./components/ChatBotBubble";
 import Lenis from "lenis";
 
 const App = () => {
+
   useEffect(() => {
     // Fix: pastikan html tidak punya scroll-behavior CSS yang conflict
     document.documentElement.style.scrollBehavior = "auto";
 
     const lenis = new Lenis({
-      duration: 1.6,
+      duration: 1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1,
@@ -35,6 +36,7 @@ const App = () => {
       document.documentElement.style.scrollBehavior = "";
     };
   }, []);
+
 
   return (
     <BrowserRouter>

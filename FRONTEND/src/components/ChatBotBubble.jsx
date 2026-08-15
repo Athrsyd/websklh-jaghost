@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://app.daffadev.my.id/api/v1";
 
 const ROUTE_MAP = {
   "beranda": "/",
@@ -79,7 +79,7 @@ const ChatBubble = ({ message, isUser }) => (
     className={`flex w-full mb-2 ${isUser ? "justify-end" : "justify-start"}`}
   >
     <div
-      className="max-w-[75%] px-3 py-2 text-sm leading-snug shadow-sm break-words"
+      className="max-w-[75%] px-3 py-2 text-sm leading-snug shadow-sm wrap-break-words"
       style={{
         backgroundColor: isUser ? "#E8472A" : "#ffffff",
         color: isUser ? "#ffffff" : "#1a2540",
@@ -100,7 +100,7 @@ const BUBBLE_HOVERED = "p-3 rotate-0";
 const BUBBLE_DEFAULT = "p-2 rotate-360";
 
 const PANEL_BASE =
-  "container pr-8 pl-4 py-3 flex gap-4 flex-row bg-secondary/30 backdrop-blur-xs rounded-l-full -mr-5 shadow-lg transition-all duration-300 ease-in-out items-center";
+  "container pr-8 overflow-hidden pl-4 py-3 flex gap-4 flex-row bg-secondary/30 backdrop-blur-xs rounded-l-full -mr-5 shadow-lg transition-all duration-300 ease-in-out items-center";
 
 const INITIAL_MESSAGES = [
   { id: 1, text: "Halo! Ada yang bisa saya bantu?", isUser: false },
@@ -240,35 +240,34 @@ const ChatBotBubble = () => {
     [handleSend],
   );
 
+  const STYLE_CONTAINER = "fixed bottom-24 right-10 flex flex-col rounded-lg bg-secondary/30 shadow-lg backdrop-blur-xs w-78 h-90 overflow-hidden transition-all duration-300 ease-in-out";
+
   return (
     <div onMouseLeave={isActive ? handleMouseLeave : undefined}>
       {/* Chat container — hanya bagian ini yang ditambahkan: scroll area + bubbles */}
-      {isActive ||
-        (isHovered && (
-          <div
-            className="container fixed bottom-32 right-12 z-50 flex flex-col
-          bg-secondary/30 backdrop-blur-xs rounded-lg -mr-4 shadow-lg transition-all
-          duration-300 ease-in-out w-80 h-100 overflow-hidden"
-          >
-            {/* Message list */}
-            <div
-              className="flex flex-col flex-1 overflow-y-auto p-3"
-              style={{
-                scrollbarWidth: "thin",
-                scrollbarColor: "rgba(255,255,255,0.2) transparent",
-              }}
-            >
-              {messages.map((msg) => (
-                <ChatBubble
-                  key={msg.id}
-                  message={msg.text}
-                  isUser={msg.isUser}
-                />
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-        ))}
+
+      <div
+        className={`${STYLE_CONTAINER} ${isHovered && isActive ? "opacity-100 z-50" : "opacity-0 -z-10"} `}
+      >
+        <div
+          className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3"
+          onWheel={(e) => e.stopPropagation()}
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(255,255,255,0.2) transparent",
+          }}
+        >
+          {messages.map((msg) => (
+            <ChatBubble
+              key={msg.id}
+              message={msg.text}
+              isUser={msg.isUser}
+            />
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+      </div>
+
 
       {/* Floating button + hover panel — tidak diubah dari aslinya */}
       <div className="fixed bottom-7 right-7 z-50 flex flex-row-reverse items-center">
@@ -283,10 +282,9 @@ const ChatBotBubble = () => {
         </button>
 
         <div
-          className={`${PANEL_BASE} ${isHovered ? "opacity-100" : "opacity-0"}`}
+          className={`${PANEL_BASE} ${isHovered ? "opacity-100 w-70" : "opacity-0 w-0"}`}
         >
           <svg
-          onClick={()=> setIsHovered(false)}
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"

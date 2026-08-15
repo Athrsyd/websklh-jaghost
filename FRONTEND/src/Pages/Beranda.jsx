@@ -347,11 +347,9 @@ const Beranda = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="w-1/4 h-40 border-2 border-[#0037B080]/50"></div> */}
           </div>
           <Link to="/tentang-kami/hubungan-industri">
-            <button className="bg-secondary text-xl text-white py-3 px-10 rounded-xl hover:bg-blue-600 transition-colors">
+            <button className="bg-secondary text-xl text-white py-3 px-16 rounded-xl hover:bg-blue-600 transition-colors">
               Lihat Selengkapnya
             </button>
           </Link>

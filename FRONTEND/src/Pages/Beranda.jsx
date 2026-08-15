@@ -193,11 +193,14 @@ const Beranda = () => {
         />
 
         <div className="container w-4/5 flex flex-col gap-4 mx-auto relative z-10 pt-32">
-          <div className="rounded-tl-full rounded-tr-full rounded-br-full rounded-bl-none w-3/8 bg-secondary/20 backdrop-blur-3xl text-white px-8 py-1 border border-white/20 shadow-lg shadow-black/20">
+
+          <div className="rounded-tl-full rounded-tr-full rounded-br-full rounded-bl-none w-7/8 md:w-5/8
+           lg:w-3/8 bg-secondary/20 backdrop-blur-3xl text-white px-4 md:px-8 py-1 border
+            border-white/20 shadow-lg shadow-black/20">
             Selamat datang di SMK Negeri 26 Jakarta
           </div>
 
-          <h1 className="text-7xl uppercase font-bold text-white mt-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl uppercase font-bold text-white mt-4">
             Belajar, <br />
             Bekerja, <br />
             Membangun
@@ -206,8 +209,8 @@ const Beranda = () => {
           {/* Banner Card Statistik */}
           <div
             className="mt-8 bg-linear-to-b w-4/5 from-tertiary to-[#99341F] text-white 
-        rounded-3xl py-6 px-10 shadow-2xl flex flex-col md:flex-row 
-        items-center justify-between gap-3 border border-orange-400/30"
+        rounded-3xl py-6 px-10 shadow-2xl flex flex-col lg:flex-row 
+        items-start lg:items-center justify-between gap-3 border border-orange-400/30"
           >
             {deskripsi.map((item, index) => (
               <React.Fragment key={item.id}>
@@ -230,11 +233,15 @@ const Beranda = () => {
 
       {/* Sambutan */}
       <section className="w-full min-h-screen bg-white py-20">
-        <div className="container w-4/5 mx-auto flex flex-col md:flex-row gap-2 items-center justify-center">
-          <div className="w-1/2">
-            <img src={kepsek} alt="Kepala Sekolah" className="w-4/5 h-auto" />
+
+        <div className="container lg:w-4/5 w-full mx-auto flex flex-col 
+        md:flex-row gap-2 items-center justify-center">
+
+          <div className="w-3/5 lg:w-1/2">
+            <img src={kepsek} alt="Kepala Sekolah" className="w-full lg:w-4/5 h-auto" />
           </div>
-          <div className="w-1/2 flex flex-col ">
+
+          <div className="w-4/5 lg:w-1/2 flex flex-col ">
             <div className=" flex flex-row h-16 gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +260,8 @@ const Beranda = () => {
                 Sambutan Kepala Sekolah{" "}
               </p>
             </div>
-            <div className="w-full text-justify border-l-2 border-tertiary text-2xl pl-4">
+            <div className="w-full text-start indent-4 lg:text-justify md:border-none  lg:border-l-2 
+            border-tertiary text-2xl pl-4">
               <p>
                 Selamat datang di website resmi SMK Negeri 26 Jakarta. Website
                 ini menjadi sarana informasi, komunikasi, dan layanan digital
@@ -264,17 +272,19 @@ const Beranda = () => {
                 atas kunjungan Anda.
               </p>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Program keahlian */}
-      <section className="w-full min-h-screen bg-yellow-400 rounded-t-[7em] py-20">
+      <section className="w-full min-h-screen bg-yellow-400 lg:rounded-t-[6em] rounded-t-4xl 
+       py-10 lg:py-20">
         <div
-          className="container w-3/10 opacity-70  mx-auto flex flex-col gap-4 bg-white/50 border border-white
+          className="container w-3/4 lg:w-3/10 opacity-70  mx-auto flex flex-col gap-4 bg-white/50 border border-white
         rounded-full py-2 px-4 shadow-2xl items-center justify-center "
         >
-          <h1 className="text-3xl font-bold text-center pb-2 text-black">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-center pb-2 text-black">
             • Program Keahlian •
           </h1>
         </div>
@@ -282,18 +292,18 @@ const Beranda = () => {
           {/* Button */}
           <button
             onClick={() => handleJurusanInc()}
-            className="absolute text-black left-10 z-10 w-10 h-10 bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute hidden text-black left-10 - z-10 w-10 h-10 bg-white/50 rounded-full border-white border md:flex items-center justify-center"
           >
             <img src={rowKiri} className="h-6" alt="Kiri" />
           </button>
           <button
             onClick={() => handleJurusanDec()}
-            className="absolute text-black right-10 z-10 w-10 h-10  bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute hidden text-black right-10  z-10 w-10 h-10  bg-white/50 rounded-full border-white border md:flex items-center justify-center"
           >
             <img src={rowKanan} className="h-6" alt="Kanan" />
           </button>
 
-          <div className="indicator absolute top-40 flex flex-row gap-4">
+          <div className="indicator absolute top-50 flex flex-row gap-4">
             {Array(7)
               .fill(0)
               .map((_, index) => (

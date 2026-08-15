@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://app.daffadev.my.id/api/v1";
 
 export const ROUTE_MAP = {
   'beranda': '/',

@@ -3,10 +3,34 @@ import tu from "./../assets/hero-bg.png";
 import kepsek from "./../assets/kepsek.png";
 import rowKanan from "./../assets/rowKananHitam.svg";
 import rowKiri from "./../assets/rowKiriHitam.svg";
+import logoPLN from "./../assets/logopln.png";
 import { Link } from "react-router-dom";
 
 const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
+  const HubunganIndustri = [
+    {
+      id: 1,
+      nama: "PLN",
+      logo: logoPLN,
+    },
+    {
+      id: 2,
+      nama: "PLN",
+      logo: logoPLN,
+    },
+    {
+      id: 3,
+      nama: "PLN",
+      logo: logoPLN,
+    },
+    {
+      id: 4,
+      nama: "PLN",
+      logo: logoPLN,
+    },
+  ];
+
   const jurusanData = [
     {
       id: 1,
@@ -156,6 +180,8 @@ const Beranda = () => {
     setJurusanId(id);
   };
 
+  const partners = [...HubunganIndustri, ...HubunganIndustri];
+
   return (
     <>
       {/* Heroo */}
@@ -228,7 +254,15 @@ const Beranda = () => {
               </p>
             </div>
             <div className="w-full text-justify border-l-2 border-tertiary text-2xl pl-4">
-              <p>Selamat datang di website resmi SMK Negeri 26 Jakarta. Website ini menjadi sarana informasi, komunikasi, dan layanan digital bagi seluruh warga sekolah serta masyarakat. Semoga kehadiran website ini dapat memberikan informasi yang mudah diakses, meningkatkan pelayanan, dan mendukung terciptanya pendidikan yang berkualitas, inovatif, serta berdaya saing. Terima kasih atas kunjungan Anda.</p>
+              <p>
+                Selamat datang di website resmi SMK Negeri 26 Jakarta. Website
+                ini menjadi sarana informasi, komunikasi, dan layanan digital
+                bagi seluruh warga sekolah serta masyarakat. Semoga kehadiran
+                website ini dapat memberikan informasi yang mudah diakses,
+                meningkatkan pelayanan, dan mendukung terciptanya pendidikan
+                yang berkualitas, inovatif, serta berdaya saing. Terima kasih
+                atas kunjungan Anda.
+              </p>
             </div>
           </div>
         </div>
@@ -267,7 +301,7 @@ const Beranda = () => {
                   key={index}
                   onClick={() => handleDot(index + 1)}
                   className={`indicator-item indicator-center
-                    ${index + 1 === jurusanId ? 'w-5': 'w-3'} h-3 rounded-full bg-white/50 ${index + 1 === jurusanId ? "bg-white" : ""}`}
+                    ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white/50 ${index + 1 === jurusanId ? "bg-white" : ""}`}
                 ></div>
               ))}
           </div>
@@ -276,14 +310,49 @@ const Beranda = () => {
 
       {/* Hubungan Industri */}
       <section className="w-full min-h-screen bg-white py-20">
-        <div className="container w-4/5 mx-auto flex flex-col gap-4 justify-center items-center">
+        <div className="w-full mx-auto flex flex-col gap-4 justify-center items-center">
           <h1 className="text-5xl font-bold text-center text-black">
             Hubungan Industri
           </h1>
-          <div className="h-80"></div>
+          <div className="h-80 w-full flex flex-row items-center">
+            <div className="w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4 flex flex-col items-center justify-center border-[#0037B080]/30">
+              <p className="text-black font-montserrat text-lg leading-5 text-justify">
+                Bekerja sama dengan berbagai perusahaan dan instansi untuk
+                mendukung pembelajaran, PKL, serta penyerapan lulusan.
+              </p>
+            </div>
+            <div className="w-full h-46 overflow-hidden border-t-2 border-b-2 border-[#0037B080]/30">
+              <div
+                className="h-full flex items-center group"
+                style={{
+                  maskImage:
+                    "linear-gradient(to right, transparent 0%, black 15%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, transparent 0%, black 15%)",
+                }}
+              >
+                <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
+                  {partners.map((partner, index) => (
+                    <div
+                      key={`${partner.id}-${index}`}
+                      className="flex items-center justify-center w-50 h-46 shrink-0 border-t-[1.75px] border-b-[1.75px] border-l border-r border-[#0037B080]/80"
+                    >
+                      <img
+                        src={partner.logo}
+                        alt={partner.nama}
+                        className="max-h-30 w-auto "
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="w-1/4 h-40 border-2 border-[#0037B080]/50"></div> */}
+          </div>
           <Link to="/tentang-kami/hubungan-industri">
-            <button className="bg-secondary text-xl text-white py-4 px-8 rounded-lg hover:bg-blue-600 transition-colors">
-              Lihat Lebih Lanjut
+            <button className="bg-secondary text-xl text-white py-3 px-10 rounded-xl hover:bg-blue-600 transition-colors">
+              Lihat Selengkapnya
             </button>
           </Link>
         </div>

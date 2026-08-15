@@ -10,6 +10,8 @@
   --color-side-back: #ffede9;
   --color-tertiary: #ff5733;
 
+  --animate-marquee: marquee 20s linear infinite;
+
   --radius-7xl: 3rem;
 
   --font-poppins: "Poppins", sans-serif;
@@ -18,6 +20,15 @@
 
 *::-webkit-scrollbar {
   width: 0px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @layer base {

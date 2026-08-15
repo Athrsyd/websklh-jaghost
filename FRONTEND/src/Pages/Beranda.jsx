@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tu from "./../assets/hero-bg.png";
+import heroVideo from "./../assets/hero_1080p30.webm";
 import kepsek from "./../assets/kepsek.png";
 import rowKanan from "./../assets/rowKananHitam.svg";
 import rowKiri from "./../assets/rowKiriHitam.svg";
@@ -8,6 +9,17 @@ import { Link } from "react-router-dom";
 
 const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mediaQuery.matches);
+
+    const handleMediaChange = (e) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
   const HubunganIndustri = [
     {
       id: 1,
@@ -186,11 +198,30 @@ const Beranda = () => {
     <>
       {/* Heroo */}
       <section className="w-full min-h-screen bg-primary relative overflow-hidden pb-12">
-        <img
-          src={tu}
-          alt="Hero Background"
-          className="w-full absolute inset-0 h-full opacity-25 object-cover"
-        />
+        {isDesktop ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster={tu}
+            className="w-full absolute inset-0 h-full opacity-25 object-cover pointer-events-none"
+          >
+            <source src={heroVideo} type="video/webm" />
+            <img
+              src={tu}
+              alt="Hero Background"
+              className="w-full absolute inset-0 h-full opacity-25 object-cover"
+            />
+          </video>
+        ) : (
+          <img
+            src={tu}
+            alt="Hero Background"
+            className="w-full absolute inset-0 h-full opacity-25 object-cover"
+          />
+        )}
 
         <div className="container w-4/5 flex flex-col gap-4 mx-auto relative z-10 pt-32">
 

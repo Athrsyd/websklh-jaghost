@@ -31,64 +31,261 @@ const Beranda = () => {
     },
   ];
 
-  const jurusanData = [
-    {
-      id: 1,
-      nama: "Konstruksi Gedung dan Sanitasi",
-      color: "#FF0000",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 2,
-      nama: "Teknik Elektronika dan Komunikasi",
-      color: "#1F4481",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 3,
-      nama: "Teknik Instalasi Tenaga Listrik",
-      color: "#FFDD00",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 4,
-      nama: "Teknik Fabrikasi Logam dan Manufaktur",
-      color: "#F10732",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 5,
-      nama: "Teknik Kendaraan Ringan",
-      color: "#DED8E5",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 6,
-      nama: "Teknik Bodi Kendaraan Ringan",
-      color: "#F4A34D",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-    {
-      id: 7,
-      nama: "Sistem Informasi Jaringan dan Aplikasi",
-      color: "#FF5733",
-      deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
-    },
-  ];
+const jurusanData = [
+  {
+    id: 1,
+    nama: "Konstruksi Gedung dan Sanitasi",
+    singkatan: "KGS",
+    color: "#FF0000",
+    deskripsi:
+      "Program keahlian yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Perencanaan & Desain Gedung",
+        icon: "📐",
+        deskripsi:
+          "Belajar merancang gambar kerja, estimasi biaya (RAB), dan pemodelan bangunan gedung (BIM/AutoCAD).",
+      },
+      {
+        judul: "Konstruksi & Pelaksanaan",
+        icon: "🏗️",
+        deskripsi:
+          "Belajar teknik pembuatan struktur gedung, pembesian, bekisting, hingga pekerjaan penyelesaian bangunan.",
+      },
+      {
+        judul: "Sistem Sanitasi & Plumbing",
+        icon: "🚰",
+        deskripsi:
+          "Belajar instalasi perpipaan air bersih, pengolahan air limbah, dan sistem drainase bangunan.",
+      },
+    ],
+    prospekKerja: [
+      "Drafter/BIM Operator",
+      "Pelaksana Lapangan Konstruksi",
+      "Estimator Biaya Konstruksi",
+      "Teknisi Sanitasi & Plumbing",
+      "Quality Control (QC) Konstruksi",
+    ],
+  },
+  {
+    id: 2,
+    nama: "Teknik Elektronika dan Komunikasi",
+    singkatan: "TEK",
+    color: "#1F4481",
+    deskripsi:
+      "Program keahlian yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Elektronika Dasar & Mikrokontroler",
+        icon: "🔌",
+        deskripsi:
+          "Belajar merangkai komponen elektronik, pembuatan PCB, dan pemrograman sirkuit mikrokontroler.",
+      },
+      {
+        judul: "Sistem Telekomunikasi & Transmisi",
+        icon: "📡",
+        deskripsi:
+          "Belajar prinsip kerja transmisi sinyal, komunikasi radio, fiber optik, dan jaringan nirkabel.",
+      },
+      {
+        judul: "Perbaikan & Pemeliharaan Perangkat",
+        icon: "🛠️",
+        deskripsi:
+          "Belajar pemeliharaan, kalibrasi, serta perbaikan sistem dan peralatan komunikasi elektronik.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Telekomunikasi",
+      "Network Support Engineer",
+      "Teknisi Radio & Pemancar",
+      "Maintenance Technician Elektronika",
+      "Radio Frequency (RF) Technician",
+    ],
+  },
+  {
+    id: 3,
+    nama: "Teknik Instalasi Tenaga Listrik",
+    singkatan: "TITL",
+    color: "#FFDD00",
+    deskripsi:
+      "Program keahlian yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Instalasi Penerangan & Tenaga",
+        icon: "💡",
+        deskripsi:
+          "Belajar merancang dan memasang instalasi listrik rumah tangga, gedung, serta jaringan tenaga listrik.",
+      },
+      {
+        judul: "Otomasi Industri & Panel Listrik",
+        icon: "⚡",
+        deskripsi:
+          "Belajar merakit panel listrik (PLC, Smart Relay) dan mengoperasikan sistem kontrol mesin industri.",
+      },
+      {
+        judul: "Perbaikan & Perawatan Peralatan Listrik",
+        icon: "⚙️",
+        deskripsi:
+          "Belajar analisis kerusakan, perawatan preventif, dan pemeliharaan motor serta mesin listrik.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Listrik Industri",
+      "Panel Maker",
+      "Maintenance Electrician",
+      "Teknisi Instalasi Gedung",
+      "Supervisor Otomasi Industri",
+    ],
+  },
+  {
+    id: 4,
+    nama: "Teknik Fabrikasi Logam dan Manufaktur",
+    singkatan: "TFLM",
+    color: "#F10732",
+    deskripsi:
+      "Program keahlian yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Teknik Pengelasan (Welding)",
+        icon: "💥",
+        deskripsi:
+          "Belajar berbagai metode pengelasan (SMAW, GMAW/MIG, GTAW/TIG) sesuai standar industri.",
+      },
+      {
+        judul: "Desain & Pembentukan Logam",
+        icon: "✂️",
+        deskripsi:
+          "Belajar membuat pola, pemotongan logam (CNC/Laser cutting), dan perakitan struktur konstruksi logam.",
+      },
+      {
+        judul: "Fabrikasi & Kontrol Kualitas",
+        icon: "🛡️",
+        deskripsi:
+          "Belajar manufaktur produk logam, pembentukan plat, dan pengujian kualitas hasil lasan (NDT/DT).",
+      },
+    ],
+    prospekKerja: [
+      "Welder Professional",
+      "Fabricator Logam",
+      "Operator Mesin CNC Cutting",
+      "Quality Control Inspector",
+      "Estimator Fabrikasi Logam",
+    ],
+  },
+  {
+    id: 5,
+    nama: "Teknik Kendaraan Ringan",
+    singkatan: "TKR",
+    color: "#DED8E5",
+    deskripsi:
+      "Program keahlian yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Sistem Mesin Kendaraan (Engine)",
+        icon: "🚗",
+        deskripsi:
+          "Belajar perawatan dan overhaul mesin bensin maupun diesel (termasuk sistem EFI/Common Rail).",
+      },
+      {
+        judul: "Sistem Pemindah Tenaga & Sasis",
+        icon: "🛞",
+        deskripsi:
+          "Belajar perbaikan sistem transmisi, kemudi, suspensi, serta sistem pengereman kendaraan.",
+      },
+      {
+        judul: "Kelistrikan & Otomasi Otomotif",
+        icon: "🔋",
+        deskripsi:
+          "Belajar diagnosis kelistrikan bodi, sistem pendingin (AC), dan sensor-sensor elektronik mobil modern.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi/Mekanik Mobil",
+      "Service Advisor",
+      "Diagnostic Technician",
+      "Auto Electrician",
+      "Quality Inspector Otomotif",
+    ],
+  },
+  {
+    id: 6,
+    nama: "Teknik Bodi Kendaraan Ringan",
+    singkatan: "TBKR",
+    color: "#F4A34D",
+    deskripsi:
+      "Program keahlian yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Perbaikan & Perataan Bodi (Body Repair)",
+        icon: "🔨",
+        deskripsi:
+          "Belajar perbaikan struktur rangka bodi, ketok bodi, dan teknik penarikan kerusakan bodi.",
+      },
+      {
+        judul: "Pengecatan & Finishing (Auto Refinishing)",
+        icon: "🎨",
+        deskripsi:
+          "Belajar pencampuran cat, persiapan permukaan, pengerjaan cat dasar, hingga proses top coat dan polishing.",
+      },
+      {
+        judul: "Pemasangan Aksesoris & Interior",
+        icon: "🪛",
+        deskripsi:
+          "Belajar pembongkaran, perakitan interior, serta penyesuaian aksesoris dan kaca kendaraan.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Body Repair",
+      "Painter Otomotif",
+      "Estimator Perbaikan Bodi (Asuransi/Bengkel)",
+      "Detailer Kendaraan",
+      "Specialist Modifikasi Bodi",
+    ],
+  },
+  {
+    id: 7,
+    nama: "Sistem Informasi Jaringan dan Aplikasi",
+    singkatan: "SIJA",
+    color: "#FF5733",
+    deskripsi:
+      "Program 4 tahun yang mempelajari pemrograman, pengelolaan basis data, dan sistem informasi berbasis teknologi modern.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Software Development",
+        icon: "💻",
+        deskripsi:
+          "Belajar membuat aplikasi web, mobile, dan desktop yang fungsional dan modern.",
+      },
+      {
+        judul: "Database & Cloud Computing",
+        icon: "🗄️",
+        deskripsi:
+          "Belajar merancang basis data, pengelolaan server, dan implementasi infrastruktur komputasi awan.",
+      },
+      {
+        judul: "Networking & Cybersecurity",
+        icon: "🌐",
+        deskripsi:
+          "Belajar konfigurasi jaringan komputer, manajemen router/switch, dan proteksi sistem dari ancaman siber.",
+      },
+    ],
+    prospekKerja: [
+      "Software Engineer",
+      "Web Developer",
+      "Mobile App Developer",
+      "Database Administrator",
+      "IT Security Specialist",
+      "System Analyst",
+    ],
+  },
+];
 
   const deskripsi = [
     {

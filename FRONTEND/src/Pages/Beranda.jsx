@@ -35,7 +35,7 @@ const Beranda = () => {
     {
       id: 1,
       nama: "Konstruksi Gedung dan Sanitasi",
-      color: "",
+      color: "#FF0000",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -43,7 +43,7 @@ const Beranda = () => {
     {
       id: 2,
       nama: "Teknik Elektronika dan Komunikasi",
-      color: "",
+      color: "#1F4481",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -51,7 +51,7 @@ const Beranda = () => {
     {
       id: 3,
       nama: "Teknik Instalasi Tenaga Listrik",
-      color: "",
+      color: "#FFDD00",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -59,7 +59,7 @@ const Beranda = () => {
     {
       id: 4,
       nama: "Teknik Fabrikasi Logam dan Manufaktur",
-      color: "",
+      color: "#F10732",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -67,7 +67,7 @@ const Beranda = () => {
     {
       id: 5,
       nama: "Teknik Kendaraan Ringan",
-      color: "",
+      color: "#DED8E5",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -75,7 +75,7 @@ const Beranda = () => {
     {
       id: 6,
       nama: "Teknik Bodi Kendaraan Ringan",
-      color: "",
+      color: "#F4A34D",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -83,7 +83,7 @@ const Beranda = () => {
     {
       id: 7,
       nama: "Sistem Informasi Jaringan dan Aplikasi",
-      color: "",
+      color: "#FF5733",
       deskripsi:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       img: "",
@@ -321,11 +321,11 @@ const Beranda = () => {
       {/* Hubungan Industri */}
       <section className="w-full min-h-screen bg-white py-20">
         <div className="w-full mx-auto flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-black">
+          <h1 className="text-3xl md:text-3xl lg:text-5xl font-bold text-center text-black">
             Hubungan Industri
           </h1>
           <div className="h-80 w-full flex flex-row items-center">
-            <div className="w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4 flex flex-col items-center justify-center border-[#0037B080]/30">
+            <div className="hidden md:flex w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
               <p className="text-black font-montserrat text-lg leading-5 text-justify">
                 Bekerja sama dengan berbagai perusahaan dan instansi untuk
                 mendukung pembelajaran, PKL, serta penyerapan lulusan.
@@ -367,7 +367,7 @@ const Beranda = () => {
       </section>
 
       {/* Prestasi */}
-      <section className="w-full min-h-screen bg-white py-20">
+      {/* <section className="w-full min-h-screen bg-white py-20">
         <div
           className="container w-9/10 bg-tertiary mx-auto rounded-4xl 
         px-4 py-8 flex flex-col gap-4 justify-center items-center"
@@ -377,7 +377,7 @@ const Beranda = () => {
           </h1>
           <div className="h-160"></div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

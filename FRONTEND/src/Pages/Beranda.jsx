@@ -56,7 +56,7 @@ const jurusanData = [
     color: "#FF0000",
     deskripsi:
       "Program keahlian yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
-    img: "",
+    img: modelBangunan,
     poinPembelajaran: [
       {
         judul: "Perencanaan & Desain Gedung",
@@ -92,7 +92,7 @@ const jurusanData = [
     color: "#1F4481",
     deskripsi:
       "Program keahlian yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
-    img: "",
+    img: modelElektro,
     poinPembelajaran: [
       {
         judul: "Elektronika Dasar & Mikrokontroler",
@@ -128,7 +128,7 @@ const jurusanData = [
     color: "#FFDD00",
     deskripsi:
       "Program keahlian yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
-    img: "",
+    img: modelListrik,
     poinPembelajaran: [
       {
         judul: "Instalasi Penerangan & Tenaga",
@@ -164,7 +164,7 @@ const jurusanData = [
     color: "#F10732",
     deskripsi:
       "Program keahlian yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
-    img: "",
+    img: modelMesin,
     poinPembelajaran: [
       {
         judul: "Teknik Pengelasan (Welding)",
@@ -200,7 +200,7 @@ const jurusanData = [
     color: "#DED8E5",
     deskripsi:
       "Program keahlian yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
-    img: "",
+    img: modelTkr,
     poinPembelajaran: [
       {
         judul: "Sistem Mesin Kendaraan (Engine)",

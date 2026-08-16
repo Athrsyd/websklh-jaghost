@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tu from "./../assets/hero-bg.png";
+import heroVideo from "./../assets/hero_1080p30.webm";
 import kepsek from "./../assets/kepsek.png";
 import rowKanan from "./../assets/rowKananHitam.svg";
 import rowKiri from "./../assets/rowKiriHitam.svg";
@@ -13,6 +14,17 @@ import { Link } from "react-router-dom";
 
 const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mediaQuery.matches);
+
+    const handleMediaChange = (e) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
   const HubunganIndustri = [
     {
       id: 1,
@@ -36,64 +48,261 @@ const Beranda = () => {
     },
   ];
 
-  const jurusanData = [
-    {
-      id: 1,
-      nama: "Konstruksi Gedung dan Sanitasi",
-      color: "#FF0000",
-      deskripsi:
-        "Program keahlian 4 tahun yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
-      img: modelBangunan,
-    },
-    {
-      id: 2,
-      nama: "Teknik Elektronika dan Komunikasi",
-      color: "#1F4481",
-      deskripsi:
-        "Program keahlian 3 tahun yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
-      img: modelElektro,
-    },
-    {
-      id: 3,
-      nama: "Teknik Instalasi Tenaga Listrik",
-      color: "#FFDD00",
-      deskripsi:
-        "Program keahlian 3 tahun yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
-      img: modelListrik,
-    },
-    {
-      id: 4,
-      nama: "Teknik Fabrikasi Logam dan Manufaktur",
-      color: "#F10732",
-      deskripsi:
-        "Program keahlian 4 tahun yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
-      img: modelMesin,
-    },
-    {
-      id: 5,
-      nama: "Teknik Kendaraan Ringan",
-      color: "#DED8E5",
-      deskripsi:
-        "Program keahlian 3 tahun yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
-      img: modelTkr,
-    },
-    {
-      id: 6,
-      nama: "Teknik Bodi Kendaraan Ringan",
-      color: "#AC8963",
-      deskripsi:
-        "Program keahlian 3 tahun yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
-      img: "",
-    },
-    {
-      id: 7,
-      nama: "Sistem Informasi Jaringan dan Aplikasi",
-      color: "#FF5733",
-      deskripsi:
-        "Program keahlian 4 tahun yang mempelajari pengembangan perangkat lunak, pengelolaan basis data, infrastruktur jaringan, dan keamanan siber.",
-      img: "",
-    },
-  ];
+const jurusanData = [
+  {
+    id: 1,
+    nama: "Konstruksi Gedung dan Sanitasi",
+    singkatan: "KGS",
+    color: "#FF0000",
+    deskripsi:
+      "Program keahlian yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Perencanaan & Desain Gedung",
+        icon: "📐",
+        deskripsi:
+          "Belajar merancang gambar kerja, estimasi biaya (RAB), dan pemodelan bangunan gedung (BIM/AutoCAD).",
+      },
+      {
+        judul: "Konstruksi & Pelaksanaan",
+        icon: "🏗️",
+        deskripsi:
+          "Belajar teknik pembuatan struktur gedung, pembesian, bekisting, hingga pekerjaan penyelesaian bangunan.",
+      },
+      {
+        judul: "Sistem Sanitasi & Plumbing",
+        icon: "🚰",
+        deskripsi:
+          "Belajar instalasi perpipaan air bersih, pengolahan air limbah, dan sistem drainase bangunan.",
+      },
+    ],
+    prospekKerja: [
+      "Drafter/BIM Operator",
+      "Pelaksana Lapangan Konstruksi",
+      "Estimator Biaya Konstruksi",
+      "Teknisi Sanitasi & Plumbing",
+      "Quality Control (QC) Konstruksi",
+    ],
+  },
+  {
+    id: 2,
+    nama: "Teknik Elektronika dan Komunikasi",
+    singkatan: "TEK",
+    color: "#1F4481",
+    deskripsi:
+      "Program keahlian yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Elektronika Dasar & Mikrokontroler",
+        icon: "🔌",
+        deskripsi:
+          "Belajar merangkai komponen elektronik, pembuatan PCB, dan pemrograman sirkuit mikrokontroler.",
+      },
+      {
+        judul: "Sistem Telekomunikasi & Transmisi",
+        icon: "📡",
+        deskripsi:
+          "Belajar prinsip kerja transmisi sinyal, komunikasi radio, fiber optik, dan jaringan nirkabel.",
+      },
+      {
+        judul: "Perbaikan & Pemeliharaan Perangkat",
+        icon: "🛠️",
+        deskripsi:
+          "Belajar pemeliharaan, kalibrasi, serta perbaikan sistem dan peralatan komunikasi elektronik.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Telekomunikasi",
+      "Network Support Engineer",
+      "Teknisi Radio & Pemancar",
+      "Maintenance Technician Elektronika",
+      "Radio Frequency (RF) Technician",
+    ],
+  },
+  {
+    id: 3,
+    nama: "Teknik Instalasi Tenaga Listrik",
+    singkatan: "TITL",
+    color: "#FFDD00",
+    deskripsi:
+      "Program keahlian yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Instalasi Penerangan & Tenaga",
+        icon: "💡",
+        deskripsi:
+          "Belajar merancang dan memasang instalasi listrik rumah tangga, gedung, serta jaringan tenaga listrik.",
+      },
+      {
+        judul: "Otomasi Industri & Panel Listrik",
+        icon: "⚡",
+        deskripsi:
+          "Belajar merakit panel listrik (PLC, Smart Relay) dan mengoperasikan sistem kontrol mesin industri.",
+      },
+      {
+        judul: "Perbaikan & Perawatan Peralatan Listrik",
+        icon: "⚙️",
+        deskripsi:
+          "Belajar analisis kerusakan, perawatan preventif, dan pemeliharaan motor serta mesin listrik.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Listrik Industri",
+      "Panel Maker",
+      "Maintenance Electrician",
+      "Teknisi Instalasi Gedung",
+      "Supervisor Otomasi Industri",
+    ],
+  },
+  {
+    id: 4,
+    nama: "Teknik Fabrikasi Logam dan Manufaktur",
+    singkatan: "TFLM",
+    color: "#F10732",
+    deskripsi:
+      "Program keahlian yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Teknik Pengelasan (Welding)",
+        icon: "💥",
+        deskripsi:
+          "Belajar berbagai metode pengelasan (SMAW, GMAW/MIG, GTAW/TIG) sesuai standar industri.",
+      },
+      {
+        judul: "Desain & Pembentukan Logam",
+        icon: "✂️",
+        deskripsi:
+          "Belajar membuat pola, pemotongan logam (CNC/Laser cutting), dan perakitan struktur konstruksi logam.",
+      },
+      {
+        judul: "Fabrikasi & Kontrol Kualitas",
+        icon: "🛡️",
+        deskripsi:
+          "Belajar manufaktur produk logam, pembentukan plat, dan pengujian kualitas hasil lasan (NDT/DT).",
+      },
+    ],
+    prospekKerja: [
+      "Welder Professional",
+      "Fabricator Logam",
+      "Operator Mesin CNC Cutting",
+      "Quality Control Inspector",
+      "Estimator Fabrikasi Logam",
+    ],
+  },
+  {
+    id: 5,
+    nama: "Teknik Kendaraan Ringan",
+    singkatan: "TKR",
+    color: "#DED8E5",
+    deskripsi:
+      "Program keahlian yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Sistem Mesin Kendaraan (Engine)",
+        icon: "🚗",
+        deskripsi:
+          "Belajar perawatan dan overhaul mesin bensin maupun diesel (termasuk sistem EFI/Common Rail).",
+      },
+      {
+        judul: "Sistem Pemindah Tenaga & Sasis",
+        icon: "🛞",
+        deskripsi:
+          "Belajar perbaikan sistem transmisi, kemudi, suspensi, serta sistem pengereman kendaraan.",
+      },
+      {
+        judul: "Kelistrikan & Otomasi Otomotif",
+        icon: "🔋",
+        deskripsi:
+          "Belajar diagnosis kelistrikan bodi, sistem pendingin (AC), dan sensor-sensor elektronik mobil modern.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi/Mekanik Mobil",
+      "Service Advisor",
+      "Diagnostic Technician",
+      "Auto Electrician",
+      "Quality Inspector Otomotif",
+    ],
+  },
+  {
+    id: 6,
+    nama: "Teknik Bodi Kendaraan Ringan",
+    singkatan: "TBKR",
+    color: "#F4A34D",
+    deskripsi:
+      "Program keahlian yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Perbaikan & Perataan Bodi (Body Repair)",
+        icon: "🔨",
+        deskripsi:
+          "Belajar perbaikan struktur rangka bodi, ketok bodi, dan teknik penarikan kerusakan bodi.",
+      },
+      {
+        judul: "Pengecatan & Finishing (Auto Refinishing)",
+        icon: "🎨",
+        deskripsi:
+          "Belajar pencampuran cat, persiapan permukaan, pengerjaan cat dasar, hingga proses top coat dan polishing.",
+      },
+      {
+        judul: "Pemasangan Aksesoris & Interior",
+        icon: "🪛",
+        deskripsi:
+          "Belajar pembongkaran, perakitan interior, serta penyesuaian aksesoris dan kaca kendaraan.",
+      },
+    ],
+    prospekKerja: [
+      "Teknisi Body Repair",
+      "Painter Otomotif",
+      "Estimator Perbaikan Bodi (Asuransi/Bengkel)",
+      "Detailer Kendaraan",
+      "Specialist Modifikasi Bodi",
+    ],
+  },
+  {
+    id: 7,
+    nama: "Sistem Informasi Jaringan dan Aplikasi",
+    singkatan: "SIJA",
+    color: "#FF5733",
+    deskripsi:
+      "Program 4 tahun yang mempelajari pemrograman, pengelolaan basis data, dan sistem informasi berbasis teknologi modern.",
+    img: "",
+    poinPembelajaran: [
+      {
+        judul: "Software Development",
+        icon: "💻",
+        deskripsi:
+          "Belajar membuat aplikasi web, mobile, dan desktop yang fungsional dan modern.",
+      },
+      {
+        judul: "Database & Cloud Computing",
+        icon: "🗄️",
+        deskripsi:
+          "Belajar merancang basis data, pengelolaan server, dan implementasi infrastruktur komputasi awan.",
+      },
+      {
+        judul: "Networking & Cybersecurity",
+        icon: "🌐",
+        deskripsi:
+          "Belajar konfigurasi jaringan komputer, manajemen router/switch, dan proteksi sistem dari ancaman siber.",
+      },
+    ],
+    prospekKerja: [
+      "Software Engineer",
+      "Web Developer",
+      "Mobile App Developer",
+      "Database Administrator",
+      "IT Security Specialist",
+      "System Analyst",
+    ],
+  },
+];
 
   const deskripsi = [
     {
@@ -193,18 +402,40 @@ const Beranda = () => {
     <>
       {/* Heroo */}
       <section className="w-full min-h-screen bg-primary relative overflow-hidden pb-12">
-        <img
-          src={tu}
-          alt="Hero Background"
-          className="w-full absolute inset-0 h-full opacity-25 object-cover"
-        />
+        {isDesktop ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster={tu}
+            className="w-full absolute inset-0 h-full opacity-25 object-cover pointer-events-none"
+          >
+            <source src={heroVideo} type="video/webm" />
+            <img
+              src={tu}
+              alt="Hero Background"
+              className="w-full absolute inset-0 h-full opacity-25 object-cover"
+            />
+          </video>
+        ) : (
+          <img
+            src={tu}
+            alt="Hero Background"
+            className="w-full absolute inset-0 h-full opacity-25 object-cover"
+          />
+        )}
 
         <div className="container w-4/5 flex flex-col gap-4 mx-auto relative z-10 pt-32">
-          <div className="rounded-tl-full rounded-tr-full rounded-br-full rounded-bl-none w-3/8 bg-secondary/20 backdrop-blur-3xl text-white px-8 py-1 border border-white/20 shadow-lg shadow-black/20">
+
+          <div className="rounded-tl-full rounded-tr-full rounded-br-full rounded-bl-none w-7/8 md:w-5/8
+           lg:w-3/8 bg-secondary/20 backdrop-blur-3xl text-white px-4 md:px-8 py-1 border
+            border-white/20 shadow-lg shadow-black/20">
             Selamat datang di SMK Negeri 26 Jakarta
           </div>
 
-          <h1 className="text-7xl uppercase font-bold text-white mt-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl uppercase font-bold text-white mt-4">
             Belajar, <br />
             Bekerja, <br />
             Membangun
@@ -213,8 +444,8 @@ const Beranda = () => {
           {/* Banner Card Statistik */}
           <div
             className="mt-8 bg-linear-to-b w-4/5 from-tertiary to-[#99341F] text-white 
-        rounded-3xl py-6 px-10 shadow-2xl flex flex-col md:flex-row 
-        items-center justify-between gap-3 border border-orange-400/30"
+        rounded-3xl py-6 px-10 shadow-2xl flex flex-col lg:flex-row 
+        items-start lg:items-center justify-between gap-3 border border-orange-400/30"
           >
             {deskripsi.map((item, index) => (
               <React.Fragment key={item.id}>
@@ -237,11 +468,15 @@ const Beranda = () => {
 
       {/* Sambutan */}
       <section className="w-full min-h-screen bg-white py-20">
-        <div className="container w-4/5 mx-auto flex flex-col md:flex-row gap-2 items-center justify-center">
-          <div className="w-1/2">
-            <img src={kepsek} alt="Kepala Sekolah" className="w-4/5 h-auto" />
+
+        <div className="container lg:w-4/5 w-full mx-auto flex flex-col 
+        md:flex-row gap-2 items-center justify-center">
+
+          <div className="w-3/5 lg:w-1/2">
+            <img src={kepsek} alt="Kepala Sekolah" className="w-full lg:w-4/5 h-auto" />
           </div>
-          <div className="w-1/2 flex flex-col ">
+
+          <div className="w-4/5 lg:w-1/2 flex flex-col ">
             <div className=" flex flex-row h-16 gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +495,8 @@ const Beranda = () => {
                 Sambutan Kepala Sekolah{" "}
               </p>
             </div>
-            <div className="w-full text-justify border-l-2 border-tertiary text-2xl pl-4">
+            <div className="w-full text-start indent-4 lg:text-justify md:border-none  lg:border-l-2 
+            border-tertiary text-2xl pl-4">
               <p>
                 Selamat datang di website resmi SMK Negeri 26 Jakarta. Website
                 ini menjadi sarana informasi, komunikasi, dan layanan digital
@@ -271,6 +507,7 @@ const Beranda = () => {
                 atas kunjungan Anda.
               </p>
             </div>
+
           </div>
         </div>
       </section>
@@ -367,11 +604,11 @@ const Beranda = () => {
       {/* Hubungan Industri */}
       <section className="w-full min-h-screen bg-white py-20">
         <div className="w-full mx-auto flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-black">
+          <h1 className="text-3xl md:text-3xl lg:text-5xl font-bold text-center text-black">
             Hubungan Industri
           </h1>
           <div className="h-80 w-full flex flex-row items-center">
-            <div className="w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4 flex flex-col items-center justify-center border-[#0037B080]/30">
+            <div className="hidden md:flex w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
               <p className="text-black font-montserrat text-lg leading-5 text-justify">
                 Bekerja sama dengan berbagai perusahaan dan instansi untuk
                 mendukung pembelajaran, PKL, serta penyerapan lulusan.
@@ -413,7 +650,7 @@ const Beranda = () => {
       </section>
 
       {/* Prestasi */}
-      <section className="w-full min-h-screen bg-white py-20">
+      {/* <section className="w-full min-h-screen bg-white py-20">
         <div
           className="container w-9/10 bg-tertiary mx-auto rounded-4xl 
         px-4 py-8 flex flex-col gap-4 justify-center items-center"
@@ -423,7 +660,7 @@ const Beranda = () => {
           </h1>
           <div className="h-160"></div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

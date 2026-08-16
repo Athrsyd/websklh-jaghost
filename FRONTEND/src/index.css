@@ -66,3 +66,16 @@ body {
     transform: translateX(-1590px);
   }
 }
+
+#arrowSejarah {
+  animation: tuingTuing 2s infinite ease-in-out;
+}
+
+@keyframes tuingTuing {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

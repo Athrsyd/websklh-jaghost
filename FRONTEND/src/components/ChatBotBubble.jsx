@@ -132,6 +132,7 @@ const ChatBotBubble = () => {
     () => setIsActive((prev) => !prev),
     [],
   );
+  
 
   // Agentic Auto Navigation
   const handleAgenticNavigation = useCallback((toolCalls) => {
@@ -285,6 +286,7 @@ const ChatBotBubble = () => {
           className={`${PANEL_BASE} ${isHovered ? "opacity-100 w-70" : "opacity-0 w-0"}`}
         >
           <svg
+          onClick={setIsHovered.bind(null, false)}
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"

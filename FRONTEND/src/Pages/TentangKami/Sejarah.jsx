@@ -354,7 +354,7 @@ const Sejarah = () => {
           }}
         >
           <a href="#timeline">
-            <svg width="25" height="12" viewBox="0 0 34 17" fill="none">
+            <svg id="arrowSejarah" width="25" height="12" viewBox="0 0 34 17" fill="none">
               <path
                 d="M32 2L19.6515 13.9422C18.1932 15.3526 15.8068 15.3526 14.3485 13.9422L2 2"
                 stroke="#001F3F"

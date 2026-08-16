@@ -6,7 +6,9 @@ namespace App\RAG\Retrieval;
 
 use App\Repositories\ChunkRepository;
 use App\DTO\HybridRetrievalResult;
+use App\DTO\ConfidenceGateResult;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class HybridRetriever
 {
@@ -28,39 +30,37 @@ class HybridRetriever
     public function retrieve(string $query, string $documentVersionId, string $traceId): HybridRetrievalResult
     {
         $startTime = microtime(true);
-
-        $dense = $this->denseSearcher->search($query, $documentVersionId);
-        $sparse = $this->sparseSearcher->search($query, $documentVersionId);
-        
-        $fused = $this->fusion->fuse($dense, $sparse);
-        
-        $gateResult = $this->gate->gate($fused);
-        
+        $dense = [];
+        $sparse = [];
+        $fused = [];
         $reranked = [];
         $parentChunks = [];
-        
-        if ($gateResult->passed) {
-            $reranked = $this->reranker->rerank($query, $gateResult->filteredResults);
+        $gateResult = null;
+
+        try {
+            $dense = $this->denseSearcher->search($query, $documentVersionId);
+            $sparse = $this->sparseSearcher->search($query, $documentVersionId);
             
-            $parentIds = array_filter(array_map(fn($r) => $r->metadata['parent_chunk_id'] ?? null, $reranked));
-            if (!empty($parentIds)) {
-                $parentChunks = $this->chunkRepository->findByIds(array_values(array_unique($parentIds)));
+            $fused = $this->fusion->fuse($dense, $sparse);
+            $gateResult = $this->gate->gate($fused);
+            
+            if ($gateResult->passed) {
+                $reranked = $this->reranker->rerank($query, $gateResult->filteredResults);
+                
+                $parentIds = array_filter(array_map(fn($r) => $r->metadata['parent_chunk_id'] ?? null, $reranked));
+                if (!empty($parentIds)) {
+                    $parentChunks = $this->chunkRepository->findByIds(array_values(array_unique($parentIds)));
+                }
             }
+        } catch (Throwable $e) {
+            Log::channel('rag')->warning('Retrieval database query failed, proceeding with direct context', [
+                'error' => $e->getMessage(),
+                'trace_id' => $traceId,
+            ]);
+            $gateResult = new ConfidenceGateResult(false, 'database_unavailable', [], 0.0);
         }
 
         $latency = (microtime(true) - $startTime) * 1000;
-
-        Log::channel('rag')->info('Retrieval completed', [
-            'trace_id' => $traceId,
-            'query' => $query,
-            'dense_count' => count($dense),
-            'sparse_count' => count($sparse),
-            'fused_count' => count($fused),
-            'reranked_count' => count($reranked),
-            'latency_ms' => $latency,
-            'passed' => $gateResult->passed,
-            'reason' => $gateResult->reason
-        ]);
 
         return new HybridRetrievalResult(
             $reranked,

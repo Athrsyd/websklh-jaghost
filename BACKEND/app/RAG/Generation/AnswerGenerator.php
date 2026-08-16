@@ -8,6 +8,7 @@ use App\AI\Contracts\LlmProviderInterface;
 use App\DTO\GenerationResult;
 use App\DTO\HybridRetrievalResult;
 use App\RAG\Tools\NavigationTool;
+use App\RAG\Tools\SpotlightTool;
 use Illuminate\Support\Facades\Log;
 
 class AnswerGenerator
@@ -19,16 +20,26 @@ class AnswerGenerator
         private readonly CitationFormatter $citationFormatter
     ) {}
 
-    public function generate(string $query, HybridRetrievalResult $retrieval, string $traceId): GenerationResult
-    {
+    public function generate(
+        string $query,
+        HybridRetrievalResult $retrieval,
+        string $traceId,
+        array $pageContext = []
+    ): GenerationResult {
         $sanitizedQuery = $this->injectionDefense->sanitize($query);
         $sanitizedResults = $this->injectionDefense->sanitizeChunks($retrieval->results);
         
-        $messages = $this->promptBuilder->build($sanitizedQuery, $retrieval->parentChunks, $sanitizedResults);
+        $messages = $this->promptBuilder->build(
+            $sanitizedQuery,
+            $retrieval->parentChunks,
+            $sanitizedResults,
+            $pageContext
+        );
         
-        // Navigation tool definition for OpenAI/Gemini function calling
+        // Tool definitions for OpenAI/Gemini function calling
         $tools = [
-            NavigationTool::getDefinition()
+            NavigationTool::getDefinition(),
+            SpotlightTool::getDefinition(),
         ];
 
         $llmResponse = $this->llm->chat($messages, 0.1, 2048, $tools);
@@ -58,6 +69,11 @@ class AnswerGenerator
 
                     $call['function']['arguments'] = json_encode($args, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                     $defaultAnswerParts[] = "Baik, saya mengarahkan Anda ke halaman **{$resolved['title']}** ({$resolved['path']}).";
+                } elseif ($fnName === 'spotlight_sections' && !empty($args['targets'])) {
+                    $call['function']['arguments'] = json_encode($args, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                    if (empty($answerText)) {
+                        $defaultAnswerParts[] = "Saya telah menandai bagian penting di halaman ini untuk Anda.";
+                    }
                 }
 
                 $enrichedToolCalls[] = $call;
@@ -65,7 +81,6 @@ class AnswerGenerator
 
             $toolCalls = $enrichedToolCalls;
 
-            // If the LLM returned no textual message alongside the tool call, provide the friendly navigation message
             if (empty($answerText) && !empty($defaultAnswerParts)) {
                 $answerText = implode("\n\n", $defaultAnswerParts);
             }

@@ -20,6 +20,7 @@ class ChatCompletionController extends Controller
             'messages' => 'required|array|min:1',
             'messages.*.role' => 'required|string|in:user,assistant,system',
             'messages.*.content' => 'required|string|max:1000',
+            'page_context' => 'nullable|array',
             'model' => 'nullable|string|max:100',
             'temperature' => 'nullable|numeric|min:0|max:2',
             'max_tokens' => 'nullable|integer|min:1|max:4096',
@@ -28,6 +29,7 @@ class ChatCompletionController extends Controller
 
         try {
             $messages = $validated['messages'];
+            $pageContext = $request->input('page_context', []);
             
             // Find the last user message
             $userMessages = array_filter($messages, fn($m) => ($m['role'] ?? '') === 'user');
@@ -44,7 +46,7 @@ class ChatCompletionController extends Controller
                 ], 422);
             }
 
-            $result = $pipeline->query($query);
+            $result = $pipeline->query($query, null, $pageContext);
 
             $messagePayload = [
                 'role' => 'assistant',

@@ -1,7 +1,13 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://app.daffadev.my.id/api/v1";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8000/api/v1"
+    : "https://app.daffadev.my.id/api/v1");
 
 const ROUTE_MAP = {
   "beranda": "/",
@@ -72,6 +78,125 @@ const SendIcon = () => (
   </svg>
 );
 
+// --- Markdown Message Formatter ---
+
+const renderInlineMarkdown = (text) => {
+  if (typeof text !== "string") return text;
+
+  // Split by bold (**...**), inline code (`...`), and italic (*...*)
+  const regex = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)/g;
+  const parts = text.split(regex);
+
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
+      return (
+        <strong key={index} className="font-bold">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.startsWith("`") && part.endsWith("`") && part.length >= 2) {
+      return (
+        <code
+          key={index}
+          className="bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded text-xs font-mono"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    if (part.startsWith("*") && part.endsWith("*") && part.length >= 2) {
+      return (
+        <em key={index} className="italic">
+          {part.slice(1, -1)}
+        </em>
+      );
+    }
+    return part;
+  });
+};
+
+const FormattedMessage = ({ text }) => {
+  if (!text) return null;
+
+  const lines = text.split("\n");
+
+  return (
+    <div className="space-y-1">
+      {lines.map((line, lineIndex) => {
+        const trimmed = line.trim();
+
+        // Empty line -> small vertical spacer
+        if (!trimmed) {
+          return <div key={lineIndex} className="h-1.5" />;
+        }
+
+        // Heading 1: # Title
+        if (trimmed.startsWith("# ")) {
+          return (
+            <h1 key={lineIndex} className="font-extrabold text-base mt-1 mb-0.5">
+              {renderInlineMarkdown(trimmed.slice(2))}
+            </h1>
+          );
+        }
+
+        // Heading 2: ## Title
+        if (trimmed.startsWith("## ")) {
+          return (
+            <h2 key={lineIndex} className="font-bold text-sm mt-1 mb-0.5">
+              {renderInlineMarkdown(trimmed.slice(3))}
+            </h2>
+          );
+        }
+
+        // Heading 3: ### Title
+        if (trimmed.startsWith("### ")) {
+          return (
+            <h3 key={lineIndex} className="font-semibold text-xs mt-0.5 mb-0.5">
+              {renderInlineMarkdown(trimmed.slice(4))}
+            </h3>
+          );
+        }
+
+        // Numbered list: 1. Item or 1) Item
+        const numMatch = trimmed.match(/^(\d+[\.\)])\s+(.*)$/);
+        if (numMatch) {
+          return (
+            <div key={lineIndex} className="flex items-start gap-1.5 ml-1">
+              <span className="font-semibold text-xs leading-5 shrink-0 select-none">
+                {numMatch[1]}
+              </span>
+              <span className="flex-1">
+                {renderInlineMarkdown(numMatch[2])}
+              </span>
+            </div>
+          );
+        }
+
+        // Bullet list: - Item or * Item or • Item
+        const bulletMatch = trimmed.match(/^([\-\*•])\s+(.*)$/);
+        if (bulletMatch) {
+          return (
+            <div key={lineIndex} className="flex items-start gap-1.5 ml-1">
+              <span className="text-xs leading-5 shrink-0 select-none">•</span>
+              <span className="flex-1">
+                {renderInlineMarkdown(bulletMatch[2])}
+              </span>
+            </div>
+          );
+        }
+
+        // Regular paragraph
+        return (
+          <p key={lineIndex} className="leading-relaxed">
+            {renderInlineMarkdown(line)}
+          </p>
+        );
+      })}
+    </div>
+  );
+};
+
 // --- Chat Bubble ---
 
 const ChatBubble = ({ message, isUser }) => (
@@ -86,7 +211,7 @@ const ChatBubble = ({ message, isUser }) => (
         borderRadius: isUser ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
       }}
     >
-      {message}
+      <FormattedMessage text={message} />
     </div>
   </div>
 );
@@ -132,7 +257,239 @@ const ChatBotBubble = () => {
     () => setIsActive((prev) => !prev),
     [],
   );
-  
+
+  // --- Dynamic Live DOM Scanner for AI Spotlight ---
+  const extractPageContext = useCallback(() => {
+    try {
+      const mainContent = document.querySelector("main") || document.body;
+      const sections = [];
+      const seenTitles = new Set();
+
+      // 1. Scan explicit <section> elements
+      const domSections = mainContent.querySelectorAll("section");
+      domSections.forEach((sec, idx) => {
+        const headerEl = sec.querySelector("h1, h2, h3, h4, [class*='font-bold'], [class*='font-semibold'], strong, p.font-bold");
+        let title = headerEl ? (headerEl.innerText || headerEl.textContent || "").trim().split("\n")[0] : `Bagian ${idx + 1}`;
+        title = title.replace(/[•\t\r]/g, "").trim();
+
+        if (title && title.length > 2 && !seenTitles.has(title.toLowerCase())) {
+          seenTitles.add(title.toLowerCase());
+          const snippet = (sec.innerText || sec.textContent || "").replace(/\s+/g, " ").trim().slice(0, 150);
+          sections.push({
+            title,
+            snippet: snippet || undefined,
+          });
+        }
+      });
+
+      // 2. Scan all standalone headings
+      const headings = mainContent.querySelectorAll("h1, h2, h3, h4, [data-section]");
+      headings.forEach((h) => {
+        if (h.closest("#technobot-root") || h.closest(".technobot-ignore")) return;
+        const title = (h.innerText || h.textContent || "").replace(/[•\t\r]/g, "").trim().split("\n")[0];
+        if (title && title.length > 2 && title.length < 80 && !seenTitles.has(title.toLowerCase())) {
+          seenTitles.add(title.toLowerCase());
+          sections.push({ title });
+        }
+      });
+
+      return {
+        path: window.location.pathname,
+        title: document.title || "SMKN 26 Jakarta",
+        sections: sections.slice(0, 12),
+      };
+    } catch (err) {
+      console.warn("DOM scan error:", err);
+      return {
+        path: window.location.pathname,
+        title: document.title,
+        sections: [],
+      };
+    }
+  }, []);
+
+  // --- AI Spotlight Engine ---
+  const spotlightTimerRef = useRef(null);
+
+  // Inject keyframe animation once (idempotent)
+  // Inject keyframe animation once (idempotent)
+  useEffect(() => {
+    if (document.getElementById("technobot-spotlight-styles")) return;
+    const style = document.createElement("style");
+    style.id = "technobot-spotlight-styles";
+    style.textContent = `
+      @keyframes technobotCalloutPulse {
+        0%, 100% {
+          background-color: rgba(0, 122, 255, 0.07);
+          border-left-color: #007aff;
+        }
+        50% {
+          background-color: rgba(0, 122, 255, 0.13);
+          border-left-color: #ff5733;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
+  const applySpotlightStyle = (el) => {
+    // Save original styles for clean removal
+    el.dataset.technobotOrigBg = el.style.backgroundColor || el.style.background || "";
+    el.dataset.technobotOrigBorderLeft = el.style.borderLeft || "";
+    el.dataset.technobotOrigPad = el.style.padding || "";
+    el.dataset.technobotOrigRadius = el.style.borderRadius || "";
+    el.dataset.technobotOrigTransition = el.style.transition || "";
+    el.dataset.technobotOrigAnim = el.style.animation || "";
+
+    el.style.transition = "background-color 0.4s ease, border-left 0.4s ease, padding 0.3s ease";
+    el.style.borderLeft = "4px solid #007aff";
+    el.style.backgroundColor = "rgba(0, 122, 255, 0.08)";
+    el.style.borderRadius = "0 10px 10px 0";
+    el.style.padding = "12px 18px";
+    el.style.animation = "technobotCalloutPulse 2.5s ease-in-out infinite";
+  };
+
+  const removeSpotlightStyle = (el) => {
+    el.style.backgroundColor = el.dataset.technobotOrigBg || "";
+    el.style.background = el.dataset.technobotOrigBg || "";
+    el.style.borderLeft = el.dataset.technobotOrigBorderLeft || "";
+    el.style.padding = el.dataset.technobotOrigPad || "";
+    el.style.borderRadius = el.dataset.technobotOrigRadius || "";
+    el.style.transition = el.dataset.technobotOrigTransition || "";
+    el.style.animation = el.dataset.technobotOrigAnim || "";
+
+    delete el.dataset.technobotOrigBg;
+    delete el.dataset.technobotOrigBorderLeft;
+    delete el.dataset.technobotOrigPad;
+    delete el.dataset.technobotOrigRadius;
+    delete el.dataset.technobotOrigTransition;
+    delete el.dataset.technobotOrigAnim;
+  };
+
+  const handleAgenticSpotlight = useCallback((toolCalls) => {
+    console.log("[TechnoBot Spotlight] toolCalls received:", JSON.stringify(toolCalls));
+    if (!Array.isArray(toolCalls)) return;
+
+    // Clear previous spotlight highlights
+    document.querySelectorAll("[data-technobot-spotlight]").forEach((el) => {
+      removeSpotlightStyle(el);
+      el.removeAttribute("data-technobot-spotlight");
+    });
+    if (spotlightTimerRef.current) {
+      clearTimeout(spotlightTimerRef.current);
+    }
+
+    const highlightedElements = [];
+
+    for (const tool of toolCalls) {
+      const fn = tool.function || {};
+      if (fn.name !== "spotlight_sections") continue;
+
+      try {
+        const args = typeof fn.arguments === "string" ? JSON.parse(fn.arguments) : fn.arguments;
+        const targets = Array.isArray(args.targets) ? args.targets : (args.target ? [args.target] : []);
+
+        targets.forEach((targetTitle) => {
+          const cleanTarget = String(targetTitle).toLowerCase().replace(/[•"'\-]/g, "").trim();
+          if (!cleanTarget) return;
+
+          // Strategy: walk elements to find the most specific content match
+          const allElements = document.body.querySelectorAll("*");
+          let bestMatch = null;
+          let bestScore = 0;
+
+          allElements.forEach((el) => {
+            // Skip non-visible / meta elements
+            if (["SCRIPT", "STYLE", "LINK", "META", "NAV", "FOOTER"].includes(el.tagName)) return;
+            if (el.closest("[data-technobot-ignore]")) return;
+
+            // Skip chatbot itself
+            const chatPanel = document.querySelector(".fixed.bottom-24.right-10");
+            if (chatPanel && chatPanel.contains(el)) return;
+            const chatBubble = document.querySelector(".fixed.bottom-7.right-7");
+            if (chatBubble && chatBubble.contains(el)) return;
+
+            // Get direct text of the element
+            const ownText = Array.from(el.childNodes)
+              .filter((n) => n.nodeType === Node.TEXT_NODE)
+              .map((n) => n.textContent)
+              .join(" ")
+              .toLowerCase()
+              .replace(/[•"'\-\s]+/g, " ")
+              .trim();
+
+            const fullText = (el.innerText || el.textContent || "").toLowerCase().replace(/[•"'\-]/g, "").trim();
+
+            // 1. Exact match on direct text
+            if (ownText && ownText.includes(cleanTarget)) {
+              const score = 1000 - ownText.length;
+              if (score > bestScore) {
+                bestScore = score;
+                bestMatch = el;
+              }
+            }
+            // 2. Heading match
+            else if (/^H[1-6]$/.test(el.tagName) && fullText.includes(cleanTarget)) {
+              const score = 800 - fullText.length;
+              if (score > bestScore) {
+                bestScore = score;
+                bestMatch = el;
+              }
+            }
+            // 3. Specific content paragraph / card
+            else if (fullText.includes(cleanTarget) && fullText.length < 400) {
+              const score = 500 - fullText.length;
+              if (score > bestScore) {
+                bestScore = score;
+                bestMatch = el;
+              }
+            }
+          });
+
+          if (bestMatch) {
+            let targetContainer = bestMatch;
+
+            // If matched element is an inline tag, select its parent block
+            const inlineTags = ["SPAN", "STRONG", "B", "EM", "A", "I"];
+            if (inlineTags.includes(bestMatch.tagName)) {
+              targetContainer = bestMatch.parentElement || bestMatch;
+            }
+
+            // If the element has a direct card wrapper (like Visi/Misi card or Sambutan text block)
+            const parentCard = bestMatch.closest(".rounded-3xl, .rounded-2xl, [class*='rounded'], [class*='border-l']");
+            if (parentCard && parentCard.offsetHeight < 450 && parentCard !== document.querySelector("main")) {
+              targetContainer = parentCard;
+            }
+
+            if (!highlightedElements.includes(targetContainer)) {
+              highlightedElements.push(targetContainer);
+
+              targetContainer.setAttribute("data-technobot-spotlight", "true");
+              applySpotlightStyle(targetContainer);
+            }
+          }
+        });
+      } catch (err) {
+        console.error("[TechnoBot Spotlight] parse error:", err);
+      }
+    }
+
+    // Smooth scroll to the first highlighted element
+    if (highlightedElements.length > 0) {
+      const firstTarget = highlightedElements[0];
+      setTimeout(() => {
+        firstTarget.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 250);
+
+      // Auto-remove after 8 seconds cleanly
+      spotlightTimerRef.current = setTimeout(() => {
+        highlightedElements.forEach((el) => {
+          removeSpotlightStyle(el);
+          el.removeAttribute("data-technobot-spotlight");
+        });
+      }, 8000);
+    }
+  }, []);
 
   // Agentic Auto Navigation
   const handleAgenticNavigation = useCallback((toolCalls) => {
@@ -159,7 +516,7 @@ const ChatBotBubble = () => {
     }
   }, [navigate]);
 
-  // Connect to Live RAG Backend API
+  // Connect to Live RAG Backend API with AI Spotlight Context
   const handleSend = useCallback(async () => {
     const trimmed = inputValue.trim();
     if (!trimmed || isLoading) return;
@@ -176,6 +533,8 @@ const ChatBotBubble = () => {
     setHistory(updatedHistory);
 
     try {
+      const pageContext = extractPageContext();
+
       const response = await fetch(`${API_BASE_URL}/chat/completions`, {
         method: "POST",
         headers: {
@@ -184,6 +543,7 @@ const ChatBotBubble = () => {
         },
         body: JSON.stringify({
           messages: updatedHistory,
+          page_context: pageContext,
           stream: false,
         }),
       });
@@ -193,10 +553,12 @@ const ChatBotBubble = () => {
       }
 
       const data = await response.json();
+      console.log("[TechnoBot] RAW API response:", JSON.stringify(data).slice(0, 500));
       const choice = data.choices?.[0] || {};
       const assistantMessage = choice.message || {};
       const content = assistantMessage.content || "Informasi telah diproses.";
       const toolCalls = assistantMessage.tool_calls || [];
+      console.log("[TechnoBot] tool_calls count:", toolCalls.length, "tool_calls:", JSON.stringify(toolCalls).slice(0, 300));
 
       setMessages((prev) => [
         ...prev,
@@ -213,7 +575,9 @@ const ChatBotBubble = () => {
       ]);
 
       if (toolCalls.length > 0) {
+        console.log("[TechnoBot] Dispatching toolCalls to handlers...");
         handleAgenticNavigation(toolCalls);
+        handleAgenticSpotlight(toolCalls);
       }
     } catch (error) {
       console.error("API error:", error);
@@ -228,7 +592,7 @@ const ChatBotBubble = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [inputValue, isLoading, history, handleAgenticNavigation]);
+  }, [inputValue, isLoading, history, extractPageContext, handleAgenticNavigation, handleAgenticSpotlight]);
 
   const handleKeyDown = useCallback(
     (e) => {

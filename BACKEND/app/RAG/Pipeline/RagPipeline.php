@@ -19,18 +19,25 @@ class RagPipeline
         private readonly AnswerGenerator $generator
     ) {}
 
-    public function query(string $query, ?string $documentVersionId = null): GenerationResult
-    {
+    public function query(
+        string $query,
+        ?string $documentVersionId = null,
+        array $pageContext = []
+    ): GenerationResult {
         $traceId = Str::uuid()->toString();
         $trimmedQuery = trim($query);
         
         if (empty($documentVersionId) || $documentVersionId === 'default' || !Str::isUuid($documentVersionId)) {
-            $doc = DB::table('document_versions')->where('status', 'completed')->orderByDesc('created_at')->first();
-            $documentVersionId = $doc ? $doc->id : null;
+            try {
+                $doc = DB::table('document_versions')->where('status', 'completed')->orderByDesc('created_at')->first();
+                $documentVersionId = $doc ? $doc->id : null;
+            } catch (Throwable) {
+                $documentVersionId = null;
+            }
         }
 
         $retrievalResult = $this->retriever->retrieve($trimmedQuery, $documentVersionId ?? '', $traceId);
-        $generationResult = $this->generator->generate($trimmedQuery, $retrievalResult, $traceId);
+        $generationResult = $this->generator->generate($trimmedQuery, $retrievalResult, $traceId, $pageContext);
 
         try {
             DB::table('retrieval_logs')->insert([

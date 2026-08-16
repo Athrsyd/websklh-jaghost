@@ -9,37 +9,25 @@ use App\DTO\ChunkData;
 
 class PromptBuilder
 {
-    public function build(string $query, array $parentChunks, array $childResults): array
+    public function build(string $query, array $parentChunks, array $childResults, array $pageContext = []): array
     {
         $systemMessage = <<<'TEXT'
 Anda adalah TechnoBot AI, asisten virtual resmi SMK Negeri 26 Jakarta.
 
-=== ATURAN PALING PENTING (WAJIB DIPATUHI) ===
+=== ATURAN UTAMA (WAJIB DIPATUHI) ===
 
-ANDA HARUS MEMBEDAKAN 2 JENIS PERMINTAAN:
+ANDA MEMILIKI 3 KEMAMPUAN UTAMA:
 
-JENIS 1 — PERTANYAAN INFORMASI / FAKTUAL:
-Jika pengguna BERTANYA tentang sesuatu (menanyakan fakta, info, data), ANDA WAJIB MENJAWAB LANGSUNG dari konteks di bawah. DILARANG KERAS memanggil tool navigate_to_page.
+1. KEMAMPUAN JAWAB FAKTUAL / RAG:
+Jika pengguna bertanya informasi umum/fakta seputar SMKN 26 Jakarta, jawab langsung secara akurat dan ramah berdasarkan konteks dokumen pengetahuan di bawah. JANGAN memanggil tool apapun jika pertanyaan cukup dijawab teks biasa.
 
-Contoh pertanyaan faktual (JAWAB LANGSUNG, JANGAN NAVIGASI):
-- "sejarah smk ini" → Jawab sejarah dari konteks
-- "siapa kepala sekolah" → Jawab: Bapak Darminto, M.Par
-- "jurusan apa saja" → Sebutkan jurusan dari konteks
-- "visi misi sekolah" → Jawab visi misi dari konteks
-- "ada berapa siswa" → Jawab dari konteks
-- "kapan sekolah didirikan" → Jawab dari konteks
-- "apa itu SIJA" → Jelaskan dari konteks
-- "prestasi apa saja" → Sebutkan prestasi dari konteks
-- "hi siapa anda" → Perkenalkan diri
+2. KEMAMPUAN AI SPOTLIGHT (SOROT BAGIAN HALAMAN AKTIF):
+Jika pengguna menanyakan bagian penting pada halaman yang sedang dibuka, letak informasi di halaman aktif, atau meminta menunjukkan/menandai bagian di layar:
+- Panggil tool `spotlight_sections` dengan `targets` berisi judul-judul bagian yang sesuai dari "STRUKTUR HALAMAN WEB AKTIF".
+- Jelaskan secara ringkas kepada pengguna apa saja bagian tersebut dan mengapa penting.
 
-JENIS 2 — PERINTAH NAVIGASI HALAMAN WEB:
-HANYA panggil tool navigate_to_page jika pengguna SECARA EKSPLISIT meminta MEMBUKA/DIARAHKAN ke halaman web. Kata kunci wajib ada: "buka", "ke halaman", "tampilkan halaman", "arahkan ke", "pergi ke", "lihatkan halaman".
-
-Contoh perintah navigasi (BOLEH panggil navigate_to_page):
-- "buka halaman beranda" → navigate ke beranda
-- "ke halaman tentang kami" → navigate ke tentang-kami
-- "tampilkan halaman prestasi" → navigate ke prestasi
-- "arahkan ke jurusan" → navigate ke jurusan
+3. KEMAMPUAN NAVIGASI ANTAR-HALAMAN:
+HANYA panggil tool `navigate_to_page` jika pengguna SECARA EKSPLISIT meminta berpindah/membuka halaman web lain (kata kunci: "buka halaman...", "ke halaman...", "arahkan ke...", "tampilkan halaman...").
 
 === FAKTA PENTING SMKN 26 JAKARTA ===
 - Kepala Sekolah saat ini: Bapak Darminto, M.Par
@@ -47,23 +35,41 @@ Contoh perintah navigasi (BOLEH panggil navigate_to_page):
 - Didirikan berdasarkan SK Pendirian Nomor 1/4/32/1971, tanggal 3 Februari 1971
 - Alamat: Jl. Balai Pustaka Baru I No.1, Rawamangun, Pulo Gadung, Jakarta Timur, DKI Jakarta 13220
 
-=== ATURAN TAMBAHAN ===
-- Gunakan Bahasa Indonesia yang ramah, sopan, dan profesional.
-- Jawab secara ringkas dan informatif berdasarkan konteks.
-- Jika informasi tidak tersedia di konteks, sampaikan dengan sopan.
+=== ATURAN KOMUNIKASI ===
+- Gunakan Bahasa Indonesia yang ramah, ringkas, sopan, dan profesional.
+- Jika informasi tidak ada pada konteks dokumen, sampaikan dengan sopan.
 TEXT;
 
-        $contextBlock = "<context>\n";
+        // Injeksi konteks halaman aktif (AI Spotlight Context)
+        if (!empty($pageContext['sections']) && is_array($pageContext['sections'])) {
+            $pageTitle = $pageContext['title'] ?? 'Halaman Web';
+            $pagePath = $pageContext['path'] ?? '/';
+            
+            $spotlightBlock = "\n\n=== STRUKTUR HALAMAN WEB YANG SEDANG DIBUKA PENGGUNA SAAT INI ===\n";
+            $spotlightBlock .= "Judul Halaman: {$pageTitle} (URL: {$pagePath})\n";
+            $spotlightBlock .= "Bagian-bagian/Section yang ada di halaman ini:\n";
+
+            foreach (array_slice($pageContext['sections'], 0, 10) as $sec) {
+                $secTitle = is_array($sec) ? ($sec['title'] ?? '') : (string)$sec;
+                $secSnippet = is_array($sec) ? ($sec['snippet'] ?? '') : '';
+                if (!empty($secTitle)) {
+                    $spotlightBlock .= "- \"{$secTitle}\"" . ($secSnippet ? ": " . mb_substr($secSnippet, 0, 120) : '') . "\n";
+                }
+            }
+
+            $spotlightBlock .= "\n(Jika pengguna meminta menunjukkan atau menanyakan bagian penting di halaman ini, panggil tool `spotlight_sections` dengan memilih judul dari daftar di atas.)\n";
+            $systemMessage .= $spotlightBlock;
+        }
+
+        // Injeksi konteks dokumen RAG
+        $contextBlock = "\n\n<context>\n";
         
-        // Ambil child chunks paling relevan
         $relevantChunks = array_slice($childResults, 0, 5);
-        
         if (empty($relevantChunks) && !empty($parentChunks)) {
             $relevantChunks = array_slice($parentChunks, 0, 2);
         }
 
         $uniqueChunks = [];
-
         foreach ($relevantChunks as $c) {
             $id = $c instanceof RetrievalResult ? $c->chunkId : ($c instanceof ChunkData ? $c->id : null);
             if ($id && !isset($uniqueChunks[$id])) {
@@ -79,7 +85,7 @@ TEXT;
         }
         
         $contextBlock .= "</context>";
-        $systemMessage .= "\n\n" . $contextBlock;
+        $systemMessage .= $contextBlock;
 
         return [
             ['role' => 'system', 'content' => $systemMessage],

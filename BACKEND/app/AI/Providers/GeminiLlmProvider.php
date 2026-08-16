@@ -24,7 +24,7 @@ readonly class GeminiLlmProvider implements LlmProviderInterface
     public function __construct()
     {
         $this->apiKey = config('rag.llm.providers.gemini.api_key', '');
-        $this->model = config('rag.llm.providers.gemini.model', 'gemini-1.5-flash');
+        $this->model = config('rag.llm.providers.gemini.model', 'gemini-3.5-flash-lite');
         $this->baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
     }
 

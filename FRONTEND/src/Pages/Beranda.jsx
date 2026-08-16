@@ -4,6 +4,11 @@ import kepsek from "./../assets/kepsek.png";
 import rowKanan from "./../assets/rowKananHitam.svg";
 import rowKiri from "./../assets/rowKiriHitam.svg";
 import logoPLN from "./../assets/logopln.png";
+import modelBangunan from "./../assets/modelJurusan/kgs.png";
+import modelElektro from "./../assets/modelJurusan/tek.png";
+import modelListrik from "./../assets/modelJurusan/titl.png";
+import modelMesin from "./../assets/modelJurusan/tflm.png";
+import modelTkr from "./../assets/modelJurusan/tkr.png";
 import { Link } from "react-router-dom";
 
 const Beranda = () => {
@@ -35,57 +40,57 @@ const Beranda = () => {
     {
       id: 1,
       nama: "Konstruksi Gedung dan Sanitasi",
-      color: "",
+      color: "#FF0000",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
+        "Program keahlian 4 tahun yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
+      img: modelBangunan,
     },
     {
       id: 2,
       nama: "Teknik Elektronika dan Komunikasi",
-      color: "",
+      color: "#1F4481",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
+        "Program keahlian 3 tahun yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
+      img: modelElektro,
     },
     {
       id: 3,
       nama: "Teknik Instalasi Tenaga Listrik",
-      color: "",
+      color: "#FFDD00",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
+        "Program keahlian 3 tahun yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
+      img: modelListrik,
     },
     {
       id: 4,
       nama: "Teknik Fabrikasi Logam dan Manufaktur",
-      color: "",
+      color: "#F10732",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
+        "Program keahlian 4 tahun yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
+      img: modelMesin,
     },
     {
       id: 5,
       nama: "Teknik Kendaraan Ringan",
-      color: "",
+      color: "#DED8E5",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-      img: "",
+        "Program keahlian 3 tahun yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
+      img: modelTkr,
     },
     {
       id: 6,
       nama: "Teknik Bodi Kendaraan Ringan",
-      color: "",
+      color: "#AC8963",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+        "Program keahlian 3 tahun yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
       img: "",
     },
     {
       id: 7,
       nama: "Sistem Informasi Jaringan dan Aplikasi",
-      color: "",
+      color: "#FF5733",
       deskripsi:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+        "Program keahlian 4 tahun yang mempelajari pengembangan perangkat lunak, pengelolaan basis data, infrastruktur jaringan, dan keamanan siber.",
       img: "",
     },
   ];
@@ -159,6 +164,8 @@ const Beranda = () => {
       ),
     },
   ];
+
+  const activeJurusan = jurusanData.find((jurusan) => jurusan.id === jurusanId);
 
   const handleJurusanDec = () => {
     if (jurusanId === 7) {
@@ -269,31 +276,75 @@ const Beranda = () => {
       </section>
 
       {/* Program keahlian */}
-      <section className="w-full min-h-screen bg-yellow-400 rounded-t-[7em] py-20">
+      <section
+        className="w-full min-h-170 bg-yellow-400 rounded-t-[7em] py-15"
+        style={{
+          background: `linear-gradient(105deg, ${activeJurusan.color}, ${activeJurusan.color}CC)`,
+        }}
+      >
         <div
-          className="container w-3/10 opacity-70  mx-auto flex flex-col gap-4 bg-white/50 border border-white
-        rounded-full py-2 px-4 shadow-2xl items-center justify-center "
+          className="container relative w-2/10 opacity-70 mx-auto flex flex-col bg-white/50 border border-white
+        rounded-full py-2 px-2 shadow-2xl items-center justify-center bottom-6"
         >
-          <h1 className="text-3xl font-bold text-center font-poppins  text-black">
+          <h1 className="text-[21px] font-bold text-center font-poppins text-black">
             • Program Keahlian •
           </h1>
         </div>
-        <div className="relative w-full h-full flex items-center justify-center top-50">
+        <div className="container relative w-full mx-auto flex flex-col items-center justify-center mt-8">
+          <h1
+            className={`absolute z-99 bottom-2 font-poppins text-3xl font-bold text-center ${jurusanId === 3 || jurusanId === 4 ? "text-black" : "text-white"}`}
+          >
+            {activeJurusan.nama}
+          </h1>
+          <p
+            className={`absolute z-99 mt-6 text-md font-poppins font-semibold text-center ${jurusanId === 3 || jurusanId === 4 ? "text-black" : "text-white"} w-3/5`}
+          >
+            {activeJurusan.deskripsi}
+          </p>
+        </div>
+        <div className="relative w-2/3 flex flex-col mx-auto top-55 items-center justify-center">
+          {activeJurusan.img && (
+            <img
+              src={activeJurusan.img}
+              alt={activeJurusan.nama}
+              className={`absolute z-10 object-contain ${
+                jurusanId === 1
+                  ? "h-95 mt-10"
+                  : jurusanId === 2
+                    ? "h-110 mt-16"
+                    : "h-100 mt-10"
+              }`}
+            />
+          )}
+          <div className="relative w-full mx-auto flex flex-col justify-center items-center">
+            <div
+              className="absolute w-1/4 z-99 flex flex-col bg-white
+                rounded-full px-4 py-4 shadow-2xl items-center justify-center top-2"
+            ></div>
+            <h1 className="absolute top-3 text-md z-100 text-center font-montserrat font-semibold text-black  ">
+              Pelajari Selengkapnya
+            </h1>
+          </div>
+          <div className="absolute z-99 w-3/4 h-55 top-12 mx-auto rounded-[34px] backdrop-blur-xl shadow-2xl bg-white">
+            <h1>Tes</h1>
+          </div>
+        </div>
+        <div className="relative w-full h-full flex items-center justify-center top-60">
           {/* Button */}
           <button
             onClick={() => handleJurusanInc()}
-            className="absolute text-black left-10 z-10 w-10 h-10 bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute text-black left-30 z-10 w-10 h-10 bottom-10 bg-white/50 rounded-full border-white border flex items-center justify-center"
           >
-            <img src={rowKiri} className="h-6" alt="Kiri" />
+            <img src={rowKiri} className="h-6 pr-0.5" alt="Kiri" />
           </button>
           <button
             onClick={() => handleJurusanDec()}
-            className="absolute text-black right-10 z-10 w-10 h-10  bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute text-black right-30 z-10 w-10 h-10 bottom-10  bg-white/50 rounded-full border-white border flex items-center justify-center"
           >
-            <img src={rowKanan} className="h-6" alt="Kanan" />
+            <img src={rowKanan} className="h-6 pl-0.5" alt="Kanan" />
           </button>
 
-          <div className="indicator absolute top-40 flex flex-row gap-4">
+          <div className="indicator absolute top-65 flex flex-row gap-2">
             {Array(7)
               .fill(0)
               .map((_, index) => (
@@ -301,7 +352,12 @@ const Beranda = () => {
                   key={index}
                   onClick={() => handleDot(index + 1)}
                   className={`indicator-item indicator-center
-                    ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white/50 ${index + 1 === jurusanId ? "bg-white" : ""}`}
+                    ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white ${index + 1 === jurusanId ? "" : "bg-white"}`}
+                  style={
+                    index + 1 === jurusanId
+                      ? { backgroundColor: activeJurusan.color }
+                      : undefined
+                  }
                 ></div>
               ))}
           </div>

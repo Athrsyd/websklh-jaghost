@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import tu from "./../assets/hero-bg.png";
 import heroVideo from "./../assets/hero_1080p30.webm";
 import kepsek from "./../assets/kepsek.png";
-import rowKanan from "./../assets/rowKananHitam.svg";
-import rowKiri from "./../assets/rowKiriHitam.svg";
+import RowKanan from "./../assets/rowKananHitam.svg?react";
+import RowKiri from "./../assets/rowKiriHitam.svg?react";
 import logoPLN from "./../assets/logopln.png";
 import modelBangunan from "./../assets/modelJurusan/kgs.png";
 import modelElektro from "./../assets/modelJurusan/tek.png";
 import modelListrik from "./../assets/modelJurusan/titl.png";
 import modelMesin from "./../assets/modelJurusan/tflm.png";
 import modelTkr from "./../assets/modelJurusan/tkr.png";
-import ruler from "./../assets/tabler_ruler.svg";
-import briefcase from "./../assets/briefcase.svg";
+import briefcase from "./../assets/briefcase.svg?react";
 import { Link } from "react-router-dom";
 
 const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
+  const [direction, setDirection] = useState(1);
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
@@ -58,29 +59,10 @@ const Beranda = () => {
       color: "#FF0000",
       backgroundIconColor: "#FA010126",
       iconColor: "#FF0000",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari perencanaan, pembuatan, pemeliharaan bangunan gedung, serta sistem plumbing dan sanitasi lingkungan secara modern.",
       img: modelBangunan,
-      poinPembelajaran: [
-        {
-          judul: "Perencanaan & Desain Gedung",
-          icon: "",
-          deskripsi:
-            "Belajar merancang gambar kerja, estimasi biaya (RAB), dan pemodelan bangunan gedung (BIM/AutoCAD).",
-        },
-        {
-          judul: "Konstruksi & Pelaksanaan",
-          icon: "",
-          deskripsi:
-            "Belajar teknik pembuatan struktur gedung, pembesian, bekisting, hingga pekerjaan penyelesaian bangunan.",
-        },
-        {
-          judul: "Sistem Sanitasi & Plumbing",
-          icon: "",
-          deskripsi:
-            "Belajar instalasi perpipaan air bersih, pengolahan air limbah, dan sistem drainase bangunan.",
-        },
-      ],
       prospekKerja: [
         "Drafter/BIM Operator",
         "Pelaksana Lapangan Konstruksi",
@@ -96,29 +78,10 @@ const Beranda = () => {
       color: "#1F4481",
       backgroundIconColor: "#001F3F26",
       iconColor: "#001F3F",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari sistem komunikasi radio, transmisi sinyal, jaringan telekomunikasi, dan perakitan perangkat elektronik.",
       img: modelElektro,
-      poinPembelajaran: [
-        {
-          judul: "Elektronika Dasar & Mikrokontroler",
-          icon: "",
-          deskripsi:
-            "Belajar merangkai komponen elektronik, pembuatan PCB, dan pemrograman sirkuit mikrokontroler.",
-        },
-        {
-          judul: "Sistem Telekomunikasi & Transmisi",
-          icon: "",
-          deskripsi:
-            "Belajar prinsip kerja transmisi sinyal, komunikasi radio, fiber optik, dan jaringan nirkabel.",
-        },
-        {
-          judul: "Perbaikan & Pemeliharaan Perangkat",
-          icon: "",
-          deskripsi:
-            "Belajar pemeliharaan, kalibrasi, serta perbaikan sistem dan peralatan komunikasi elektronik.",
-        },
-      ],
       prospekKerja: [
         "Teknisi Telekomunikasi",
         "Network Support Engineer",
@@ -134,29 +97,10 @@ const Beranda = () => {
       color: "#FFDD00",
       backgroundIconColor: "#FFDD004D",
       iconColor: "#FFDD00",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
       img: modelListrik,
-      poinPembelajaran: [
-        {
-          judul: "Instalasi Penerangan & Tenaga",
-          icon: "",
-          deskripsi:
-            "Belajar merancang dan memasang instalasi listrik rumah tangga, gedung, serta jaringan tenaga listrik.",
-        },
-        {
-          judul: "Otomasi Industri & Panel Listrik",
-          icon: "",
-          deskripsi:
-            "Belajar merakit panel listrik (PLC, Smart Relay) dan mengoperasikan sistem kontrol mesin industri.",
-        },
-        {
-          judul: "Perbaikan & Perawatan Peralatan Listrik",
-          icon: "",
-          deskripsi:
-            "Belajar analisis kerusakan, perawatan preventif, dan pemeliharaan motor serta mesin listrik.",
-        },
-      ],
       prospekKerja: [
         "Teknisi Listrik Industri",
         "Panel Maker",
@@ -172,29 +116,10 @@ const Beranda = () => {
       color: "#F10732",
       backgroundIconColor: "#FA063A26",
       iconColor: "#DC042F",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari teknik pembentukan, pengelasan, pemotongan, dan fabrikasi logam untuk kebutuhan manufaktur serta industri berat.",
       img: modelMesin,
-      poinPembelajaran: [
-        {
-          judul: "Teknik Pengelasan (Welding)",
-          icon: "",
-          deskripsi:
-            "Belajar berbagai metode pengelasan (SMAW, GMAW/MIG, GTAW/TIG) sesuai standar industri.",
-        },
-        {
-          judul: "Desain & Pembentukan Logam",
-          icon: "",
-          deskripsi:
-            "Belajar membuat pola, pemotongan logam (CNC/Laser cutting), dan perakitan struktur konstruksi logam.",
-        },
-        {
-          judul: "Fabrikasi & Kontrol Kualitas",
-          icon: "",
-          deskripsi:
-            "Belajar manufaktur produk logam, pembentukan plat, dan pengujian kualitas hasil lasan (NDT/DT).",
-        },
-      ],
       prospekKerja: [
         "Welder Professional",
         "Fabricator Logam",
@@ -210,29 +135,10 @@ const Beranda = () => {
       color: "#DED8E5",
       backgroundIconColor: "#1E1E1E26",
       iconColor: "#434655",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari perawatan, perbaikan, dan diagnosis sistem mekanis serta elektronik pada mobil atau kendaraan ringan.",
       img: modelTkr,
-      poinPembelajaran: [
-        {
-          judul: "Sistem Mesin Kendaraan (Engine)",
-          icon: "",
-          deskripsi:
-            "Belajar perawatan dan overhaul mesin bensin maupun diesel (termasuk sistem EFI/Common Rail).",
-        },
-        {
-          judul: "Sistem Pemindah Tenaga & Sasis",
-          icon: "",
-          deskripsi:
-            "Belajar perbaikan sistem transmisi, kemudi, suspensi, serta sistem pengereman kendaraan.",
-        },
-        {
-          judul: "Kelistrikan & Otomasi Otomotif",
-          icon: "",
-          deskripsi:
-            "Belajar diagnosis kelistrikan bodi, sistem pendingin (AC), dan sensor-sensor elektronik mobil modern.",
-        },
-      ],
       prospekKerja: [
         "Teknisi/Mekanik Mobil",
         "Service Advisor",
@@ -248,29 +154,10 @@ const Beranda = () => {
       color: "#F4A34D",
       backgroundIconColor: "#99341F26",
       iconColor: "#895721",
+      icon: briefcase,
       deskripsi:
         "Program keahlian yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
       img: "",
-      poinPembelajaran: [
-        {
-          judul: "Perbaikan & Perataan Bodi (Body Repair)",
-          icon: "",
-          deskripsi:
-            "Belajar perbaikan struktur rangka bodi, ketok bodi, dan teknik penarikan kerusakan bodi.",
-        },
-        {
-          judul: "Pengecatan & Finishing (Auto Refinishing)",
-          icon: "",
-          deskripsi:
-            "Belajar pencampuran cat, persiapan permukaan, pengerjaan cat dasar, hingga proses top coat dan polishing.",
-        },
-        {
-          judul: "Pemasangan Aksesoris & Interior",
-          icon: "",
-          deskripsi:
-            "Belajar pembongkaran, perakitan interior, serta penyesuaian aksesoris dan kaca kendaraan.",
-        },
-      ],
       prospekKerja: [
         "Teknisi Body Repair",
         "Painter Otomotif",
@@ -286,29 +173,10 @@ const Beranda = () => {
       color: "#FF5733",
       backgroundIconColor: "#FF573326",
       iconColor: "#FF5733",
+      icon: briefcase,
       deskripsi:
         "Program 4 tahun yang mempelajari pemrograman, pengelolaan basis data, dan sistem informasi berbasis teknologi modern.",
       img: "",
-      poinPembelajaran: [
-        {
-          judul: "Software Development",
-          icon: "",
-          deskripsi:
-            "Belajar membuat aplikasi web, mobile, dan desktop yang fungsional dan modern.",
-        },
-        {
-          judul: "Database & Cloud Computing",
-          icon: "",
-          deskripsi:
-            "Belajar merancang basis data, pengelolaan server, dan implementasi infrastruktur komputasi awan.",
-        },
-        {
-          judul: "Networking & Cybersecurity",
-          icon: "",
-          deskripsi:
-            "Belajar konfigurasi jaringan komputer, manajemen router/switch, dan proteksi sistem dari ancaman siber.",
-        },
-      ],
       prospekKerja: [
         "Software Engineer",
         "Web Developer",
@@ -392,18 +260,17 @@ const Beranda = () => {
 
   const activeJurusan = jurusanData.find((jurusan) => jurusan.id === jurusanId);
 
-  // Gabungkan poinPembelajaran + prospekKerja jadi satu array supaya bisa di-map seragam
+  const slideVariants = {
+    enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
+  };
+
   const detailItems = [
-    ...activeJurusan.poinPembelajaran.map((poin) => ({
-      judul: poin.judul,
-      deskripsi: poin.deskripsi,
-      icon: poin.icon || ruler,
-      isProspekKerja: false,
-    })),
     {
       judul: "Prospek Kerja:",
       deskripsi: activeJurusan.prospekKerja.join(", "),
-      icon: briefcase,
+      icon: activeJurusan.icon,
       isProspekKerja: true,
     },
   ];
@@ -552,113 +419,165 @@ const Beranda = () => {
 
       {/* Program keahlian */}
       <section
-        className="w-full min-h-170 bg-yellow-400 rounded-t-[7em] py-15"
+        className="w-full min-h-135 bg-yellow-400 rounded-t-[7em] py-15"
         style={{
           background: `color-mix(in srgb, ${activeJurusan.color} 30%, transparent)`,
         }}
       >
         <div
           className="container relative w-2/10 opacity-70 mx-auto flex flex-col bg-white/50 border border-white
-        rounded-full py-2 px-2 shadow-2xl items-center justify-center bottom-6"
+  rounded-full py-2 px-2 shadow-2xl items-center justify-center bottom-6"
         >
           <h1 className="text-[21px] font-bold text-center font-poppins text-black">
             • Program Keahlian •
           </h1>
         </div>
+
+        {/* Judul + Deskripsi */}
         <div className="container relative w-full mx-auto flex flex-col items-center justify-center mt-8">
-          <h1 className="absolute z-99 bottom-2 font-poppins text-3xl font-bold text-black text-center">
-            {activeJurusan.nama}
-          </h1>
-          <p className="absolute z-99 mt-6 text-md font-poppins font-semibold text-center text-black w-3/5">
-            {activeJurusan.deskripsi}
-          </p>
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={jurusanId}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="absolute z-99 bottom-2 w-full flex flex-col items-center"
+            >
+              <h1 className="font-poppins text-3xl font-bold text-black text-center">
+                {activeJurusan.nama}
+              </h1>
+              <p className="mt-6 text-md font-poppins font-semibold text-center text-black w-3/5">
+                {activeJurusan.deskripsi}
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
+
         <div className="relative w-2/3 flex flex-col mx-auto top-55 items-center justify-center">
+          {/* Gambar */}
           {activeJurusan.img && (
-            <img
-              src={activeJurusan.img}
-              alt={activeJurusan.nama}
-              className={`absolute z-10 object-contain ${
-                jurusanId === 1
-                  ? "h-95 mt-10"
-                  : jurusanId === 2
-                    ? "h-110 mt-16"
-                    : "h-100 mt-10"
-              }`}
-            />
+            <div className="absolute w-full overflow-hidden flex justify-center h-102">
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.img
+                  key={jurusanId}
+                  src={activeJurusan.img}
+                  alt={activeJurusan.nama}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className={`absolute z-10 object-contain ${
+                    jurusanId === 1
+                      ? "h-70 mt-3"
+                      : jurusanId === 2
+                        ? "h-83 mb-17"
+                        : jurusanId === 4
+                          ? "h-81 mt-1.5"
+                          : "h-80 mt-3"
+                  }`}
+                />
+              </AnimatePresence>
+            </div>
           )}
+
           <div className="relative w-full mx-auto flex flex-col justify-center items-center">
             <div
               className="absolute w-1/4 z-99 flex flex-col bg-white
-                rounded-full px-4 py-4 shadow-2xl items-center justify-center top-2"
+          rounded-full px-4 py-4 shadow-2xl items-center justify-center top-6"
             ></div>
             <h1
-              className="absolute top-3.5 text-[13px] z-100 text-center font-montserrat font-semibold text-black"
+              className="absolute top-7.5 text-[13px] z-100 text-center font-montserrat font-semibold text-black"
               style={{ color: activeJurusan.color }}
             >
               Pelajari Selengkapnya
             </h1>
           </div>
-          <div className="absolute z-99 w-3/4 h-55 top-12 mx-auto rounded-[34px] backdrop-blur-xl shadow-2xl bg-white"></div>
-          <div className="absolute top-15 z-100 w-2/3">
-            <div className="flex flex-col gap-3 w-full text-black">
-              {detailItems.map((item, index) => (
-                <div
-                  key={index}
-                  className="relative flex flex-row gap-4 items-start"
-                >
-                  <div
-                    className={` rounded-full ${item.isProspekKerja ? "py-1.5 px-1.5" : "py-1 px-1"}  shrink-0`}
-                    style={{
-                      backgroundColor: activeJurusan.backgroundIconColor,
-                    }}
-                  >
-                    <img
-                      src={item.icon}
-                      alt={item.judul}
-                      className={`${item.isProspekKerja ? "h-5" : "h-6"}`}
-                    />
-                  </div>
-                  <h1 className="text-black font-montserrat text-xs">
-                    <span className="font-bold">{item.judul}</span>{" "}
-                    {item.judul === "Prospek Kerja:" ? (
-                      item.deskripsi
-                    ) : (
-                      <>
-                        <br />
-                        {item.deskripsi}
-                      </>
-                    )}
-                  </h1>
-                </div>
-              ))}
-            </div>
+
+          {/* Detail box */}
+          <div className="absolute z-10 w-3/4 h-17 top-15 mx-auto rounded-[34px] backdrop-blur-xl shadow-2xl bg-white"></div>
+          <div className="absolute top-19 z-100 w-2/3 overflow-hidden">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={jurusanId}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className="flex flex-col gap-3 w-full text-black"
+              >
+                {detailItems.map((item, index) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="relative flex flex-row gap-4 items-start"
+                    >
+                      <div
+                        className={`rounded-full ${item.isProspekKerja ? "flex py-2 px-2 w-8" : "py-1 px-1"} shrink-0`}
+                        style={{
+                          backgroundColor: activeJurusan.backgroundIconColor,
+                        }}
+                      >
+                        <IconComponent
+                          style={{ color: activeJurusan.iconColor }}
+                          className={`${item.isProspekKerja ? "h-4" : "h-6"}`}
+                        />
+                      </div>
+                      <h1 className="text-black font-montserrat text-xs">
+                        <span className="font-bold">{item.judul}</span>{" "}
+                        {item.judul === "Prospek Kerja:" ? (
+                          item.deskripsi
+                        ) : (
+                          <>
+                            <br />
+                            {item.deskripsi}
+                          </>
+                        )}
+                      </h1>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
+
         <div className="relative w-full h-full flex items-center justify-center top-60">
-          {/* Button */}
           <button
             onClick={() => handleJurusanInc()}
-            className="absolute text-black left-30 z-10 w-10 h-10 bottom-10 bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute text-black left-30 z-10 w-10 h-10 bottom-18 bg-white/50 rounded-full border-white border flex items-center justify-center"
           >
-            <img src={rowKiri} className="h-6 pr-0.5" alt="Kiri" />
+            <RowKiri
+              style={{ color: activeJurusan.iconColor }}
+              className="h-6 pr-0.5"
+            />
           </button>
           <button
             onClick={() => handleJurusanDec()}
-            className="absolute text-black right-30 z-10 w-10 h-10 bottom-10  bg-white/50 rounded-full border-white border flex items-center justify-center"
+            className="absolute text-black right-30 z-10 w-10 h-10 bottom-18 bg-white/50 rounded-full border-white border flex items-center justify-center"
           >
-            <img src={rowKanan} className="h-6 pl-0.5" alt="Kanan" />
+            <RowKanan
+              style={{ color: activeJurusan.iconColor }}
+              className="h-6 pl-0.5"
+            />
           </button>
 
-          <div className="indicator absolute top-65 flex flex-row gap-2">
+          <div className="indicator absolute top-30 flex flex-row gap-2">
             {Array(7)
               .fill(0)
               .map((_, index) => (
                 <div
                   key={index}
                   onClick={() => handleDot(index + 1)}
-                  className={`indicator-item indicator-center
-                    ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white ${index + 1 === jurusanId ? "" : "bg-white"}`}
+                  className={`indicator-item indicator-center transition-all duration-300
+              ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white`}
                   style={
                     index + 1 === jurusanId
                       ? { backgroundColor: activeJurusan.color }

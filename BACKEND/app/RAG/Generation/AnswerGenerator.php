@@ -9,6 +9,7 @@ use App\DTO\GenerationResult;
 use App\DTO\HybridRetrievalResult;
 use App\RAG\Tools\NavigationTool;
 use App\RAG\Tools\SpotlightTool;
+use App\RAG\Tools\ComputerActionTool;
 use Illuminate\Support\Facades\Log;
 
 class AnswerGenerator
@@ -40,6 +41,7 @@ class AnswerGenerator
         $tools = [
             NavigationTool::getDefinition(),
             SpotlightTool::getDefinition(),
+            ComputerActionTool::getDefinition(),
         ];
 
         $llmResponse = $this->llm->chat($messages, 0.1, 2048, $tools);
@@ -73,6 +75,21 @@ class AnswerGenerator
                     $call['function']['arguments'] = json_encode($args, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                     if (empty($answerText)) {
                         $defaultAnswerParts[] = "Saya telah menandai bagian penting di halaman ini untuk Anda.";
+                    }
+                } elseif ($fnName === 'computer_action' && !empty($args['action'])) {
+                    $call['function']['arguments'] = json_encode($args, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                    if (empty($answerText)) {
+                        $act = $args['action'];
+                        $target = $args['target'] ?? '';
+                        if ($act === 'scroll_down' || $act === 'scroll_bottom') {
+                            $defaultAnswerParts[] = "Baik, saya gulirkan halaman ke bawah untuk Anda.";
+                        } elseif ($act === 'scroll_up' || $act === 'scroll_top') {
+                            $defaultAnswerParts[] = "Baik, saya gulirkan halaman ke atas.";
+                        } elseif ($act === 'scroll_to') {
+                            $defaultAnswerParts[] = "Baik, saya arahkan tampilan ke bagian {$target}.";
+                        } elseif ($act === 'click') {
+                            $defaultAnswerParts[] = "Baik, saya klik {$target} untuk Anda.";
+                        }
                     }
                 }
 

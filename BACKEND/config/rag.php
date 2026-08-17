@@ -12,19 +12,19 @@ return [
     ],
     
     'llm' => [
-        'provider' => env('RAG_LLM_PROVIDER', 'gemini'),
-        'model' => env('RAG_LLM_MODEL', 'gemini-1.5-flash'),
+        'provider' => env('RAG_LLM_PROVIDER', 'groq'),
+        'model' => env('RAG_LLM_MODEL', 'openai/gpt-oss-120b'),
         'temperature' => (float) env('RAG_LLM_TEMPERATURE', 0.1),
         'max_tokens' => (int) env('RAG_LLM_MAX_TOKENS', 2048),
         'providers' => [
             'groq' => [
                 'api_key' => env('GROQ_API_KEY'),
-                'model' => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
+                'model' => env('GROQ_MODEL', 'openai/gpt-oss-120b'),
                 'base_url' => env('GROQ_BASE_URL', 'https://api.groq.com/openai/v1'),
             ],
             'gemini' => [
                 'api_key' => env('GEMINI_API_KEY'),
-                'model' => env('GEMINI_MODEL', env('RAG_LLM_MODEL', 'gemini-3.5-flash-lite')),
+                'model' => env('GEMINI_MODEL', 'gemini-2.5-flash'),
             ],
         ],
     ],

@@ -13,12 +13,14 @@ const ROUTE_MAP = {
   "beranda": "/",
   "home": "/",
   "tentang-kami": "/tentang-kami",
+  "tentang kami": "/tentang-kami",
   "tentang": "/tentang-kami",
   "guru-dan-staf": "/tentang-kami/guru-dan-staf",
   "guru": "/tentang-kami/guru-dan-staf",
   "prestasi": "/tentang-kami/prestasi",
   "sejarah": "/tentang-kami/sejarah",
   "profil-sekolah": "/tentang-kami/profil-sekolah",
+  "profil": "/tentang-kami/profil-sekolah",
   "hubungan-industri": "/tentang-kami/hubungan-industri",
   "program": "/program",
   "bkk": "/program/bkk",
@@ -126,12 +128,10 @@ const FormattedMessage = ({ text }) => {
       {lines.map((line, lineIndex) => {
         const trimmed = line.trim();
 
-        // Empty line -> small vertical spacer
         if (!trimmed) {
           return <div key={lineIndex} className="h-1.5" />;
         }
 
-        // Heading 1: # Title
         if (trimmed.startsWith("# ")) {
           return (
             <h1 key={lineIndex} className="font-extrabold text-base mt-1 mb-0.5">
@@ -140,7 +140,6 @@ const FormattedMessage = ({ text }) => {
           );
         }
 
-        // Heading 2: ## Title
         if (trimmed.startsWith("## ")) {
           return (
             <h2 key={lineIndex} className="font-bold text-sm mt-1 mb-0.5">
@@ -149,7 +148,6 @@ const FormattedMessage = ({ text }) => {
           );
         }
 
-        // Heading 3: ### Title
         if (trimmed.startsWith("### ")) {
           return (
             <h3 key={lineIndex} className="font-semibold text-xs mt-0.5 mb-0.5">
@@ -158,7 +156,6 @@ const FormattedMessage = ({ text }) => {
           );
         }
 
-        // Numbered list: 1. Item or 1) Item
         const numMatch = trimmed.match(/^(\d+[\.\)])\s+(.*)$/);
         if (numMatch) {
           return (
@@ -173,7 +170,6 @@ const FormattedMessage = ({ text }) => {
           );
         }
 
-        // Bullet list: - Item or * Item or • Item
         const bulletMatch = trimmed.match(/^([\-\*•])\s+(.*)$/);
         if (bulletMatch) {
           return (
@@ -186,7 +182,6 @@ const FormattedMessage = ({ text }) => {
           );
         }
 
-        // Regular paragraph
         return (
           <p key={lineIndex} className="leading-relaxed">
             {renderInlineMarkdown(line)}
@@ -231,6 +226,41 @@ const INITIAL_MESSAGES = [
   { id: 1, text: "Halo! Ada yang bisa saya bantu?", isUser: false },
 ];
 
+// Smooth Animated Scroll Helper (human-like slow scrolling)
+const smoothSlowScroll = (targetY, duration = 2400) => {
+  return new Promise((resolve) => {
+    const startY = window.pageYOffset || document.documentElement.scrollTop;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 8) {
+      resolve();
+      return;
+    }
+    const startTime = performance.now();
+
+    const step = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeInOutCubic for ultra smooth acceleration and braking
+      const ease =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      const currentY = startY + distance * ease;
+      window.scrollTo(0, currentY);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        window.scrollTo(0, targetY);
+        resolve();
+      }
+    };
+
+    requestAnimationFrame(step);
+  });
+};
+
 // --- Main Component ---
 
 const ChatBotBubble = () => {
@@ -241,8 +271,17 @@ const ChatBotBubble = () => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // High-Visibility Virtual Cursor State for Computer Use
+  const [cursorState, setCursorState] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    clicking: false,
+  });
+
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
+  const spotlightTimerRef = useRef(null);
 
   // Auto-scroll ke pesan terbaru
   useEffect(() => {
@@ -258,14 +297,43 @@ const ChatBotBubble = () => {
     [],
   );
 
-  // --- Dynamic Live DOM Scanner for AI Spotlight ---
+  // Inject styles for editorial spotlight and cursor click ripple
+  useEffect(() => {
+    if (document.getElementById("technobot-spotlight-styles")) return;
+    const style = document.createElement("style");
+    style.id = "technobot-spotlight-styles";
+    style.textContent = `
+      @keyframes technobotCalloutPulse {
+        0%, 100% {
+          background-color: rgba(0, 122, 255, 0.07);
+          border-left-color: #007aff;
+        }
+        50% {
+          background-color: rgba(0, 122, 255, 0.13);
+          border-left-color: #ff5733;
+        }
+      }
+      @keyframes technobotClickRipple {
+        0% {
+          transform: scale(0.4);
+          opacity: 0.9;
+        }
+        100% {
+          transform: scale(2.2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
+  // --- Dynamic Live DOM Scanner ---
   const extractPageContext = useCallback(() => {
     try {
       const mainContent = document.querySelector("main") || document.body;
       const sections = [];
       const seenTitles = new Set();
 
-      // 1. Scan explicit <section> elements
       const domSections = mainContent.querySelectorAll("section");
       domSections.forEach((sec, idx) => {
         const headerEl = sec.querySelector("h1, h2, h3, h4, [class*='font-bold'], [class*='font-semibold'], strong, p.font-bold");
@@ -282,7 +350,6 @@ const ChatBotBubble = () => {
         }
       });
 
-      // 2. Scan all standalone headings
       const headings = mainContent.querySelectorAll("h1, h2, h3, h4, [data-section]");
       headings.forEach((h) => {
         if (h.closest("#technobot-root") || h.closest(".technobot-ignore")) return;
@@ -308,32 +375,8 @@ const ChatBotBubble = () => {
     }
   }, []);
 
-  // --- AI Spotlight Engine ---
-  const spotlightTimerRef = useRef(null);
-
-  // Inject keyframe animation once (idempotent)
-  // Inject keyframe animation once (idempotent)
-  useEffect(() => {
-    if (document.getElementById("technobot-spotlight-styles")) return;
-    const style = document.createElement("style");
-    style.id = "technobot-spotlight-styles";
-    style.textContent = `
-      @keyframes technobotCalloutPulse {
-        0%, 100% {
-          background-color: rgba(0, 122, 255, 0.07);
-          border-left-color: #007aff;
-        }
-        50% {
-          background-color: rgba(0, 122, 255, 0.13);
-          border-left-color: #ff5733;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  }, []);
-
+  // --- Editorial Spotlight Engine ---
   const applySpotlightStyle = (el) => {
-    // Save original styles for clean removal
     el.dataset.technobotOrigBg = el.style.backgroundColor || el.style.background || "";
     el.dataset.technobotOrigBorderLeft = el.style.borderLeft || "";
     el.dataset.technobotOrigPad = el.style.padding || "";
@@ -366,11 +409,220 @@ const ChatBotBubble = () => {
     delete el.dataset.technobotOrigAnim;
   };
 
+  // --- High-Visibility Virtual Cursor Animation for Computer Use ---
+  const animateVirtualCursor = useCallback(async (targetEl) => {
+    if (!targetEl) return;
+
+    try {
+      const rect = targetEl.getBoundingClientRect();
+      const targetX = rect.left + Math.max(14, rect.width / 2);
+      const targetY = rect.top + Math.max(12, rect.height / 2);
+
+      // Start cursor from near chatbot bubble
+      const startX = window.innerWidth - 65;
+      const startY = window.innerHeight - 65;
+
+      setCursorState({
+        visible: true,
+        x: startX,
+        y: startY,
+        clicking: false,
+      });
+
+      // Smooth glide to target over 0.75s
+      await new Promise((r) => setTimeout(r, 60));
+      setCursorState({
+        visible: true,
+        x: targetX,
+        y: targetY,
+        clicking: false,
+      });
+
+      await new Promise((r) => setTimeout(r, 800));
+
+      // Click visual pulse
+      setCursorState((prev) => ({ ...prev, clicking: true }));
+      await new Promise((r) => setTimeout(r, 180));
+
+      try {
+        const mouseEvents = ["mousedown", "mouseup", "click"];
+        mouseEvents.forEach((type) => {
+          targetEl.dispatchEvent(
+            new MouseEvent(type, {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+              clientX: targetX,
+              clientY: targetY,
+            })
+          );
+        });
+
+        if (typeof targetEl.click === "function") {
+          targetEl.click();
+        }
+        if (typeof targetEl.focus === "function") {
+          targetEl.focus();
+        }
+      } catch (err) {
+        console.warn("Click dispatch warning:", err);
+      }
+
+      await new Promise((r) => setTimeout(r, 300));
+      setCursorState((prev) => ({ ...prev, clicking: false }));
+
+      // Stay visible for 1.2 seconds so the user can easily see it
+      await new Promise((r) => setTimeout(r, 1200));
+      setCursorState((prev) => ({ ...prev, visible: false }));
+    } catch (err) {
+      console.error("Cursor error:", err);
+      setCursorState((prev) => ({ ...prev, visible: false }));
+    }
+  }, []);
+
+  // --- Computer Use Action Executor (Click & Smooth Slow Scroll) ---
+  const executeComputerAction = useCallback(
+    async (actionType, targetQuery = "") => {
+      console.log(`[TechnoBot Computer Use] Action: ${actionType}, Target: ${targetQuery}`);
+
+      // 1. Scroll Down (Slow & Smooth over 2.2s)
+      if (actionType === "scroll_down") {
+        const currentY = window.pageYOffset || document.documentElement.scrollTop;
+        const targetY = currentY + Math.round(window.innerHeight * 0.75);
+
+        // Show cursor in viewport center gliding while scrolling
+        setCursorState({
+          visible: true,
+          x: window.innerWidth / 2 + 100,
+          y: window.innerHeight / 2,
+          clicking: false,
+        });
+
+        await smoothSlowScroll(targetY, 2200);
+
+        await new Promise((r) => setTimeout(r, 800));
+        setCursorState((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+
+      // 2. Scroll Bottom / Sampe Bawah (Slow & Smooth over 3.2s)
+      if (actionType === "scroll_bottom" || actionType === "scroll_end") {
+        const totalHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight
+        );
+        const targetY = Math.max(0, totalHeight - window.innerHeight);
+
+        setCursorState({
+          visible: true,
+          x: window.innerWidth / 2 + 120,
+          y: window.innerHeight / 2,
+          clicking: false,
+        });
+
+        await smoothSlowScroll(targetY, 3200);
+
+        await new Promise((r) => setTimeout(r, 800));
+        setCursorState((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+
+      // 3. Scroll Up (Slow & Smooth over 2.2s)
+      if (actionType === "scroll_up") {
+        const currentY = window.pageYOffset || document.documentElement.scrollTop;
+        const targetY = Math.max(0, currentY - Math.round(window.innerHeight * 0.75));
+
+        setCursorState({
+          visible: true,
+          x: window.innerWidth / 2 + 100,
+          y: window.innerHeight / 2,
+          clicking: false,
+        });
+
+        await smoothSlowScroll(targetY, 2200);
+
+        await new Promise((r) => setTimeout(r, 800));
+        setCursorState((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+
+      // 4. Scroll Top (Slow & Smooth over 2.5s)
+      if (actionType === "scroll_top") {
+        setCursorState({
+          visible: true,
+          x: window.innerWidth / 2 + 100,
+          y: window.innerHeight / 2,
+          clicking: false,
+        });
+
+        await smoothSlowScroll(0, 2500);
+
+        await new Promise((r) => setTimeout(r, 800));
+        setCursorState((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+
+      const cleanQuery = String(targetQuery).toLowerCase().replace(/[•"'\-]/g, "").trim();
+      if (!cleanQuery) return;
+
+      // Find candidates for clicking
+      const candidates = Array.from(
+        document.body.querySelectorAll("button, a, input, select, [role='button'], [tabindex], h1, h2, h3, h4, p, div, section")
+      ).filter((el) => {
+        if (["SCRIPT", "STYLE", "LINK", "META"].includes(el.tagName)) return false;
+        const panel = document.querySelector(".fixed.bottom-24.right-10");
+        if (panel && panel.contains(el)) return false;
+        const bubble = document.querySelector(".fixed.bottom-7.right-7");
+        if (bubble && bubble.contains(el)) return false;
+        return true;
+      });
+
+      let bestElement = null;
+      let bestScore = 0;
+
+      candidates.forEach((el) => {
+        const text = (el.innerText || el.textContent || el.getAttribute("aria-label") || el.getAttribute("placeholder") || "").toLowerCase().trim();
+        const isClickable = el.tagName === "BUTTON" || el.tagName === "A" || el.getAttribute("role") === "button" || el.onclick != null || el.classList.contains("cursor-pointer");
+
+        if (text && text.includes(cleanQuery)) {
+          let score = 500 - text.length;
+          if (isClickable) score += 400;
+          if (text === cleanQuery) score += 300;
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestElement = el;
+          }
+        }
+      });
+
+      if (bestElement) {
+        if (actionType === "scroll_to") {
+          const rect = bestElement.getBoundingClientRect();
+          const targetY = (window.pageYOffset || document.documentElement.scrollTop) + rect.top - window.innerHeight / 3;
+          await smoothSlowScroll(Math.max(0, targetY), 2200);
+        } else {
+          await animateVirtualCursor(bestElement);
+        }
+      }
+
+      // If mapped route and action is click/navigate, transition route smoothly
+      if (actionType === "click" || actionType === "navigate") {
+        const mappedRoute = ROUTE_MAP[cleanQuery];
+        if (mappedRoute) {
+          setTimeout(() => {
+            navigate(mappedRoute);
+          }, 450);
+        }
+      }
+    },
+    [animateVirtualCursor, navigate]
+  );
+
+  // --- AI Spotlight Engine ---
   const handleAgenticSpotlight = useCallback((toolCalls) => {
-    console.log("[TechnoBot Spotlight] toolCalls received:", JSON.stringify(toolCalls));
     if (!Array.isArray(toolCalls)) return;
 
-    // Clear previous spotlight highlights
     document.querySelectorAll("[data-technobot-spotlight]").forEach((el) => {
       removeSpotlightStyle(el);
       el.removeAttribute("data-technobot-spotlight");
@@ -393,23 +645,19 @@ const ChatBotBubble = () => {
           const cleanTarget = String(targetTitle).toLowerCase().replace(/[•"'\-]/g, "").trim();
           if (!cleanTarget) return;
 
-          // Strategy: walk elements to find the most specific content match
           const allElements = document.body.querySelectorAll("*");
           let bestMatch = null;
           let bestScore = 0;
 
           allElements.forEach((el) => {
-            // Skip non-visible / meta elements
             if (["SCRIPT", "STYLE", "LINK", "META", "NAV", "FOOTER"].includes(el.tagName)) return;
             if (el.closest("[data-technobot-ignore]")) return;
 
-            // Skip chatbot itself
             const chatPanel = document.querySelector(".fixed.bottom-24.right-10");
             if (chatPanel && chatPanel.contains(el)) return;
             const chatBubble = document.querySelector(".fixed.bottom-7.right-7");
             if (chatBubble && chatBubble.contains(el)) return;
 
-            // Get direct text of the element
             const ownText = Array.from(el.childNodes)
               .filter((n) => n.nodeType === Node.TEXT_NODE)
               .map((n) => n.textContent)
@@ -420,24 +668,19 @@ const ChatBotBubble = () => {
 
             const fullText = (el.innerText || el.textContent || "").toLowerCase().replace(/[•"'\-]/g, "").trim();
 
-            // 1. Exact match on direct text
             if (ownText && ownText.includes(cleanTarget)) {
               const score = 1000 - ownText.length;
               if (score > bestScore) {
                 bestScore = score;
                 bestMatch = el;
               }
-            }
-            // 2. Heading match
-            else if (/^H[1-6]$/.test(el.tagName) && fullText.includes(cleanTarget)) {
+            } else if (/^H[1-6]$/.test(el.tagName) && fullText.includes(cleanTarget)) {
               const score = 800 - fullText.length;
               if (score > bestScore) {
                 bestScore = score;
                 bestMatch = el;
               }
-            }
-            // 3. Specific content paragraph / card
-            else if (fullText.includes(cleanTarget) && fullText.length < 400) {
+            } else if (fullText.includes(cleanTarget) && fullText.length < 400) {
               const score = 500 - fullText.length;
               if (score > bestScore) {
                 bestScore = score;
@@ -449,13 +692,11 @@ const ChatBotBubble = () => {
           if (bestMatch) {
             let targetContainer = bestMatch;
 
-            // If matched element is an inline tag, select its parent block
             const inlineTags = ["SPAN", "STRONG", "B", "EM", "A", "I"];
             if (inlineTags.includes(bestMatch.tagName)) {
               targetContainer = bestMatch.parentElement || bestMatch;
             }
 
-            // If the element has a direct card wrapper (like Visi/Misi card or Sambutan text block)
             const parentCard = bestMatch.closest(".rounded-3xl, .rounded-2xl, [class*='rounded'], [class*='border-l']");
             if (parentCard && parentCard.offsetHeight < 450 && parentCard !== document.querySelector("main")) {
               targetContainer = parentCard;
@@ -463,7 +704,6 @@ const ChatBotBubble = () => {
 
             if (!highlightedElements.includes(targetContainer)) {
               highlightedElements.push(targetContainer);
-
               targetContainer.setAttribute("data-technobot-spotlight", "true");
               applySpotlightStyle(targetContainer);
             }
@@ -474,14 +714,14 @@ const ChatBotBubble = () => {
       }
     }
 
-    // Smooth scroll to the first highlighted element
     if (highlightedElements.length > 0) {
       const firstTarget = highlightedElements[0];
       setTimeout(() => {
-        firstTarget.scrollIntoView({ behavior: "smooth", block: "center" });
+        const rect = firstTarget.getBoundingClientRect();
+        const targetY = (window.pageYOffset || document.documentElement.scrollTop) + rect.top - window.innerHeight / 3;
+        smoothSlowScroll(Math.max(0, targetY), 2000);
       }, 250);
 
-      // Auto-remove after 8 seconds cleanly
       spotlightTimerRef.current = setTimeout(() => {
         highlightedElements.forEach((el) => {
           removeSpotlightStyle(el);
@@ -516,7 +756,7 @@ const ChatBotBubble = () => {
     }
   }, [navigate]);
 
-  // Connect to Live RAG Backend API with AI Spotlight Context
+  // Connect to Live RAG Backend API with Computer Use & Spotlight
   const handleSend = useCallback(async () => {
     const trimmed = inputValue.trim();
     if (!trimmed || isLoading) return;
@@ -525,6 +765,52 @@ const ChatBotBubble = () => {
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
     setIsLoading(true);
+
+    // Advanced Natural Language Computer Use Intent Parser
+    const lowerQuery = trimmed.toLowerCase();
+    const pendingActions = [];
+
+    // 1. Compound / Multi-step intent: "klik ... lalu scroll ..."
+    const compoundMatch = lowerQuery.match(/(klik|pencet|pilih|buka)\s+(.+?)\s+(lalu|kemudian|terus|setelah itu)\s+(scrol+|gulir)\s*(.*)/i);
+    if (compoundMatch) {
+      const clickTarget = compoundMatch[2].replace(/^(bagian|menu|halaman)\s+/i, "").trim();
+      const scrollDirection = compoundMatch[5].trim();
+
+      pendingActions.push({ type: "click", target: clickTarget });
+
+      if (scrollDirection.includes("bawah") || scrollDirection.includes("kebawah")) {
+        pendingActions.push({ type: "scroll_bottom", target: "", delay: 1100 });
+      } else if (scrollDirection.includes("atas") || scrollDirection.includes("keatas")) {
+        pendingActions.push({ type: "scroll_top", target: "", delay: 1100 });
+      } else {
+        pendingActions.push({ type: "scroll_down", target: "", delay: 1100 });
+      }
+    } else {
+      // 2. Click / Navigation intent
+      if (/^(klik|pencet|pilih|buka)\s+/i.test(lowerQuery)) {
+        const target = trimmed.replace(/^(klik|pencet|pilih|buka)\s+(bagian\s+|menu\s+|halaman\s+)?/i, "").trim();
+        pendingActions.push({ type: "click", target });
+      }
+      // 3. Scroll intent
+      else if (/(scrol+|gulir)/i.test(lowerQuery)) {
+        if (/sampe\s*bawah|sampai\s*bawah|paling\s*bawah/i.test(lowerQuery)) {
+          pendingActions.push({ type: "scroll_bottom", target: "" });
+        } else if (/paling\s*atas|ke\s*paling\s*atas/i.test(lowerQuery)) {
+          pendingActions.push({ type: "scroll_top", target: "" });
+        } else if (/ke\s*bawah|kebawah|down/i.test(lowerQuery)) {
+          pendingActions.push({ type: "scroll_down", target: "" });
+        } else if (/ke\s*atas|keatas|up/i.test(lowerQuery)) {
+          pendingActions.push({ type: "scroll_up", target: "" });
+        } else {
+          const matchTarget = lowerQuery.match(/(?:scrol+|gulir)\s*(?:ke\s*bagian|ke)\s*(.+)/i);
+          if (matchTarget && matchTarget[1]) {
+            pendingActions.push({ type: "scroll_to", target: matchTarget[1].trim() });
+          } else {
+            pendingActions.push({ type: "scroll_down", target: "" });
+          }
+        }
+      }
+    }
 
     const updatedHistory = [
       ...history,
@@ -553,12 +839,10 @@ const ChatBotBubble = () => {
       }
 
       const data = await response.json();
-      console.log("[TechnoBot] RAW API response:", JSON.stringify(data).slice(0, 500));
       const choice = data.choices?.[0] || {};
       const assistantMessage = choice.message || {};
       const content = assistantMessage.content || "Informasi telah diproses.";
       const toolCalls = assistantMessage.tool_calls || [];
-      console.log("[TechnoBot] tool_calls count:", toolCalls.length, "tool_calls:", JSON.stringify(toolCalls).slice(0, 300));
 
       setMessages((prev) => [
         ...prev,
@@ -575,9 +859,34 @@ const ChatBotBubble = () => {
       ]);
 
       if (toolCalls.length > 0) {
-        console.log("[TechnoBot] Dispatching toolCalls to handlers...");
         handleAgenticNavigation(toolCalls);
         handleAgenticSpotlight(toolCalls);
+
+        for (const tool of toolCalls) {
+          const fnName = tool?.function?.name;
+          if (fnName === "computer_action") {
+            const rawArgs = tool.function.arguments;
+            const args = typeof rawArgs === "string" ? JSON.parse(rawArgs) : rawArgs;
+            const act = args.action || "click";
+            const target = args.target || "";
+            executeComputerAction(act, target);
+          } else if (fnName === "click_element") {
+            const rawArgs = tool.function.arguments;
+            const args = typeof rawArgs === "string" ? JSON.parse(rawArgs) : rawArgs;
+            if (args.target) {
+              executeComputerAction("click", args.target);
+            }
+          }
+        }
+      }
+
+      // Execute client-side parsed actions
+      if (pendingActions.length > 0) {
+        pendingActions.forEach((act) => {
+          setTimeout(() => {
+            executeComputerAction(act.type, act.target);
+          }, act.delay || 300);
+        });
       }
     } catch (error) {
       console.error("API error:", error);
@@ -592,13 +901,13 @@ const ChatBotBubble = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [inputValue, isLoading, history, extractPageContext, handleAgenticNavigation, handleAgenticSpotlight]);
+  }, [inputValue, isLoading, history, extractPageContext, handleAgenticNavigation, handleAgenticSpotlight, executeComputerAction]);
 
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        setIsActive(true); // Pastikan chat terbuka saat mengirim pesan
+        setIsActive(true);
         handleSend();
       }
     },
@@ -609,8 +918,59 @@ const ChatBotBubble = () => {
 
   return (
     <div onMouseLeave={isActive ? handleMouseLeave : undefined}>
-      {/* Chat container — hanya bagian ini yang ditambahkan: scroll area + bubbles */}
+      {/* High-Visibility Standard Virtual OS Pointer Cursor */}
+      {cursorState.visible && (
+        <div
+          style={{
+            position: "fixed",
+            left: `${cursorState.x}px`,
+            top: `${cursorState.y}px`,
+            pointerEvents: "none",
+            zIndex: 999999,
+            transition: "left 0.75s cubic-bezier(0.22, 1, 0.36, 1), top 0.75s cubic-bezier(0.22, 1, 0.36, 1)",
+            transform: `translate(-3px, -3px) scale(${cursorState.clicking ? 0.88 : 1})`,
+          }}
+        >
+          {/* Crisp High-Contrast OS Cursor SVG */}
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{
+              filter: "drop-shadow(0 4px 10px rgba(0, 122, 255, 0.45)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5))",
+            }}
+          >
+            <path
+              d="M3 3L10.5 21L14 14L21 10.5L3 3Z"
+              fill="#0f172a"
+              stroke="#ffffff"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
 
+          {/* Click Ripple Wave */}
+          {cursorState.clicking && (
+            <span
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: "rgba(0, 122, 255, 0.4)",
+                border: "2px solid #007aff",
+                animation: "technobotClickRipple 0.5s ease-out forwards",
+                pointerEvents: "none",
+              }}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Chat container */}
       <div
         className={`${STYLE_CONTAINER} ${isHovered && isActive ? "opacity-100 z-50" : "opacity-0 -z-10"} `}
       >
@@ -633,8 +993,7 @@ const ChatBotBubble = () => {
         </div>
       </div>
 
-
-      {/* Floating button + hover panel — tidak diubah dari aslinya */}
+      {/* Floating button + hover panel */}
       <div className="fixed bottom-7 right-7 z-50 flex flex-row-reverse items-center">
         <button
           type="button"
@@ -650,7 +1009,7 @@ const ChatBotBubble = () => {
           className={`${PANEL_BASE} ${isHovered ? "opacity-100 w-70" : "opacity-0 w-0"}`}
         >
           <svg
-          onClick={setIsHovered.bind(null, false)}
+            onClick={setIsHovered.bind(null, false)}
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"

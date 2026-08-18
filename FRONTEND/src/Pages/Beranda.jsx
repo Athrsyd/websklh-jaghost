@@ -27,6 +27,11 @@ const Beranda = () => {
 
     return () => mediaQuery.removeEventListener("change", handleMediaChange);
   }, []);
+
+  useEffect(() => {
+    console.log(window.innerWidth, window.innerHeight);
+  }, []);
+
   const HubunganIndustri = [
     {
       id: 1,

@@ -281,6 +281,7 @@ const Beranda = () => {
   ];
 
   const handleJurusanDec = () => {
+    setDirection(1);
     if (jurusanId === 7) {
       setJurusanId(1);
     } else {
@@ -289,6 +290,7 @@ const Beranda = () => {
   };
 
   const handleJurusanInc = () => {
+    setDirection(-1);
     if (jurusanId === 1) {
       setJurusanId(7);
     } else {
@@ -424,22 +426,22 @@ const Beranda = () => {
 
       {/* Program keahlian */}
       <section
-        className="w-full min-h-135 bg-yellow-400 rounded-t-[7em] py-15"
+        className="w-full min-h-135 bg-yellow-400 rounded-t-[7em] py-15 transition-colors duration-500"
         style={{
           background: `color-mix(in srgb, ${activeJurusan.color} 30%, transparent)`,
         }}
       >
         <div
           className="container relative w-2/10 opacity-70 mx-auto flex flex-col bg-white/50 border border-white
-  rounded-full py-2 px-2 shadow-2xl items-center justify-center bottom-6"
+          rounded-full py-2 px-2 shadow-2xl items-center justify-center bottom-8"
         >
           <h1 className="text-[21px] font-bold text-center font-poppins text-black">
             • Program Keahlian •
           </h1>
         </div>
 
-        {/* Judul + Deskripsi */}
-        <div className="container relative w-full mx-auto flex flex-col items-center justify-center mt-8">
+        {/* Judul + Deskripsi — sekarang punya tinggi tetap supaya tidak collapse */}
+        <div className="absolute w-full mx-auto mt-4 ">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={jurusanId}
@@ -449,19 +451,19 @@ const Beranda = () => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="absolute z-99 bottom-2 w-full flex flex-col items-center"
+              className="absolute inset-0 z-99 flex flex-col items-center justify-center"
             >
               <h1 className="font-poppins text-3xl font-bold text-black text-center">
                 {activeJurusan.nama}
               </h1>
-              <p className="mt-6 text-md font-poppins font-semibold text-center text-black w-3/5">
+              <p className="text-md font-poppins font-semibold text-center text-black w-3/5">
                 {activeJurusan.deskripsi}
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        <div className="relative w-2/3 flex flex-col mx-auto top-55 items-center justify-center">
+        <div className="relative w-2/3 flex flex-col mx-auto top-60 items-center justify-center">
           {/* Gambar */}
           {activeJurusan.img && (
             <div className="absolute w-full overflow-hidden flex justify-center h-102">
@@ -493,7 +495,7 @@ const Beranda = () => {
           <div className="relative w-full mx-auto flex flex-col justify-center items-center">
             <div
               className="absolute w-1/4 z-99 flex flex-col bg-white
-          rounded-full px-4 py-4 shadow-2xl items-center justify-center top-6"
+    rounded-full px-4 py-4 shadow-2xl items-center justify-center top-6"
             ></div>
             <h1
               className="absolute top-7.5 text-[13px] z-100 text-center font-montserrat font-semibold text-black"
@@ -503,9 +505,7 @@ const Beranda = () => {
             </h1>
           </div>
 
-          {/* Detail box */}
-          <div className="absolute z-10 w-3/4 h-17 top-15 mx-auto rounded-[34px] backdrop-blur-xl shadow-2xl bg-white"></div>
-          <div className="absolute top-19 z-100 w-2/3 overflow-hidden">
+          <div className="absolute top-15 z-10 w-3/4 mx-auto h-20 rounded-full overflow-hidden">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={jurusanId}
@@ -515,40 +515,42 @@ const Beranda = () => {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="flex flex-col gap-3 w-full text-black"
+                className="absolute inset-0 rounded-full backdrop-blur-xl shadow-2xl bg-white flex items-center px-6"
               >
-                {detailItems.map((item, index) => {
-                  const IconComponent = item.icon;
-                  return (
-                    <div
-                      key={index}
-                      className="relative flex flex-row gap-4 items-start"
-                    >
+                <div className="flex flex-col gap-3 w-full text-black">
+                  {detailItems.map((item, index) => {
+                    const IconComponent = item.icon;
+                    return (
                       <div
-                        className={`rounded-full ${item.isProspekKerja ? "flex py-2 px-2 w-8" : "py-1 px-1"} shrink-0`}
-                        style={{
-                          backgroundColor: activeJurusan.backgroundIconColor,
-                        }}
+                        key={index}
+                        className="relative flex flex-row gap-4 items-start"
                       >
-                        <IconComponent
-                          style={{ color: activeJurusan.iconColor }}
-                          className={`${item.isProspekKerja ? "h-4" : "h-6"}`}
-                        />
+                        <div
+                          className={`rounded-full ${item.isProspekKerja ? "flex py-2 px-2 w-8" : "py-1 px-1"} shrink-0`}
+                          style={{
+                            backgroundColor: activeJurusan.backgroundIconColor,
+                          }}
+                        >
+                          <IconComponent
+                            style={{ color: activeJurusan.iconColor }}
+                            className={`${item.isProspekKerja ? "h-4" : "h-6"}`}
+                          />
+                        </div>
+                        <h1 className="text-black font-montserrat text-xs">
+                          <span className="font-bold">{item.judul}</span>{" "}
+                          {item.judul === "Prospek Kerja:" ? (
+                            item.deskripsi
+                          ) : (
+                            <>
+                              <br />
+                              {item.deskripsi}
+                            </>
+                          )}
+                        </h1>
                       </div>
-                      <h1 className="text-black font-montserrat text-xs">
-                        <span className="font-bold">{item.judul}</span>{" "}
-                        {item.judul === "Prospek Kerja:" ? (
-                          item.deskripsi
-                        ) : (
-                          <>
-                            <br />
-                            {item.deskripsi}
-                          </>
-                        )}
-                      </h1>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -574,7 +576,7 @@ const Beranda = () => {
             />
           </button>
 
-          <div className="indicator absolute top-30 flex flex-row gap-2">
+          <div className="indicator absolute top-40 flex flex-row gap-2">
             {Array(7)
               .fill(0)
               .map((_, index) => (
@@ -582,7 +584,7 @@ const Beranda = () => {
                   key={index}
                   onClick={() => handleDot(index + 1)}
                   className={`indicator-item indicator-center transition-all duration-300
-              ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white`}
+        ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white`}
                   style={
                     index + 1 === jurusanId
                       ? { backgroundColor: activeJurusan.color }

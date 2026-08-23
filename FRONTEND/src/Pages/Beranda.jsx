@@ -583,7 +583,7 @@ const Beranda = () => {
                 <div
                   key={index}
                   onClick={() => handleDot(index + 1)}
-                  className={`indicator-item indicator-center transition-all duration-300
+                  className={`indicator-item indicator-center cursor-pointer transition-all duration-300
         ${index + 1 === jurusanId ? "w-5" : "w-3"} h-3 rounded-full bg-white`}
                   style={
                     index + 1 === jurusanId

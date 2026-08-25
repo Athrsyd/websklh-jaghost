@@ -1,6 +1,10 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
-
+import foto1 from '../../assets/sejarah/1.avif';
+import foto2 from '../../assets/sejarah/2.jpg';
+import foto3 from '../../assets/sejarah/3.jpg';
+import foto4 from '../../assets/sejarah/4.jpg';
+import foto5 from '../../assets/sejarah/5.jpeg';
 // ─────────────────────────────────────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────────────────────────────────────
@@ -8,6 +12,7 @@ const timelineData = [
   {
     year: "1969-1970",
     title: "Awal Gagasan Pendidikan Teknik",
+    image: foto1,
     description:
       "Pada masa PELITA I, pembangunan nasional mendorong pembaruan sistem pendidikan nasional, termasuk pengembangan pendidikan teknik. Gagasan ini menjadi bagian dari upaya mempersiapkan tenaga terampil melalui pendidikan Sekolah Teknologi Menengah.",
     side: "left", // dot muncul di KANAN -> pair (teks+gambar) digeser ke KIRI
@@ -15,6 +20,7 @@ const timelineData = [
   {
     year: "1971",
     title: "Proyek Perintis Dimulai",
+    image: foto2,
     description:
       "Proyek Perintis Sekolah Teknologi Menengah Pembangunan Jakarta mulai diwujudkan sebagai bagian dari pengembangan pendidikan teknik. Pada 1 Juli 1971, Proyek Perintis STM Pembangunan Jakarta diresmikan dan menerapkan masa pendidikan selama empat tahun.",
     side: "right", // dot muncul di KIRI -> pair digeser ke KANAN
@@ -22,6 +28,7 @@ const timelineData = [
   {
     year: "1986",
     title: "Menjadi STMN Pembangunan",
+    image: foto3,
     description:
       "Setelah periode sebagai Proyek Perintis STM Pembangunan, status proyek tidak lagi digunakan. Pada tahun 1986, sekolah berubah menjadi Sekolah Teknologi Menengah Negeri Pembangunan (STMN Pembangunan) Jakarta.",
     side: "left",
@@ -29,6 +36,7 @@ const timelineData = [
   {
     year: "1997",
     title: "Lahirnya SMK Negeri 26 Jakarta",
+    image: foto4,
     description:
       "Pada tahun 1997 terjadi perubahan nomenklatur. STM Negeri Pembangunan Jakarta kemudian berubah menjadi Sekolah Menengah Kejuruan Negeri 26 Jakarta, yang dikenal sebagai SMK Negeri 26 Jakarta.",
     side: "right",
@@ -36,6 +44,7 @@ const timelineData = [
   {
     year: "SEKARANG",
     title: "Melanjutkan Perjalanan",
+    image: foto5,
     description:
       "Perjalanan panjang tersebut menjadi bagian dari identitas SMK Negeri 26 Jakarta dalam menjalankan pendidikan vokasi dan terus berkembang menghadapi kebutuhan pendidikan dan dunia kerja.",
     side: "left",
@@ -198,7 +207,9 @@ const TimelineItem = ({ item }) => {
       // animate={isInView ? "visible" : "hidden"}
       style={{ width: IMAGE_W, flexShrink: 0, boxSizing: "border-box" }}
     >
-      <PlaceholderImage />
+      <a href={item.image} target="_blank" rel="noopener noreferrer">
+        <img src={item.image} alt={item.title} className="w-full h-full rounded-2xl cursor-zoom-in object-cover" />
+      </a>
     </motion.div>
   );
 

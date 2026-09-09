@@ -22,10 +22,35 @@
   width: 0px;
 }
 
+.faq-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #007aff #e9edf2;
+}
+
+.faq-scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+  display: block !important;
+}
+
+.faq-scrollbar::-webkit-scrollbar-track {
+  background: #e9edf2;
+  border-radius: 9999px;
+}
+
+.faq-scrollbar::-webkit-scrollbar-thumb {
+  background: #007aff;
+  border-radius: 9999px;
+}
+
+.faq-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0060c7;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0%);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -54,13 +79,14 @@ body {
   -webkit-text-stroke-width: 3px;
   font-size: 20em;
   -webkit-text-stroke-color: #ff5733;
-  animation: fadeIn 12s linear infinite ;
+  animation: fadeIn 12s linear infinite;
 }
 
 @keyframes fadeIn {
   from {
     transform: translateX(1570px);
   }
+
   to {
     transform: translateX(-1590px);
   }
@@ -71,11 +97,13 @@ body {
 }
 
 @keyframes tuingTuing {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
 }
-

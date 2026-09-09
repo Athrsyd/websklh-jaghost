@@ -129,11 +129,17 @@ const Navbar = () => {
                             >
                                 <Link
                                     to={link.href}
-                                    className={`text-md hover:text-blue-500
+                                    className={`text-md hover:text-blue-500 flex items-center gap-1
                                         after:absolute after:top-6 after:left-0 after:h-0.5 after:w-0
                                         after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full
                                         ${currentPage === link.name.toLowerCase() ? 'text-blue-500 after:scale-100' : 'text-gray-700'}`}>
-                                    {link.name}
+                                    <span>{link.name}</span>
+                                    {hasSublinks(link.name) && (
+                                        <IoChevronDown
+                                            size={13}
+                                            className={`transition-transform duration-200 ${openMenu === link.name ? 'rotate-180' : ''} ${currentPage === link.name.toLowerCase() ? 'text-blue-500' : 'text-gray-400'}`}
+                                        />
+                                    )}
                                 </Link>
                                 <div className={`absolute left-0 top-full mt-0.5 pt-2 ${openMenu === link.name ? 'block' : 'hidden'} bg-white shadow-xl
                                     transition-all duration-300 ease-in-out rounded-lg`}>

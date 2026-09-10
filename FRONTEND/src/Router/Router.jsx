@@ -11,6 +11,7 @@ import Program from '../Pages/Program'
 import BKK from '../Pages/program/BKK'
 import Jurusan from '../Pages/program/Jurusan'
 import Ekskul from '../Pages/program/Ekskul'
+import EkskulDetail from '../Pages/program/Detail/EkskulDetail'
 import LSP from '../Pages/program/LSP'
 import Informasi from '../Pages/Informasi'
 import Berita from '../Pages/info/Berita'
@@ -54,6 +55,7 @@ const Router = () => {
                 <Route path="/program/bkk" element={<BKK />} />
                 <Route path="/program/jurusan" element={<Jurusan />} />
                 <Route path="/program/ekskul" element={<Ekskul />} />
+                <Route path="/program/ekskul/:id" element={<EkskulDetail />} />
                 <Route path="/program/lsp" element={<LSP />} />
 
                 {/* Informasi */}

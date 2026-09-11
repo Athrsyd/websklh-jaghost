@@ -6,6 +6,25 @@ import kepsek from "./../assets/kepsek.png";
 import RowKanan from "./../assets/rowKananHitam.svg?react";
 import RowKiri from "./../assets/rowKiriHitam.svg?react";
 import logoPLN from "./../assets/logopln.png";
+import logoAdw from "./../assets/mitraKerja/SIJA/adwSIJA.png"
+import logoSolu from "./../assets/mitraKerja/SIJA/solu.png"
+import logoLumosive from "./../assets/mitraKerja/SIJA/lumosive.png"
+import logoBmw from "./../assets/mitraKerja/Otomotif/bmw.png"
+import logoArtha from "./../assets/mitraKerja/KGS/arthaKarya.png"
+import logoArvitech from "./../assets/mitraKerja/KGS/arvitech.png"
+import logoBahariJaya from "./../assets/mitraKerja/KGS/bahariJaya.png"
+import logoDwiTunggalKarunia from "./../assets/mitraKerja/KGS/dwitunggalKarunia.png"
+import logoGaharuKonstruksindo from "./../assets/mitraKerja/KGS/gaharuKonstruksindo.png"
+import logoGarudaIntiKarya from "./../assets/mitraKerja/KGS/garudaIntiKarya.png"
+import logoKaryaBaruPerdana from "./../assets/mitraKerja/KGS/karyaBaruPerdana.png"
+import logoPanasonic from "./../assets/mitraKerja/TEK/panasonic.png"
+import logoKomatsu from "./../assets/mitraKerja/TFLM/komatsu.png"
+import logoMercendes from "./../assets/mitraKerja/TFLM/mercendes.png"
+import logoSiemens from "./../assets/mitraKerja/TFLM/siemens.png"
+import logoSkf from "./../assets/mitraKerja/TFLM/skf.png"
+import logoDamaiPutraGroup from "./../assets/mitraKerja/KGS/damaiPutraGroup.png"
+import logoPlazaToyota from "./../assets/mitraKerja/Otomotif/plazaToyota.png"
+import logoMacnesia from "./../assets/mitraKerja/TEK/macnesia.png"
 import modelBangunan from "./../assets/modelJurusan/kgs.png";
 import modelElektro from "./../assets/modelJurusan/tek.png";
 import modelListrik from "./../assets/modelJurusan/titl.png";
@@ -136,24 +155,104 @@ const Beranda = () => {
   const HubunganIndustri = [
     {
       id: 1,
-      nama: "PLN",
-      logo: logoPLN,
+      nama: "ADW",
+      logo: logoAdw,
     },
     {
       id: 2,
-      nama: "PLN",
-      logo: logoPLN,
+      nama: "lumosive",
+      logo: logoLumosive,
     },
     {
       id: 3,
-      nama: "PLN",
-      logo: logoPLN,
+      nama: "solu",
+      logo: logoSolu,
     },
     {
       id: 4,
       nama: "PLN",
       logo: logoPLN,
     },
+    {
+      id: 5,
+      nama: "arthaKarya",
+      logo: logoArtha,
+    },
+    {
+      id: 6,
+      nama: "arvitech",
+      logo: logoArvitech,
+    },
+    {
+      id: 7,
+      nama: "bahariJaya",
+      logo: logoBahariJaya,
+    },
+    {
+      id: 8,
+      nama: "damaiPutraGroup",
+      logo: logoDamaiPutraGroup,
+    },
+    {
+      id: 9,
+      nama: "dwitunggalKarunia",
+      logo: logoDwiTunggalKarunia,
+    },
+    {
+      id: 10,
+      nama: "gaharuKonstruksindo",
+      logo: logoGaharuKonstruksindo,
+    },
+    {
+      id: 11,
+      nama: "garudaIntiKarya",
+      logo: logoGarudaIntiKarya,
+    },
+    {
+      id: 12,
+      nama: "karyaBaruPerdana",
+      logo: logoKaryaBaruPerdana,
+    },
+    {
+      id: 13,
+      nama: "bmw",
+      logo: logoBmw,
+    },
+    {
+      id: 14,
+      nama: "plazaToyota",
+      logo: logoPlazaToyota,
+    },
+    {
+      id: 15,
+      nama: "macnesia",
+      logo: logoMacnesia,
+    },
+    {
+      id: 16,
+      nama: "panasonic",
+      logo: logoPanasonic,
+    },
+    {
+      id: 17,
+      nama: "komatsu",
+      logo: logoKomatsu,
+    },
+    {
+      id: 18,
+      nama: "mercendes",
+      logo: logoMercendes,
+    },
+    {
+      id: 19,
+      nama: "siemens",
+      logo: logoSiemens,
+    },
+    {
+      id: 20,
+      nama: "skf",
+      logo: logoSkf,
+    }
   ];
 
   const jurusanData = [
@@ -623,7 +722,7 @@ const Beranda = () => {
                 style={{ color: activeJurusan.color }}
                 className="absolute w-1/4 z-99 flex flex-col bg-white
                 rounded-full p-2 shadow-2xl items-center justify-center
-                 top-6 text-center font-montserrat font-semibold"
+                top-6 text-center font-montserrat font-semibold"
               >Pelajari Selengkapnya</button>
             </div>
 
@@ -751,7 +850,7 @@ const Beranda = () => {
                       <img
                         src={partner.logo}
                         alt={partner.nama}
-                        className="max-h-30 w-auto "
+                        className="max-h-30 max-w-40 "
                       />
                     </div>
                   ))}

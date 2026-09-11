@@ -1,5 +1,17 @@
 import React from 'react'
 import DepthCarousel from '../../components/DepthCarousel'
+import { ArrowRight } from 'lucide-react'
+import juniorTechnicalSupport from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_junior_technical_support-A7lHgBLSzv0AOMZy.pdf'
+import tukangBangunanGedung from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_tukang_bangunan_gedung-1kugtkpl7KIvmcJN.pdf'
+import operatorMesinBubut from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_operator_mesin_bubut-o1To4U4xKbBZycHm.pdf'
+import operatorPerkakasMesin from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_operator_perkakas_mesin-NiKzuNunGLtmTT2T.pdf'
+import assemblingOperator from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_assembling_operator-IJEbXPSiM3kq5xB6.pdf'
+import solderingOperator from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_soldering_operator-bt3SW76OgfJ4jSGz (1).pdf'
+import perakitPeralatanElektronik from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_perakit_peralatan_elektronik-7phzxq7sn8R1BvK4.pdf'
+import pelaksanaMadya from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_pelaksana_madya_pemeliharaan_instrumen_control_berbasis_plc-vsNWfftx8rYGDFmr.pdf'
+import operatorPemasanganInstalasi from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_operator_pemasangan_instalasi_listrik-aPuwswH8655L9EOW.pdf'
+import engineJuniorTechnician from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_engine_junior_technician-wlNtJAywp7ecEOQ9.pdf'
+import chassisSuspension from '../../assets/skemaUjiKom/skema_sertifikasi_okupasi_chassis_suspension_junior_technician-7yadYmeNl6HDiePC.pdf'
 
 const LSP = () => {
 
@@ -9,6 +21,20 @@ const LSP = () => {
     'Mengembangkan sarana dan prasarana pelaksanaan sertifikasi yang terstandar',
     'Mengembangkan manajemen dan tata kelola LSP',
     'Mengembangkan sistem informasi'
+  ]
+
+  const skemaSertifikasi = [
+    ['Skema Sertifikasi Okupasi Junior Technical Support', juniorTechnicalSupport],
+    ['Skema Sertifikasi Okupasi Tukang Bangunan Gedung', tukangBangunanGedung],
+    ['Skema Sertifikasi Okupasi Operator Mesin Bubut', operatorMesinBubut],
+    ['Skema Sertifikasi Okupasi Operator Perkakas Mesin', operatorPerkakasMesin],
+    ['Skema Sertifikasi Okupasi Assembling Operator', assemblingOperator],
+    ['Skema Sertifikasi Okupasi Soldering Operator', solderingOperator],
+    ['Skema Sertifikasi Okupasi Perakit Peralatan Elektronik', perakitPeralatanElektronik],
+    ['Skema Sertifikasi Okupasi Pelaksana Madya Pemeliharaan Instrumen Control Berbasis PLC', pelaksanaMadya],
+    ['Skema Sertifikasi Okupasi Operator Pemasangan Instalasi Listrik', operatorPemasanganInstalasi],
+    ['Skema Sertifikasi Okupasi Engine Junior Technician', engineJuniorTechnician],
+    ['Skema Sertifikasi Okupasi Chassis Suspension Junior Technician', chassisSuspension]
   ]
 
 
@@ -94,6 +120,41 @@ const LSP = () => {
           </ul>
         </div>
       </section>
+
+      <section className="w-full bg-[#032544] px-10 py-20 text-white sm:px-12 sm:py-14 lg:px-20 lg:py-16">
+        <div className="mx-auto max-w-6xl px-8">
+          <h2 className="font-montserrat text-xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
+            SKEMA SERTIFIKASI
+          </h2>
+          <p className="mt-2 font-poppins text-[10px] text-white/85 sm:text-xs lg:text-sm">
+            Daftar skema kompetensi yang diujikan di LSP-P1 SMK Negeri 26 Jakarta.
+          </p>
+
+          <div className="mt-7 border-t border-white/20 px-8">
+            {skemaSertifikasi.map((skema, index) => (
+              <a
+                key={skema[0]}
+                href={skema[1]}
+                download
+                title={`Klik untuk mengunduh ${skema[0]}`}
+                aria-label={`Klik untuk mengunduh ${skema[0]}`}
+                className="grid grid-cols-[34px_minmax(0,1fr)_24px] items-center gap-2 border-b border-white/20 py-2 sm:grid-cols-[42px_minmax(0,1fr)_28px] sm:gap-4 sm:py-2.5"
+              >
+                <span className="font-poppins text-md text-white/85 sm:text-lg font-bold">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="font-montserrat text-[15px] font-bold leading-tight sm:text-base lg:text-lg">
+                  {skema[0]}
+                </span>
+                <span className="flex size-4 items-center justify-center rounded-full bg-white text-[#032544] sm:size-4.5">
+                  <ArrowRight size={12} strokeWidth={3} aria-hidden="true" />
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </>
 
   )

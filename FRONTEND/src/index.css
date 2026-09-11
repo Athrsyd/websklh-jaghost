@@ -10,7 +10,7 @@
   --color-side-back: #ffede9;
   --color-tertiary: #ff5733;
 
-  --animate-marquee: marquee 20s linear infinite;
+  --animate-marquee: marquee 45s linear infinite;
 
   --radius-7xl: 3rem;
 
@@ -33,11 +33,18 @@
 }
 
 .faq-scrollbar::-webkit-scrollbar-track {
+  display:none;
   background: #e9edf2;
   border-radius: 9999px;
 }
 
+.faq-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
+
 .faq-scrollbar::-webkit-scrollbar-thumb {
+  
   background: #007aff;
   border-radius: 9999px;
 }

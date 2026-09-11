@@ -57,7 +57,7 @@ const Navbar = () => {
     const navlinks = [
         { name: 'Beranda', href: '/' },
         { name: 'Tentang Kami', href: '/tentang-kami' },
-        { name: 'Program', href: '/program' },
+        { name: 'Program', href: '/program/jurusan' },
         { name: 'Informasi', href: '/informasi' },
         { name: 'Dokumentasi', href: '/dokumentasi' },
         { name: 'Portal', href: '/portal' },
@@ -79,6 +79,7 @@ const Navbar = () => {
         { parentName: 'Dokumentasi', name: 'Galeri Foto', href: '/dokumentasi/galeri-photo' },
         { parentName: 'Dokumentasi', name: 'Galeri Video', href: '/dokumentasi/galeri-video' },
         { parentName: 'Dokumentasi', name: 'Kegiatan Sekolah', href: '/dokumentasi/kegiatan-sekolah' },
+        { parentName: 'Dokumentasi', name: 'School Tour ', href: '/dokumentasi/virtual-tour' },
         { parentName: 'Portal', name: 'SPMB', href: '/portal/spmb' },
         { parentName: 'Portal', name: 'KJP', href: '/portal/kjp' },
         { parentName: 'Portal', name: 'PIP', href: '/portal/pip' },

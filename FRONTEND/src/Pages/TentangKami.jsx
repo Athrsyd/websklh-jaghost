@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import akreditasi from '../assets/akre.png';
 
 const TentangKami = () => {
 
@@ -19,6 +20,7 @@ const TentangKami = () => {
     { id: 2, number: "80", label: "JUMLAH PENDIDIK", textColor: "text-blue-600" },
     { id: 3, number: "29", label: "JUMLAH TENAGA KEPENDIDIKAN", textColor: "text-orange-500" },
     { id: 4, number: "1971", label: "TAHUN BERDIRI", textColor: "text-blue-600" },
+    { id: 5, number: "A", label: "Terakreditasi", textColor: "text-blue-600" },
   ]
   return (
     <>
@@ -70,24 +72,37 @@ const TentangKami = () => {
       <div className="w-full py-12 px-4 space-y-16">
 
         {/* 1. Baris 4 Kartu Statistik */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="max-w-6xl mx-auto flex flex-row flex-wrap gap-6 justify-center">
           {stats.map((item) => (
             <div
               key={item.id}
-              className="bg-slate-100 cursor-pointer rounded-2xl p-6 shadow-md shadow-gray-200/60 border border-gray-100 flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1"
+              className="bg-slate-100 w-1/5 cursor-pointer rounded-2xl p-6 shadow-md shadow-gray-200/60 border border-gray-100 flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1"
             >
-              <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
-                {item.number}
-              </h2>
-              <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
-                {item.label}
-              </p>
+              {item.id !== 5 ? (
+                <>
+                  <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
+                    {item.number}
+                  </h2>
+                  <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
+                    {item.label}
+                  </p>
+                </>
+              ) : (
+                <a href={akreditasi} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center">
+                  <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
+                    {item.label}
+                  </p>
+                  <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
+                    {item.number}
+                  </h2>
+                </a>
+              )}
             </div>
           ))}
-        </div>
+        </div >
 
         {/* 2. Bagian Video Mars SMK Negeri 26 Jakarta */}
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl p-8 sm:p-12  border border-gray-100 text-center">
+        <div div className="max-w-5xl mx-auto bg-white rounded-3xl p-8 sm:p-12  border border-gray-100 text-center" >
           <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-orange-500 to-orange-600 mb-8 inline-block">
             Mars SMK Negeri 26 jakarta
           </h2>
@@ -101,10 +116,10 @@ const TentangKami = () => {
             picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen></iframe>
           </div>
-        </div>
+        </div >
 
         {/* 3. Banner Call-to-Action (CTA) */}
-        <div className="max-w-5xl mx-auto bg-blue-600 rounded-3xl p-8 sm:p-12 text-center text-white shadow-xl shadow-blue-500/20">
+        <div div className="max-w-5xl mx-auto bg-blue-600 rounded-3xl p-8 sm:p-12 text-center text-white shadow-xl shadow-blue-500/20" >
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-wide">
             Jelajahi Program dan Keunggulan <br className="hidden sm:inline" /> SMK Negeri 26 Jakarta
           </h2>
@@ -117,9 +132,9 @@ const TentangKami = () => {
               Hubungi Kami
             </Link>
           </div>
-        </div>
+        </div >
 
-      </div>
+      </div >
     </>
   )
 }

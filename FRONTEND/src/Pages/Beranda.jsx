@@ -44,38 +44,38 @@ const Beranda = () => {
       id: 1,
       question: "Apa saja jurusan yang tersedia di SMKN 26 Jakarta?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 2,
-      question: "Apa saja jurusan yang tersedia di SMKN 26 Jakarta?",
-      answer:
         "SMKN 26 Jakarta memiliki berbagai kompetensi keahlian unggulan di bidang teknik industri seperti Konstruksi Gedung dan Sanitasi (KGS), Teknik Elektronika (TEK), Teknik Ketenagalistrikan (TITL), Teknik Fabrikasi Logam & Manufaktur (TFLM), dan Teknik Kendaraan Ringan (TKR).",
     },
     {
-      id: 3,
-      question: "Apa saja jurusan yang tersedia di SMKN 26 Jakarta?",
-      answer:
-        "SMKN 26 Jakarta memiliki berbagai kompetensi keahlian unggulan di bidang teknik industri seperti Konstruksi Gedung dan Sanitasi (KGS), Teknik Elektronika (TEK), Teknik Ketenagalistrikan (TITL), Teknik Fabrikasi Logam & Manufaktur (TFLM), dan Teknik Kendaraan Ringan (TKR).",
-    },
-    {
-      id: 4,
-      question: "Apa saja jurusan yang tersedia di SMKN 26 Jakarta?",
-      answer:
-        "SMKN 26 Jakarta memiliki berbagai kompetensi keahlian unggulan di bidang teknik industri seperti Konstruksi Gedung dan Sanitasi (KGS), Teknik Elektronika (TEK), Teknik Ketenagalistrikan (TITL), Teknik Fabrikasi Logam & Manufaktur (TFLM), dan Teknik Kendaraan Ringan (TKR).",
-    },
-    {
-      id: 5,
-      question: "Bagaimana proses dan alur pendaftaran PPDB di SMKN 26 Jakarta?",
-      answer:
-        "Pendaftaran Peserta Didik Baru (PPDB) diselenggarakan secara daring melalui portal resmi PPDB DKI Jakarta, mencakup jalur afirmasi, prestasi akademik & non-akademik, zonasi, serta perpindahan tugas orang tua.",
-    },
-    {
-      id: 6,
-      question: "Apakah lulusan SMKN 26 Jakarta langsung disalurkan kerja?",
-      answer:
-        "SMKN 26 Jakarta memiliki unit Bursa Kerja Khusus (BKK) dan kemitraan aktif dengan puluhan industri terkemuka seperti PT PLN, Astra Honda Motor, dan perusahaan multinasional untuk memfasilitasi magang dan rekrutmen kerja.",
-    },
+    id: 2,
+    question: "Di mana lokasi SMKN 26 Jakarta?",
+    answer:
+      "SMKN 26 Jakarta berlokasi di Jl. Balai Pustaka Baru I No.2, RT.2/RW.7, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta"
+  },
+  {
+    id: 3,
+    question: "Bagaimana proses pendaftaran PPDB di SMKN 26 Jakarta?",
+    answer:
+      "Pendaftaran dilakukan melalui portal resmi SPMB/PPDB DKI Jakarta sesuai jalur dan jadwal yang telah ditetapkan."
+  },
+  {
+    id: 4,
+    question: "Apakah SMKN 26 Jakarta memiliki program PKL?",
+    answer:
+      "Ya, seluruh siswa mengikuti Praktik Kerja Lapangan (PKL) di perusahaan mitra sesuai kompetensi keahliannya."
+  },
+  {
+    id: 5,
+    question: "Apakah lulusan SMKN 26 Jakarta memiliki peluang kerja?",
+    answer:
+      "Ya, sekolah memiliki Bursa Kerja Khusus (BKK) yang membantu penyaluran informasi lowongan, rekrutmen, dan kemitraan dengan dunia industri."
+  },
+  {
+    id: 6,
+    question: "Fasilitas apa saja yang tersedia di SMKN 26 Jakarta?",
+    answer:
+      "Sekolah menyediakan laboratorium praktik, bengkel sesuai jurusan, ruang komputer, perpustakaan, serta fasilitas penunjang kegiatan belajar."
+  }
   ];
 
   const [activeKategori, setActiveKategori] = useState("Semua");

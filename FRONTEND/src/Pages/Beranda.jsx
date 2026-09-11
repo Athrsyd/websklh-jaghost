@@ -30,6 +30,8 @@ import modelElektro from "./../assets/modelJurusan/tek.png";
 import modelListrik from "./../assets/modelJurusan/titl.png";
 import modelMesin from "./../assets/modelJurusan/tflm.png";
 import modelTkr from "./../assets/modelJurusan/tkr.png";
+import modelSija from "./../assets/modelJurusan/sija.png"
+import modelTbkr from "./../assets/modelJurusan/tbkr.png"
 import briefcase from "./../assets/briefcase.svg?react";
 import { Link } from "react-router-dom";
 
@@ -361,7 +363,7 @@ const Beranda = () => {
       icon: briefcase,
       deskripsi:
         "Program keahlian yang fokus pada perbaikan, perataan, pengecatan, dan restorasi konstruksi bodi kendaraan akibat kerusakan atau modifikasi.",
-      img: "",
+      img: modelTbkr,
       prospekKerja: [
         "Teknisi Body Repair",
         "Painter Otomotif",
@@ -380,7 +382,7 @@ const Beranda = () => {
       icon: briefcase,
       deskripsi:
         "Program 4 tahun yang mempelajari pemrograman, pengelolaan basis data, dan sistem informasi berbasis teknologi modern.",
-      img: "",
+      img: modelSija,
       prospekKerja: [
         "Software Engineer",
         "Web Developer",

@@ -67,7 +67,7 @@ const Navbar = () => {
         { parentName: 'Tentang Kami', name: 'Guru dan Staf', href: '/tentang-kami/guru-dan-staf' },
         { parentName: 'Tentang Kami', name: 'Prestasi', href: '/tentang-kami/prestasi' },
         { parentName: 'Tentang Kami', name: 'Sejarah', href: '/tentang-kami/sejarah' },
-        { parentName: 'Tentang Kami', name: 'Profil Sekolah', href: '/tentang-kami/profil-sekolah' },
+        { parentName: 'Tentang Kami', name: 'Profil Sekolah', href: '/tentang-kami' },
         { parentName: 'Tentang Kami', name: 'Hubungan Industri', href: '/tentang-kami/hubungan-industri' },
         { parentName: 'Program', name: 'BKK', href: '/program/bkk' },
         { parentName: 'Program', name: 'Jurusan', href: '/program/jurusan' },

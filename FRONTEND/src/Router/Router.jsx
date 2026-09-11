@@ -27,6 +27,7 @@ import KJP from '../Pages/portal/KJP'
 import PIP from '../Pages/portal/PIP'
 import KegiatanSekolah from '../Pages/dokum/KegiatanSekola'
 import Lenis from "lenis";
+import JurusanDetail from '../Pages/program/Detail/JurusanDetail'
 
 
 const Router = () => {
@@ -54,6 +55,7 @@ const Router = () => {
                 <Route path="/program" element={<Program />} />
                 <Route path="/program/bkk" element={<BKK />} />
                 <Route path="/program/jurusan" element={<Jurusan />} />
+                <Route path="/program/jurusan/:id" element={<JurusanDetail />} />
                 <Route path="/program/ekskul" element={<Ekskul />} />
                 <Route path="/program/ekskul/:id" element={<EkskulDetail />} />
                 <Route path="/program/lsp" element={<LSP />} />

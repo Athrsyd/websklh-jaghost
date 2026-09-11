@@ -15,7 +15,7 @@ import EkskulDetail from '../Pages/program/Detail/EkskulDetail'
 import LSP from '../Pages/program/LSP'
 import Informasi from '../Pages/Informasi'
 import Berita from '../Pages/info/Berita'
-import KalenderAkademik from '../Pages/info/KalenderAkademik'
+import Kontak from '../Pages/info/Konytak'
 import Pengumuman from '../Pages/info/Pengumuman'
 import Dokumentasi from '../Pages/Dokumentasi'
 import GaleriFoto from '../Pages/dokum/GaleriFoto'
@@ -63,7 +63,7 @@ const Router = () => {
                 {/* Informasi */}
                 <Route path="/informasi" element={<Informasi />} />
                 <Route path="/informasi/berita" element={<Berita />} />
-                <Route path="/informasi/kalender-akademik" element={<KalenderAkademik />} />
+                <Route path="/informasi/kontak" element={<Kontak />} />
                 <Route path="/informasi/pengumuman" element={<Pengumuman />} />
 
                 {/* Dokumentasi */}

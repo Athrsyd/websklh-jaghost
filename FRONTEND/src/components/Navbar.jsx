@@ -74,7 +74,7 @@ const Navbar = () => {
         { parentName: 'Program', name: 'Ekskul', href: '/program/ekskul' },
         { parentName: 'Program', name: 'LSP', href: '/program/lsp' },
         { parentName: 'Informasi', name: 'Berita', href: '/informasi/berita' },
-        { parentName: 'Informasi', name: 'Kalender Akademik', href: '/informasi/kalender-akademik' },
+        { parentName: 'Informasi', name: 'Kontak', href: '/informasi/kontak' },
         { parentName: 'Informasi', name: 'Pengumuman', href: '/informasi/pengumuman' },
         { parentName: 'Dokumentasi', name: 'Galeri Foto', href: '/dokumentasi/galeri-photo' },
         { parentName: 'Dokumentasi', name: 'Galeri Video', href: '/dokumentasi/galeri-video' },
@@ -150,7 +150,7 @@ const Navbar = () => {
                                             <Link
                                                 key={sublink.name}
                                                 to={sublink.href}
-                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg"
                                             >
                                                 {sublink.name}
                                             </Link>

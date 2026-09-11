@@ -75,28 +75,36 @@ const TentangKami = () => {
         <div className="max-w-6xl mx-auto flex flex-row flex-wrap gap-6 justify-center">
           {stats.map((item) => (
             <div
+            onClick={() => {
+              if (item.id === 5) {
+                window.open(akreditasi, '_blank');
+              }
+            }}
               key={item.id}
               className="bg-slate-100 w-1/5 cursor-pointer rounded-2xl p-6 shadow-md shadow-gray-200/60 border border-gray-100 flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1"
             >
-              {item.id !== 5 ? (
-                <>
-                  <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
-                    {item.number}
-                  </h2>
-                  <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
-                    {item.label}
-                  </p>
-                </>
-              ) : (
-                <a href={akreditasi} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center">
-                  <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
-                    {item.label}
-                  </p>
-                  <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
-                    {item.number}
-                  </h2>
-                </a>
-              )}
+              {/* <a href={item.id === 5 ? akreditasi : false} target={item.id === 5 ? '_blank' : ''} rel="noopener noreferrer" className="block"> */}
+                {item.id !== 5 ? (
+                  <>
+                    <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
+                      {item.number}
+                    </h2>
+                    <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
+                      {item.label}
+                    </p>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-full cursor-zoom-in">
+                    <p className="text-[11px] font-bold text-gray-400 mt-2 tracking-wider uppercase">
+                      {item.label}
+                    </p>
+                    <h2 className={`text-4xl font-extrabold ${item.textColor} tracking-tight`}>
+                      {item.number}
+                    </h2>
+                    <p className='text-slate-500 text-xs mt-4'>(klik untuk melihat sertifikat akreditasi)</p>
+                  </div>
+                )}
+              {/* </a> */}
             </div>
           ))}
         </div >

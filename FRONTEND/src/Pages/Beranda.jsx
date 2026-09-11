@@ -824,10 +824,10 @@ const Beranda = () => {
       {/* Hubungan Industri */}
       <section className="w-full min-h-screen bg-white py-20">
         <div className="w-full mx-auto flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-1 pt-2">HUBUNGAN <span className='text-secondary'>KEAHLIAN</span></h1>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-1 pt-2">HUBUNGAN <span className='text-secondary uppercase'>Industri</span></h1>
 
           <div className="h-80 w-full flex flex-row items-center">
-            <div className="hidden md:flex w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
+            <div className="hidden md:flex pl-4 w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
               <p className="text-black font-montserrat text-lg leading-5 text-justify">
                 Bekerja sama dengan berbagai perusahaan dan instansi untuk
                 mendukung pembelajaran, PKL, serta penyerapan lulusan.
@@ -869,7 +869,7 @@ const Beranda = () => {
       </section>
 
       {/* FAQ */}
-      <section className="w-full min-h-screen bg-secondary py-16 md:py-24 px-4 sm:px-6 lg:px-10 flex items-center justify-center">
+      <section className="w-full min-h-screen bg-linear-to-b from-side to-white py-16 md:py-24 px-4 sm:px-6 lg:px-10 flex items-center justify-center">
         <div className="w-full max-w-310 bg-white rounded-3xl md:rounded-[40px] p-6 sm:p-10 md:p-12 lg:p-16 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             {/* Sisi Kiri: Badge & Judul */}

@@ -28,7 +28,7 @@ const VirtualTour = () => {
         </div>
       </section>
 
-      <section className="relative flex min-h-[620px] w-full items-center justify-center overflow-hidden bg-[#fdfdfd] px-5 py-16 sm:min-h-[720px] sm:px-10 lg:min-h-[820px] lg:px-16">
+      <section className="relative flex min-h-155 w-full items-center justify-center overflow-hidden bg-[#fdfdfd] px-5 py-16 sm:min-h-[720px] sm:px-10 lg:min-h-[820px] lg:px-16">
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-80"
@@ -66,7 +66,7 @@ const VirtualTour = () => {
           <a href="https://app.lapentor.com/sphere/smkn-26-1602643278?scene=5f87dd1c362df77f177c1f53" target="_blank" rel="noopener noreferrer">
             <button
               type="button"
-              className="mt-10 rounded-full bg-[#032544] px-5 py-2 font-montserrat text-[10px] font-bold uppercase tracking-wide text-white shadow-[0_4px_0_#ff5733] transition hover:-translate-y-0.5 hover:bg-[#ff5733] hover:shadow-[0_4px_0_#032544] focus:outline-none focus:ring-2 focus:ring-[#1687ff] focus:ring-offset-2 sm:mt-12 sm:px-6 sm:py-2.5 sm:text-xs"
+              className="mt-10 rounded-full bg-[#032544] px-5 py-2 font-montserrat text-[10px] font-bold uppercase tracking-wide text-white shadow-[0_4px_0_#ff5733] transition hover:-translate-y-0.5 hover:bg-tertiary hover:shadow-[0_4px_0_#032544] focus:outline-none focus:ring-2 focus:ring-[#1687ff] focus:ring-offset-2 sm:mt-12 sm:px-6 sm:py-2.5 sm:text-xs"
             >
               Lihat lebih besar
             </button>

@@ -1,14 +1,15 @@
     import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+import { Link } from 'react-router-dom';
 
 const DEFAULT_ITEMS = [
-  { image: 'https://picsum.photos/id/1015/900/1200', label: 'Canyon', link: '#' },
-  { image: 'https://picsum.photos/id/1018/900/1200', label: 'Ridgeline', link: '#' },
-  { image: 'https://picsum.photos/id/1039/900/1200', label: 'Falls', link: '#' },
-  { image: 'https://picsum.photos/id/1043/900/1200', label: 'Harbour', link: '#' },
-  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' },
-  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' },
-  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' }
+  { image: 'https://picsum.photos/id/1015/900/1200', label: 'Canyon', link: '/program/jurusan/bangunan' },
+  { image: 'https://picsum.photos/id/1018/900/1200', label: 'Ridgeline', link: '/program/jurusan/elektronika' },
+  { image: 'https://picsum.photos/id/1039/900/1200', label: 'Falls', link: '/program/jurusan/listrik' },
+  { image: 'https://picsum.photos/id/1043/900/1200', label: 'Harbour', link: '/program/jurusan/mesin  ' },
+  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '/program/jurusan/bodi-otomotif' },
+  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '/program/jurusan/otomotif' },
+  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '/program/jurusan/komputer' }
 ];
 
 const AccordionGallery = ({
@@ -187,14 +188,13 @@ const AccordionGallery = ({
     >
       {items.map((item, i) => {
         const isActive = i === active;
-        const Tag = item.link ? 'a' : 'div';
         return (
-          <Tag
+          <Link
             key={i}
             ref={el => (panelRefs.current[i] = el)}
             className="group relative block min-w-0 min-h-0 flex-[1_1_0] cursor-pointer overflow-hidden bg-[#0a0713] no-underline outline-none [transform-style:preserve-3d] [transform-origin:center] [box-shadow:0_10px_30px_-18px_rgba(0,0,0,0.8)] focus-visible:[box-shadow:0_0_0_2px_var(--ag-accent),0_10px_30px_-18px_rgba(0,0,0,0.8)] max-[520px]:min-h-[84px] max-[520px]:!transform-none"
             style={{ borderRadius: `${radius}px`, '--ag-accent': accentColor, willChange: 'flex-grow, transform' }}
-            href={item.link || undefined}
+            to={item.link || undefined}
             onClick={e => handleClick(i, e)}
             onMouseEnter={() => handleEnter(i)}
             onFocus={() => setActive(i)}
@@ -249,7 +249,7 @@ const AccordionGallery = ({
                 </span>
               </span>
             )}
-          </Tag>
+          </Link>
         );
       })}
     </div>

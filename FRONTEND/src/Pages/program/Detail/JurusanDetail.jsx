@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import model from '../../../assets/modelJurusan/sija.png'
 
 // Data untuk Prospek Karir / Dunia Kerja
 const defaultJobProspects = [
@@ -108,7 +109,7 @@ const JurusanDetail = () => {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 flex flex-col items-center">
           {/* Section Title */}
-          <h2 className="font-montserrat font-black italic text-4xl sm:text-6xl md:text-7xl lg:text-[80px] text-terbg-tertiary text-center tracking-wide uppercase mb-8 sm:mb-12">
+          <h2 className="font-montserrat font-black italic text-5xl sm:text-7xl md:text-8xl lg:text-[90px] text-tertiary text-center tracking-wide uppercase mb-8 sm:mb-12">
             WEARPACK SIJA
           </h2>
 
@@ -116,7 +117,7 @@ const JurusanDetail = () => {
           <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl flex justify-center items-center">
             <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] flex justify-center items-center overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+                src={model}
                 alt="Model Wearpack SIJA"
                 className="w-full h-full object-contain object-center drop-shadow-xl"
               />
@@ -242,12 +243,16 @@ const JurusanDetail = () => {
           {/* Pill Badges (4 Columns x 3 Rows = 12 Pills) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
             {defaultJobProspects.map((job, idx) => (
-              <div
-                key={idx}
-                className="bg-tertiary hover:bg-[#ff451d] text-white rounded-full py-3.5 sm:py-4 px-5 sm:px-6 flex items-center justify-center text-center font-bold text-xs sm:text-sm shadow-md shadow-orange-950/10 transition-all duration-200 hover:scale-[1.03] cursor-default"
-              >
-                <span>{job}</span>
-              </div>
+              <a href={`https://www.google.com/search?q=apa+itu+${job.split(" ").join("+")}`} target="_blank" rel="noopener noreferrer" key={idx}
+                title={`Cari tahu lebih lanjut tentang ${job} di Google`} className="group">
+
+                <div
+                  key={idx}
+                  className="bg-tertiary  cursor-pointer  hover:bg-[#ff451d] text-white rounded-full py-3.5 sm:py-4 px-5 sm:px-6 flex items-center justify-center text-center font-bold text-xs sm:text-sm shadow-md shadow-orange-950/10 transition-all duration-200 hover:scale-[1.03] "
+                >
+                  <span>{job}</span>
+                </div>
+              </a>
             ))}
           </div>
         </div>

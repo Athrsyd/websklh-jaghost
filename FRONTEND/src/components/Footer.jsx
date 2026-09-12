@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo26 from '../assets/logo26.png';
-import partner from '../assets/partner.png';
+import logo26 from '../assets/logo26.webp';
+import partner from '../assets/partner.webp';
 
 const Footer = () => {
   return (

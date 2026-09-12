@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import bgBuilding from '../assets/background.png';
+import bgBuilding from '../assets/background.webp';
 import AestheticDigitCounter from './AestheticDigitCounter';
 
 export default function Hero() {

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '../hooks/useChat';
-import aiLogo from '../assets/ai-logo.png';
+import aiLogo from '../assets/ai-logo.webp';
 
 export default function AiChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import kepsekImg from './../assets/kepsek.png'; // Ensure the image path is correct
+import kepsekImg from './../assets/kepsek.webp'; // Ensure the image path is correct
 
 gsap.registerPlugin(ScrollTrigger);
 

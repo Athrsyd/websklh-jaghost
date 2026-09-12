@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import logo from '../assets/dunemLogo.png'
+import logo from '../assets/dunemLogo.webp'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { IoMenu, IoClose, IoChevronDown, IoChevronUp, IoCloudDownloadOutline } from "react-icons/io5";

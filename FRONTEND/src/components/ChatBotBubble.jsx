@@ -44,6 +44,35 @@ const ROUTE_MAP = {
   "pip": "/portal/pip",
 };
 
+export const resolveRouteFromText = (text) => {
+  if (!text) return null;
+  const clean = String(text).toLowerCase().replace(/[•"'\-,]/g, " ").trim();
+  if (!clean) return null;
+
+  // 1. Check exact key match
+  if (ROUTE_MAP[clean]) return ROUTE_MAP[clean];
+
+  // 2. Sort entries by path length descending (most specific child sub-routes first)
+  const entries = Object.entries(ROUTE_MAP).sort((a, b) => b[1].length - a[1].length);
+
+  for (const [key, path] of entries) {
+    const pattern = key.replace(/[-_]/g, '[-_ ]?');
+    const regex = new RegExp(`(^|\\s)${pattern}(\\s|$)`, 'i');
+    if (regex.test(clean)) {
+      return path;
+    }
+  }
+
+  // 3. Fallback substring search
+  for (const [key, path] of entries) {
+    if (clean.includes(key.replace(/[-_]/g, ' ')) || clean.includes(key)) {
+      return path;
+    }
+  }
+
+  return null;
+};
+
 // --- Icons ---
 
 const BotIcon = () => (
@@ -608,7 +637,7 @@ const ChatBotBubble = () => {
 
       // If mapped route and action is click/navigate, transition route smoothly
       if (actionType === "click" || actionType === "navigate") {
-        const mappedRoute = ROUTE_MAP[cleanQuery];
+        const mappedRoute = resolveRouteFromText(cleanQuery);
         if (mappedRoute) {
           setTimeout(() => {
             navigate(mappedRoute);
@@ -741,7 +770,7 @@ const ChatBotBubble = () => {
         try {
           const args = typeof fn.arguments === "string" ? JSON.parse(fn.arguments) : fn.arguments;
           const directPath = args.path || args.page;
-          const mappedPath = ROUTE_MAP[args.page] || ROUTE_MAP[directPath] || directPath;
+          const mappedPath = resolveRouteFromText(args.page) || resolveRouteFromText(directPath) || ROUTE_MAP[args.page] || ROUTE_MAP[directPath] || directPath;
 
           if (mappedPath) {
             const targetUrl = mappedPath.startsWith("/") ? mappedPath : `/${mappedPath}`;
@@ -778,12 +807,12 @@ const ChatBotBubble = () => {
 
       pendingActions.push({ type: "click", target: clickTarget });
 
-      if (scrollDirection.includes("bawah") || scrollDirection.includes("kebawah")) {
-        pendingActions.push({ type: "scroll_bottom", target: "", delay: 1100 });
+      if (scrollDirection.includes("bawah") || scrollDirection.includes("kebawah") || scrollDirection.includes("footer") || !scrollDirection) {
+        pendingActions.push({ type: "scroll_bottom", target: "", delay: 1400 });
       } else if (scrollDirection.includes("atas") || scrollDirection.includes("keatas")) {
-        pendingActions.push({ type: "scroll_top", target: "", delay: 1100 });
+        pendingActions.push({ type: "scroll_top", target: "", delay: 1400 });
       } else {
-        pendingActions.push({ type: "scroll_down", target: "", delay: 1100 });
+        pendingActions.push({ type: "scroll_down", target: "", delay: 1400 });
       }
     } else {
       // 2. Click / Navigation intent
@@ -793,7 +822,7 @@ const ChatBotBubble = () => {
       }
       // 3. Scroll intent
       else if (/(scrol+|gulir)/i.test(lowerQuery)) {
-        if (/sampe\s*bawah|sampai\s*bawah|paling\s*bawah/i.test(lowerQuery)) {
+        if (/sampe\s*bawah|sampai\s*bawah|paling\s*bawah|footer/i.test(lowerQuery)) {
           pendingActions.push({ type: "scroll_bottom", target: "" });
         } else if (/paling\s*atas|ke\s*paling\s*atas/i.test(lowerQuery)) {
           pendingActions.push({ type: "scroll_top", target: "" });
@@ -859,6 +888,7 @@ const ChatBotBubble = () => {
       ]);
 
       if (toolCalls.length > 0) {
+        const hasNavigation = toolCalls.some((t) => t?.function?.name === "navigate_to_page");
         handleAgenticNavigation(toolCalls);
         handleAgenticSpotlight(toolCalls);
 
@@ -869,12 +899,24 @@ const ChatBotBubble = () => {
             const args = typeof rawArgs === "string" ? JSON.parse(rawArgs) : rawArgs;
             const act = args.action || "click";
             const target = args.target || "";
-            executeComputerAction(act, target);
+            if (hasNavigation && act.startsWith("scroll")) {
+              setTimeout(() => {
+                executeComputerAction(act, target);
+              }, 1400);
+            } else {
+              executeComputerAction(act, target);
+            }
           } else if (fnName === "click_element") {
             const rawArgs = tool.function.arguments;
             const args = typeof rawArgs === "string" ? JSON.parse(rawArgs) : rawArgs;
             if (args.target) {
-              executeComputerAction("click", args.target);
+              if (hasNavigation) {
+                setTimeout(() => {
+                  executeComputerAction("click", args.target);
+                }, 1400);
+              } else {
+                executeComputerAction("click", args.target);
+              }
             }
           }
         }
@@ -882,10 +924,15 @@ const ChatBotBubble = () => {
 
       // Execute client-side parsed actions
       if (pendingActions.length > 0) {
+        const hasNavTarget = pendingActions.some((a) => a.type === "click" && resolveRouteFromText(a.target));
         pendingActions.forEach((act) => {
+          let delay = act.delay || 300;
+          if (hasNavTarget && act.type.startsWith("scroll")) {
+            delay = Math.max(delay, 1400);
+          }
           setTimeout(() => {
             executeComputerAction(act.type, act.target);
-          }, act.delay || 300);
+          }, delay);
         });
       }
     } catch (error) {

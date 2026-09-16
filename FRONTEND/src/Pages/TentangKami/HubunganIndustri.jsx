@@ -1,5 +1,6 @@
-import React from 'react'
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { Handshake, FileText, Rocket, BarChart2, TrendingUp } from "lucide-react";
 
 // ─── Hook: auto-scroll dengan pause saat hover/touch ─────────
 function useAutoScroll(speed = 1) {
@@ -11,7 +12,6 @@ function useAutoScroll(speed = 1) {
     const el = ref.current;
     if (!el) return;
 
-    // Kalau arah mundur, mulai dari ujung kanan
     if (speed < 0) {
       el.scrollLeft = el.scrollWidth - el.clientWidth;
     }
@@ -21,10 +21,8 @@ function useAutoScroll(speed = 1) {
         el.scrollLeft += speed;
 
         if (speed > 0 && el.scrollLeft >= el.scrollWidth - el.clientWidth) {
-          // Maju → loop balik ke kiri
           el.scrollLeft = 0;
         } else if (speed < 0 && el.scrollLeft <= 0) {
-          // Mundur → loop balik ke kanan
           el.scrollLeft = el.scrollWidth - el.clientWidth;
         }
       }
@@ -41,8 +39,6 @@ function useAutoScroll(speed = 1) {
     resume: () => { paused.current = false; },
   };
 }
-
-import { Handshake, FileText, Rocket, BarChart2, TrendingUp } from "lucide-react";
 
 const AlurKerjaSama = () => {
   const steps = [
@@ -94,7 +90,7 @@ const AlurKerjaSama = () => {
   ];
 
   return (
-    <section className="w-full bg-[#F8F9FA] py-20 font-sans">
+    <section className="w-full bg-side-back py-20 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
         <div className="text-center mb-20">
@@ -200,6 +196,66 @@ export function MitraScroll({ mitraIndustri = [] }) {
 
 
 const HubunganIndustri = () => {
+  const heroSectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const numberRef = useRef(null);
+  const curveRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current.children,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power2.out',
+          }
+        );
+      }
+
+      if (numberRef.current) {
+        gsap.fromTo(
+          numberRef.current,
+          { opacity: 0, scale: 0.96 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            delay: 0.1,
+            ease: 'power2.out',
+          }
+        );
+      }
+
+      if (curveRef.current) {
+        gsap.fromTo(
+          curveRef.current,
+          { opacity: 0, x: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            delay: 0.05,
+            ease: 'power2.out',
+          }
+        );
+      }
+    }, heroSectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const handleScrollToMitra = () => {
+    const nextSection = document.getElementById('mitra-industri');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const mitraIndustri = [
     { id: 1, name: "PT. Industri Kreatif", logo: "logo1.png" },
     { id: 2, name: "CV. Teknologi Maju", logo: "logo2.png" },
@@ -208,33 +264,73 @@ const HubunganIndustri = () => {
     { id: 5, name: "PT. Solusi Industri", logo: "logo4.png" },
     { id: 6, name: "PT. Solusi Industri", logo: "logo4.png" },
   ];
+
   return (
     <>
-      <section className='bg-side-back mx-auto min-h-screen flex justify-center items-center py-16'>
-        <div className="container w-4/5 mx-auto flex flex-row gap-8 items-center justify-center">
+      {/* ─── HERO SECTION (EXACT 100% DESIGN REPLICA) ─── */}
+      <section ref={heroSectionRef} className="relative flex min-h-screen w-full items-center overflow-hidden bg-linear-to-b from-side-back to-[#f8fafc] px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, #d9d9d9 1.5px, transparent 1.5px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
 
-          <div className="w-1/2 flex flex-col justify-center items-start gap-4">
-            <h3 className="text-sm font-semibold ">
-              <span className='text-gray-500'>Tentang Kami</span> {' '}
-              &gt; {' '} <span className='text-tertiary'>Hubungan Industri</span>
-            </h3>
-            <h1 className='text-start text-5xl font-bold text-tertiary'>Hubungan <br />Industri & Inovasi</h1>
-            <p className='text-start text-xl'>
-              Membangun jembatan strategis antara pendidikan vokasi dan dunia industri untuk mencetak generasi profesional yang siap menghadapi tantangan global.
-            </p>
-            <button className='bg-tertiary text-white py-2 px-4 rounded-lg hover:bg-tertiary-hover transition-colors duration-300'>
-              Jelajahi
-            </button>
-          </div>
-          <div className="w-1/2">
-            <div className="h-100 rounded-3xl w-8/10 bg-gray-300 ">
-              {/* bikin img pake object-cover */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-16 -top-40 z-0 h-[470px] w-[430px] rounded-bl-[170px] bg-[#d9d9d9] sm:-right-24 sm:-top-52 lg:h-[560px] lg:w-[510px]"
+        />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-4">
+            <div className="flex max-w-xl flex-col items-start lg:col-span-7">
+              <nav
+                aria-label="Breadcrumb"
+                className="mb-3 flex items-center gap-2 text-sm font-medium tracking-wide md:text-[15px]"
+              >
+                <span className="text-slate-500">Program</span>
+                <span className="text-xs font-bold text-slate-800 md:text-sm">
+                  &gt;
+                </span>
+                <span className="font-semibold text-tertiary">Hubungan Industri</span>
+              </nav>
+
+              <h1 className="mb-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-tertiary sm:text-5xl lg:text-[54px]">
+                Hubungan Industri
+              </h1>
+
+              <p className="mb-8 max-w-[440px] text-left text-sm leading-relaxed text-slate-700 sm:text-base lg:text-[16px]">
+                SMK Negeri 26 Jakarta menyediakan berbagai program keahlian untuk
+                mengembangkan potensi dan kompetensi siswa. Setiap jurusan dirancang
+                untuk membekali siswa dengan keterampilan, pengalaman, dan sikap
+                profesional yang sesuai dengan kebutuhan dunia kerja.
+              </p>
+
+              <button className="group inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-tertiary text-white px-7 py-3 text-[15px] font-medium  shadow-lg shadow-blue-500/25 transition-all duration-300 hover:bg-tertiary/70 hover:shadow-blue-500/40 active:scale-[0.98]">
+                <span>Jelajahi</span>
+                <span className="text-base font-bold transition-transform duration-300 group-hover:translate-x-1">
+                  &gt;
+                </span>
+              </button>
+            </div>
+
+            <div className="pointer-events-none relative hidden h-64 select-none items-center justify-center lg:col-span-5 lg:flex">
+              <span
+                aria-hidden="true"
+                className="font-montserrat text-[210px] font-extrabold leading-none text-transparent"
+                style={{ WebkitTextStroke: '1px #74a9ff' }}
+              >
+                26
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className='bg-white py-16 min-h-screen'>
+      <section id="mitra-industri" className='bg-white py-16 min-h-screen'>
         <div className="container mx-auto px-4">
           <h2 className='text-5xl font-bold text-center text-black'>Mitra <span className='text-secondary'>Industri</span></h2>
           <p className='text-lg mx-auto w-3/5 text-center text-gray-600 px-12 mt-4'>
@@ -244,7 +340,7 @@ const HubunganIndustri = () => {
         <MitraScroll mitraIndustri={mitraIndustri} />
 
       </section>
-      <section className='bg-white py-16 min-h-screen'>
+      <section className='bg-side-back py-8 min-h-screen'>
         <div className="container mx-auto px-4">
           {/* <h2 className='text-5xl font-bold text-center text-black'>Alur <span className='text-secondary'>Kerja Sama</span></h2> */}
           <AlurKerjaSama />

@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router/Router";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Layout from "./layout/Layout";
 import ChatBotBubble from "./components/ChatBotBubble";
 import Lenis from "lenis";
 
 const App = () => {
-
   useEffect(() => {
     // Fix: pastikan html tidak punya scroll-behavior CSS yang conflict
     document.documentElement.style.scrollBehavior = "auto";
@@ -37,17 +35,12 @@ const App = () => {
     };
   }, []);
 
-
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-white text-slate-900 font-sans antialiased flex flex-col justify-between">
-        <Navbar />
-        <main className="grow">
-          <ChatBotBubble />
-          <Router />
-        </main>
-        <Footer />
-      </div>
+      <Layout>
+        <ChatBotBubble />
+        <Router />
+      </Layout>
     </BrowserRouter>
   );
 };

@@ -73,6 +73,7 @@ const Navbar = () => {
         { parentName: 'Program', name: 'Jurusan', href: '/program/jurusan' },
         { parentName: 'Program', name: 'Ekskul', href: '/program/ekskul' },
         { parentName: 'Program', name: 'LSP', href: '/program/lsp' },
+        { parentName: 'Program', name: 'BLUD', href: '/program/blud' },
         { parentName: 'Informasi', name: 'Berita', href: '/informasi/berita' },
         { parentName: 'Informasi', name: 'Kontak', href: '/informasi/kontak' },
         { parentName: 'Informasi', name: 'Pengumuman', href: '/informasi/pengumuman' },
@@ -83,6 +84,8 @@ const Navbar = () => {
         { parentName: 'Portal', name: 'SPMB', href: '/portal/spmb' },
         { parentName: 'Portal', name: 'KJP', href: '/portal/kjp' },
         { parentName: 'Portal', name: 'PIP', href: '/portal/pip' },
+        { parentName: 'Portal', name: 'LMS', href: 'https://lms.smkn26jkt.sch.id/' },
+        { parentName: 'Portal', name: 'Perpus26', href: 'https://perpus.smkn26jkt.sch.id/' },
     ];
 
     // Desktop hover handlers — unchanged

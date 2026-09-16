@@ -28,6 +28,8 @@ import PIP from '../Pages/portal/PIP'
 import KegiatanSekolah from '../Pages/dokum/KegiatanSekola'
 import Lenis from "lenis";
 import JurusanDetail from '../Pages/program/Detail/JurusanDetail'
+import BLUD from '../Pages/program/BLUD'
+import BeritaDetail from '../Pages/info/Detail/BeritaDetail'
 
 
 const Router = () => {
@@ -59,12 +61,14 @@ const Router = () => {
                 <Route path="/program/ekskul" element={<Ekskul />} />
                 <Route path="/program/ekskul/:id" element={<EkskulDetail />} />
                 <Route path="/program/lsp" element={<LSP />} />
+                <Route path="/program/blud" element={<BLUD />} />
 
                 {/* Informasi */}
                 <Route path="/informasi" element={<Informasi />} />
                 <Route path="/informasi/berita" element={<Berita />} />
                 <Route path="/informasi/kontak" element={<Kontak />} />
                 <Route path="/informasi/pengumuman" element={<Pengumuman />} />
+                <Route path="/informasi/berita/:id" element={<BeritaDetail />} />
 
                 {/* Dokumentasi */}
                 <Route path="/dokumentasi" element={<Dokumentasi />} />

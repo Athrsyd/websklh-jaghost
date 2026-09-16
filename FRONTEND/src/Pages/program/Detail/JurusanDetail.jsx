@@ -86,14 +86,14 @@ const JurusanDetail = () => {
 
             {/* Right Image (Curved mask corner) */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end items-end w-full">
-              <div className="w-full max-w-md lg:max-w-none aspect-[4/3] sm:aspect-[16/11] bg-[#03172E]/20 rounded-tl-[140px] sm:rounded-tl-[200px] overflow-hidden shadow-2xl relative">
+              <div className="w-full max-w-md lg:max-w-none aspect-4/3 sm:aspect-16/11 bg-[#03172E]/20 rounded-tl-[140px] sm:rounded-tl-[200px] overflow-hidden shadow-2xl relative">
                 {/* Fallback coding photo illustration */}
                 <img
                   src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80"
                   alt="Siswa SIJA Praktik Lab Komputer"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
@@ -115,14 +115,14 @@ const JurusanDetail = () => {
 
           {/* Wearpack Uniform Students Image with soft bottom fade */}
           <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl flex justify-center items-center">
-            <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] flex justify-center items-center overflow-hidden">
+            <div className="relative w-full aspect-4/3] sm:aspect-16/10 flex justify-center items-center overflow-hidden">
               <img
                 src={model}
                 alt="Model Wearpack SIJA"
                 className="w-full h-full object-contain object-center drop-shadow-xl"
               />
               {/* Bottom gradient fade to white */}
-              <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-white via-white/80 to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@ const JurusanDetail = () => {
               <span className="text-[#03172E]">KOMPETENSI </span>
               <span className="text-terbg-tertiary">KEAHLIAN</span>
             </h2>
-            <div className="w-24 sm:w-32 h-[3px] bg-[#03172E] mt-3 mb-3" />
+            <div className="w-24 sm:w-32 h-0.75 bg-[#03172E] mt-3 mb-3" />
             <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-2xl leading-relaxed">
               Materi pembelajaran berbasis industri yang dirancang untuk
               memenuhi standar teknologi global terkini.
@@ -151,7 +151,7 @@ const JurusanDetail = () => {
             {/* ROW 1: 2 Cards (Wide Left + Regular Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-7">
               {/* Card 1: Large rounded top-left corner */}
-              <div className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-[180px] sm:min-h-[220px] p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-45 sm:min-h-55 p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Infrastruktur Jaringan &amp; Cloud
@@ -164,7 +164,7 @@ const JurusanDetail = () => {
               </div>
 
               {/* Card 2: Large rounded top-right corner */}
-              <div className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-[180px] sm:min-h-[220px] p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-45 sm:min-h-55 p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Keamanan Siber

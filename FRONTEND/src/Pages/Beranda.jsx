@@ -39,7 +39,7 @@ const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
   const [direction, setDirection] = useState(1);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [openFaq, setOpenFaq] = useState(0);
+  const [openFaq, setOpenFaq] = useState(false);
 
   const faqData = [
     {

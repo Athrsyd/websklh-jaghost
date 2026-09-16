@@ -328,6 +328,15 @@ const Sejarah = () => {
           boxSizing: "border-box",
         }}
       >
+
+        <div
+          style={{
+            backgroundImage: "radial-gradient(circle, #FF573380, 1.5px, transparent 1.5px)",
+            backgroundSize: "26px 26px",
+            opacity: "35%",
+          }}
+          className="absolute inset-0 pointer-events-none"
+        />
         <h1
           style={{
             fontFamily: "'Montserrat', sans-serif",

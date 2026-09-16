@@ -248,7 +248,7 @@ const BeritaDetail = () => {
               - Dilengkapi data-lenis-prevent & onWheel stopPropagation
                 agar scroll lancar seperti pada komponen FAQ
              ═══════════════════════════════════════════════════════════ */}
-          <aside className="lg:col-span-4 w-full bg-white rounded-3xl border border-slate-200/80 shadow-md p-5 sm:p-6 sticky top-6">
+          <aside className="lg:col-span-4 w-full bg-white rounded-3xl border border-slate-200/80 shadow-md p-5 sm:p-6 sticky top-8">
             {/* Tombol Kembali */}
             <div>
               <button

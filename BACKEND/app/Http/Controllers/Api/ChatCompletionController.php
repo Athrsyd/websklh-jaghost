@@ -103,6 +103,11 @@ class ChatCompletionController extends Controller
                     ]
                 ],
                 'citations' => [],
+                'retrieval_metadata' => [
+                    'trace_id' => 'rag-err',
+                    'confidence_score' => 0.0,
+                    'retrieval_latency_ms' => 0,
+                ],
                 'error_detail' => app()->environment('local') ? $e->getMessage() : null,
             ], 200);
         }

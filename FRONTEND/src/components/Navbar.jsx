@@ -16,19 +16,19 @@ const Navbar = () => {
     const mobileMenuRef = useRef(null);
 
     useEffect(() => {
-        if (location.pathname === '/program/bkk' || location.pathname === '/program/jurusan' || location.pathname === '/program/ekskul' || location.pathname === '/program/lsp') {
+        if (location.pathname === '/program/bkk' || location.pathname === '/program/jurusan' || location.pathname === '/program/ekskul' || location.pathname === '/program/lsp' || location.pathname === '/program/blud' || location.pathname.startsWith('/program/')) {
             setActivePage('program');
         }
-        else if (location.pathname === '/tentang-kami' || location.pathname === '/tentang-kami/guru-dan-staf' || location.pathname === '/tentang-kami/prestasi' || location.pathname === '/tentang-kami/sejarah' || location.pathname === '/tentang-kami/profil-sekolah' || location.pathname === '/tentang-kami/hubungan-industri') {
+        else if (location.pathname === '/tentang-kami' || location.pathname === '/tentang-kami/guru-dan-staf' || location.pathname === '/tentang-kami/sejarah' || location.pathname === '/tentang-kami/profil-sekolah' || location.pathname === '/tentang-kami/hubungan-industri') {
             setActivePage('tentang kami');
         }
-        else if (location.pathname === '/informasi/berita' || location.pathname === '/informasi/kalender-akademik' || location.pathname === '/informasi/pengumuman') {
+        else if (location.pathname === '/informasi' || location.pathname.startsWith('/informasi/')) {
             setActivePage('informasi');
         }
-        else if (location.pathname === '/dokumentasi/galeri-photo' || location.pathname === '/dokumentasi/galeri-video' || location.pathname === '/dokumentasi/kegiatan-sekolah') {
+        else if (location.pathname === '/dokumentasi/galeri-photo' || location.pathname === '/dokumentasi/galeri-video' || location.pathname === '/dokumentasi/kegiatan-sekolah' || location.pathname.startsWith('/dokumentasi/')) {
             setActivePage('dokumentasi');
         }
-        else if (location.pathname === '/portal/spmb' || location.pathname === '/portal/kjp' || location.pathname === '/portal/pip') {
+        else if (location.pathname === '/portal/spmb' || location.pathname === '/portal/kjp' || location.pathname === '/portal/pip' || location.pathname.startsWith('/portal/')) {
             setActivePage('portal');
         }
         else {
@@ -65,7 +65,6 @@ const Navbar = () => {
 
     const subnavlinks = [
         { parentName: 'Tentang Kami', name: 'Guru dan Staf', href: '/tentang-kami/guru-dan-staf' },
-        { parentName: 'Tentang Kami', name: 'Prestasi', href: '/tentang-kami/prestasi' },
         { parentName: 'Tentang Kami', name: 'Sejarah', href: '/tentang-kami/sejarah' },
         { parentName: 'Tentang Kami', name: 'Profil Sekolah', href: '/tentang-kami' },
         { parentName: 'Tentang Kami', name: 'Hubungan Industri', href: '/tentang-kami/hubungan-industri' },
@@ -75,8 +74,8 @@ const Navbar = () => {
         { parentName: 'Program', name: 'LSP', href: '/program/lsp' },
         { parentName: 'Program', name: 'BLUD', href: '/program/blud' },
         { parentName: 'Informasi', name: 'Berita', href: '/informasi/berita' },
+        { parentName: 'Informasi', name: 'Prestasi', href: '/informasi/prestasi' },
         { parentName: 'Informasi', name: 'Kontak', href: '/informasi/kontak' },
-        { parentName: 'Informasi', name: 'Pengumuman', href: '/informasi/pengumuman' },
         { parentName: 'Dokumentasi', name: 'Galeri Foto', href: '/dokumentasi/galeri-photo' },
         { parentName: 'Dokumentasi', name: 'Galeri Video', href: '/dokumentasi/galeri-video' },
         { parentName: 'Dokumentasi', name: 'Kegiatan Sekolah', href: '/dokumentasi/kegiatan-sekolah' },

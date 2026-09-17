@@ -4,7 +4,6 @@ import TentangKami from '../Pages/TentangKami'
 import HubunganIndustri from '../Pages/TentangKami/HubunganIndustri'
 import Beranda from '../Pages/Beranda'
 import GuruStaf from '../Pages/TentangKami/GuruStaf'
-import Prestasi from '../Pages/TentangKami/Prestasi'
 import Sejarah from '../Pages/TentangKami/Sejarah'
 import ProfileSekolah from '../Pages/TentangKami/ProfileSekolah'
 import Program from '../Pages/Program'
@@ -16,7 +15,7 @@ import LSP from '../Pages/program/LSP'
 import Informasi from '../Pages/Informasi'
 import Berita from '../Pages/info/Berita'
 import Kontak from '../Pages/info/Kontak'
-import Pengumuman from '../Pages/info/Pengumuman'
+import Prestasi from '../Pages/info/Prestasi'
 import Dokumentasi from '../Pages/Dokumentasi'
 import GaleriFoto from '../Pages/dokum/GaleriFoto'
 import GaleriVideo from '../Pages/dokum/GaleriVideo'
@@ -48,13 +47,12 @@ const Router = () => {
                 {/* Tentang Kami */}
                 <Route path="/tentang-kami" element={<TentangKami />} />
                 <Route path="/tentang-kami/guru-dan-staf" element={<GuruStaf />} />
-                <Route path="/tentang-kami/prestasi" element={<Prestasi />} />
                 <Route path="/tentang-kami/sejarah" element={<Sejarah />} />
                 <Route path="/tentang-kami/profil-sekolah" element={<ProfileSekolah />} />
                 <Route path="/tentang-kami/hubungan-industri" element={<HubunganIndustri />} />
 
                 {/* program */}
-                <Route path="/program" element={<Program />} />
+                {/* <Route path="/program" element={<Program />} /> */}
                 <Route path="/program/bkk" element={<BKK />} />
                 <Route path="/program/jurusan" element={<Jurusan />} />
                 <Route path="/program/jurusan/:id" element={<JurusanDetail />} />
@@ -67,7 +65,7 @@ const Router = () => {
                 <Route path="/informasi" element={<Informasi />} />
                 <Route path="/informasi/berita" element={<Berita />} />
                 <Route path="/informasi/kontak" element={<Kontak />} />
-                <Route path="/informasi/pengumuman" element={<Pengumuman />} />
+                <Route path="/informasi/prestasi" element={<Prestasi />} />
                 <Route path="/informasi/berita/:id" element={<BeritaDetail />} />
 
                 {/* Dokumentasi */}

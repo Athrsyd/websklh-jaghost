@@ -128,9 +128,6 @@ const Footer = () => {
               <li>
                 <Link to="/tentang-kami" className="hover:text-blue-600 transition-colors">Fasilitas</Link>
               </li>
-              <li>
-                <Link to="/tentang-kami/prestasi" className="hover:text-blue-600 transition-colors">Prestasi</Link>
-              </li>
             </ul>
           </div>
 
@@ -167,7 +164,7 @@ const Footer = () => {
                 <Link to="/informasi/berita" className="hover:text-blue-600 transition-colors">Berita</Link>
               </li>
               <li>
-                <Link to="/informasi/pengumuman" className="hover:text-blue-600 transition-colors">Pengumuman</Link>
+                <Link to="/informasi/prestasi" className="hover:text-blue-600 transition-colors">Prestasi</Link>
               </li>
               <li>
                 <Link to="/informasi/kalender-akademik" className="hover:text-blue-600 transition-colors">Kalender Akademik</Link>

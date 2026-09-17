@@ -1,5 +1,6 @@
 import React from 'react'
 import AccrodionGallery from '../../components/AccrodionGallery'
+import showcaseJurusan from './data/showcaseJurusan'
 
 const Jurusan = () => {
   return (
@@ -66,16 +67,18 @@ const Jurusan = () => {
         </div>
       </section>
 
-      <section className="relative flex flex-col min-h-screen w-full items-center overflow-hidden bg-linear-to-b  px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
-      <div className="title flex w-full flex-col items-center justify-center gap-4">
-        <h1 className='text-5xl font-montserrat text-center text-tertiary font-black '>Program Keahlian <span className="text-secondary">SMK Negeri 26 Jakarta</span></h1>
-      </div>
+      <section className="relative flex flex-col min-h-screen w-full items-center overflow-hidden bg-linear-to-b px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
+        <div className="title flex w-full flex-col items-center justify-center gap-4">
+          <h1 className="text-5xl font-montserrat text-center text-tertiary font-black">
+            Program Keahlian <span className="text-secondary">SMK Negeri 26 Jakarta</span>
+          </h1>
+        </div>
 
-      <div className="w-4/5 p-8  bg-white rounded-lg shadow-lg mt-8">
-          <AccrodionGallery/>
-    </div>
+        <div className="w-full max-w-6xl p-6 sm:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)] border border-slate-100 mt-8 sm:mt-12">
+          <AccrodionGallery items={showcaseJurusan} defaultIndex={0} />
+        </div>
       </section>
     </>
   )
 }
-export default Jurusan
+export default Jurusan

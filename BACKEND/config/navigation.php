@@ -49,16 +49,6 @@ return [
                 'staf-tu' => 'Tenaga administrasi dan staf sekolah',
             ],
         ],
-        'prestasi' => [
-            'title' => 'Prestasi Siswa & Sekolah',
-            'path' => '/tentang-kami/prestasi',
-            'aliases' => ['prestasi', 'juara', 'lomba', 'penghargaan', 'lks'],
-            'description' => 'Daftar perolehan prestasi, piala penghargaan, pemenang Lomba Kompetensi Siswa (LKS) tingkat provinsi & nasional, serta prestasi akademik maupun non-akademik.',
-            'sections' => [
-                'prestasi-terbaru' => 'Prestasi terkini siswa SMKN 26 Jakarta',
-                'prestasi-lks' => 'Rekam jejak juara LKS',
-            ],
-        ],
         'sejarah' => [
             'title' => 'Sejarah Sekolah',
             'path' => '/tentang-kami/sejarah',
@@ -167,13 +157,14 @@ return [
                 'jadwal-semester' => 'Kalender kegiatan belajar mengajar',
             ],
         ],
-        'pengumuman' => [
-            'title' => 'Pengumuman Resmi',
-            'path' => '/informasi/pengumuman',
-            'aliases' => ['pengumuman', 'edaran', 'surat-edaran', 'notifikasi', 'informasi-penting'],
-            'description' => 'Surat edaran, pengumuman kedinasan, jadwal daftar ulang, dan instruksi penting dari manajemen sekolah.',
+        'prestasi' => [
+            'title' => 'Prestasi Siswa & Sekolah',
+            'path' => '/informasi/prestasi',
+            'aliases' => ['prestasi', 'juara', 'lomba', 'penghargaan', 'lks'],
+            'description' => 'Daftar perolehan prestasi, piala penghargaan, pemenang Lomba Kompetensi Siswa (LKS) tingkat provinsi & nasional, serta prestasi akademik maupun non-akademik.',
             'sections' => [
-                'daftar-pengumuman' => 'Edaran dan pengumuman aktif',
+                'prestasi-terbaru' => 'Prestasi terkini siswa SMKN 26 Jakarta',
+                'prestasi-lks' => 'Rekam jejak juara LKS',
             ],
         ],
 

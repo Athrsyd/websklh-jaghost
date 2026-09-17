@@ -3,8 +3,7 @@ import React from 'react'
 const Prestasi = () => {
   return (
     <>
-
-      <section className="w-full relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-8 sm:pb-12 bg-linear-to-b  from-side-back to-[#F8FAFC]">
+      <section className="w-full relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-8 sm:pb-12 bg-linear-to-b from-side-back to-[#F8FAFC]">
         {/* Subtle dot pattern */}
         <div
           style={{
@@ -22,12 +21,12 @@ const Prestasi = () => {
           {/* Badge */}
           <div className="mb-5 sm:mb-6">
             <span className="inline-block bg-tertiary text-white px-8 sm:px-9 py-1 sm:py-1.25 rounded-t-full rounded-br-full text-md sm:text-base md:text-xl font-medium tracking-wide shadow-sm">
-              Tentang Lembaga Sertifikasi Profesi
+              Prestasi Siswa & Sekolah
             </span>
           </div>
 
           {/* Heading */}
-          <h1 className="font-montserrat font-black  text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] text-primary leading-[1.04] tracking-tight mb-3 sm:mb-4">
+          <h1 className="font-montserrat font-black text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] text-primary leading-[1.04] tracking-tight mb-3 sm:mb-4">
             SETIAP <span className="text-tertiary">PENCAPAIAN</span> <br />
             DIMULAI DARI <span className="text-secondary">KEBERANIAN</span>
           </h1>
@@ -36,13 +35,10 @@ const Prestasi = () => {
           <p className="font-poppins pr-100 text-sm sm:text-md md:text-lg lg:text-xl text-slate-600 tracking-wide">
             Merayakan perjalanan siswa SMK Negeri 26 Jakarta dalam berkarya, berkompetisi, dan mengukir prestasi.
           </p>
-
         </div>
 
         {/* Bottom Scroll Indicator */}
-        <div className="relative z-10 flex justify-center items-center pt-6">
-
-        </div>
+        <div className="relative z-10 flex justify-center items-center pt-6"></div>
       </section>
 
       <section className="relative w-full bg-white px-6 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-11">
@@ -55,8 +51,8 @@ const Prestasi = () => {
               Dokumentasi berbagai pencapaian dan momen membanggakan siswa SMK Negeri 26 Jakarta.
             </p>
           </div>
- 
-          <div className="mt-6 w-9/10 grid  grid-cols-2 gap-4 sm:mt-7 sm:grid-cols-4 sm:gap-5 lg:mt-6 lg:gap-6">
+
+          <div className="mt-6 w-9/10 grid grid-cols-2 gap-4 sm:mt-7 sm:grid-cols-4 sm:gap-5 lg:mt-6 lg:gap-6">
             {Array.from({ length: 8 }, (_, index) => (
               <article
                 key={index}

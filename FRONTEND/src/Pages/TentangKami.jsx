@@ -133,10 +133,10 @@ const TentangKami = () => {
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/tentang-kami/programs" className="bg-white text-blue-600 font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-gray-100 transition-colors text-sm w-full sm:w-auto">
+            <Link to="/program/jurusan" className="bg-white text-blue-600 font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:bg-gray-100 transition-colors text-sm w-full sm:w-auto">
               Lihat Program
             </Link>
-            <Link to="/tentang-kami/contact" className="bg-transparent border border-white/60 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/10 transition-colors text-sm w-full sm:w-auto">
+            <Link to="/informasi/kontak" className="bg-transparent border border-white/60 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/10 transition-colors text-sm w-full sm:w-auto">
               Hubungi Kami
             </Link>
           </div>

@@ -1,0 +1,50 @@
+name: Code Quality
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'FRONTEND/**'
+      - 'BACKEND/**'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'FRONTEND/**'
+      - 'BACKEND/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    name: Frontend ESLint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FRONTEND
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: FRONTEND/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+
+  backend:
+    name: Laravel Pint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: BACKEND
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:2
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: vendor/bin/pint --test

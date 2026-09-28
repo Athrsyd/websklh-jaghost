@@ -1,0 +1,90 @@
+name: Backend Dev Check
+
+on:
+  push:
+    paths:
+      - 'BACKEND/**'
+      - '.github/workflows/backend-dev-check.yml'
+  pull_request:
+    paths:
+      - 'BACKEND/**'
+      - '.github/workflows/backend-dev-check.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Laravel Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: rag_knowledge
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: BACKEND
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_pgsql, pgsql, zip, bcmath, curl
+          coverage: none
+
+      - name: Setup Composer cache
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('BACKEND/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Copy environment
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Run migration
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: rag_knowledge
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+        run: php artisan migrate --force
+
+      - name: Run tests
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: rag_knowledge
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY || 'gsk_dummy_test_key' }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || 'dummy_gemini_test_key' }}
+        run: php artisan test

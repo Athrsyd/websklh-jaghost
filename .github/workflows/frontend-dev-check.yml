@@ -11,6 +11,9 @@ on:
       - '.github/workflows/frontend-dev-check.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   lint-build:
     name: Lint & Build Frontend

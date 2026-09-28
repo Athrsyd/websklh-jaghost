@@ -1,0 +1,53 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '30 17 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+
+  frontend-audit:
+    name: Frontend npm audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FRONTEND
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: FRONTEND/package-lock.json
+      - run: npm ci
+      - run: npm audit --audit-level=high
+
+  backend-audit:
+    name: Backend Composer audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: BACKEND
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:2
+      - run: composer validate --strict
+      - run: composer audit --no-interaction

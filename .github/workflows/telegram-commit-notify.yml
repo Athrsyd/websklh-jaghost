@@ -24,12 +24,7 @@ jobs:
           COMPARE_URL: ${{ github.event.compare }}
         run: |
           SHORT_SHA="${COMMIT_SHA:0:7}"
-          TEXT="Repo: ${REPO}
-Branch: ${BRANCH}
-By: ${ACTOR}
-Commit: ${SHORT_SHA}
-Message: ${COMMIT_MESSAGE}
-Compare: ${COMPARE_URL}"
+          TEXT=$'Repo: '"${REPO}"$'\nBranch: '"${BRANCH}"$'\nBy: '"${ACTOR}"$'\nCommit: '"${SHORT_SHA}"$'\nMessage: '"${COMMIT_MESSAGE}"$'\nCompare: '"${COMPARE_URL}"
 
           curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \

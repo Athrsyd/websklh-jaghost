@@ -8,7 +8,7 @@
 ## 🏫 Tentang Proyek Ini
 
 ### Apa ini?
-Ini adalah proyek **website resmi SMK Negeri 26 Jakarta** (sekolah menengah kejuruan negeri di Jakarta, Indonesia). Proyek ini dibuat oleh **tim siswa** sebagai proyek sekolah/tugas kelompok.
+Ini adalah proyek **website resmi SMK Negeri 26 Jakarta** (sekolah menengah kejuruan negeri di Jakarta, Indonesia). Proyek ini dibuat oleh **tim siswa** sebagai proyek sekolah.
 
 ### Untuk siapa?
 Website ini akan dipakai oleh:

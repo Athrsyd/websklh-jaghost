@@ -1,0 +1,74 @@
+name: Telegram Commit Notify
+
+on:
+  push:
+    branches:
+      - '**'
+
+permissions: {}
+
+jobs:
+  telegram-notify:
+    name: Send commit notifications
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify Telegram for every commit in the push
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          EVENT_FILE: ${{ github.event_path }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+
+          with open(os.environ["EVENT_FILE"], "r", encoding="utf-8") as f:
+              event = json.load(f)
+
+          commits = event.get("commits", [])
+          token = os.environ["TELEGRAM_BOT_TOKEN"]
+          chat_id = os.environ["TELEGRAM_CHAT_ID"]
+          repo = os.environ["REPOSITORY"]
+          branch = os.environ["BRANCH"]
+          actor = os.environ["ACTOR"]
+
+          for commit in commits:
+              sha = commit.get("id", "")
+              short_sha = sha[:7]
+              message = commit.get("message", "").strip()
+              author = (commit.get("author") or {}).get("name") or "Unknown"
+              url = commit.get("url") or f"https://github.com/{repo}/commit/{sha}"
+
+              text = (
+                  "🚀 New commit pushed\n\n"
+                  f"Repo: {repo}\n"
+                  f"Branch: {branch}\n"
+                  f"Author: {author}\n"
+                  f"Actor: {actor}\n"
+                  f"Commit: {short_sha}\n"
+                  f"Message: {message}\n"
+                  f"Commit URL: {url}"
+              )
+
+              data = urllib.parse.urlencode({
+                  "chat_id": chat_id,
+                  "text": text,
+              }).encode()
+
+              req = urllib.request.Request(
+                  f"https://api.telegram.org/bot{token}/sendMessage",
+                  data=data,
+                  method="POST",
+              )
+
+              with urllib.request.urlopen(req, timeout=20) as response:
+                  if response.status != 200:
+                      raise RuntimeError(f"Telegram API returned HTTP {response.status}")

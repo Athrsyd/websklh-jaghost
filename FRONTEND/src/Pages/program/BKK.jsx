@@ -124,22 +124,20 @@ const BKK = () => {
 
       <section className="bg-white relative flex min-h-screen w-full flex-col
       items-center overflow-hidden
-      px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
+      px-6 pb-16 pt-24 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
 
         <div className="title w-full flex flex-col items-center justify-center gap-4">
-          <h1 className='text-5xl font-montserrat text-center text-black font-bold '>
+          <h1 className='text-3xl sm:text-5xl font-montserrat text-center text-black font-bold'>
             Bursa Kerja Khusus </h1>
-          <div className="bg-secondary rounded-full w-60 h-0.75"></div>
+          <div className="bg-secondary rounded-full w-40 sm:w-60 h-0.75"></div>
 
-          <p className='text-slate-600 text-md px-60 text-center'>Bursa Kerja Khusus menyediakan berbagai layanan untuk mendukung dalam menemukan peluang karier terbaik.</p>
+          <p className='text-slate-600 text-sm sm:text-base px-4 sm:px-12 lg:px-60 text-center max-w-5xl'>Bursa Kerja Khusus menyediakan berbagai layanan untuk mendukung dalam menemukan peluang karier terbaik.</p>
         </div>
 
-
-
-        <div className="flex flex-row flex-wrap justify-center gap-8 mt-16 w-full">
+        <div className="flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl">
           {dataBkk.map((item, index) => (
-            <div className="flex flex-col shadow-md bg-white w-1/5 rounded-xl items-center justify-center gap-4 p-8 h-80">
-              <div className={`w-15 h-15 flex rounded-full   p-4 items-center justify-center`}
+            <div key={index} className="flex flex-col shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-1/5 rounded-2xl items-center justify-center gap-4 p-6 sm:p-8 min-h-[280px] sm:h-80 border border-slate-100 hover:shadow-lg transition-shadow">
+              <div className={`w-14 h-14 sm:w-15 sm:h-15 flex rounded-full p-3 sm:p-4 items-center justify-center`}
                 style={{
                   backgroundColor: (index + 1) % 2 === 0
                     ? 'color-mix(in srgb, var(--color-tertiary) 50%, transparent)'
@@ -149,9 +147,9 @@ const BKK = () => {
                 {item.icon}
               </div>
               <div className="flex flex-col items-center justify-center gap-2">
-                <h1 className="text-xl font-bold text-center">0{index + 1}</h1>
-                <h2 className="text-md font-bold text-center">{item.title}</h2>
-                <p className="text-sm text-center my-4 text-slate-600">{item.description}</p>
+                <h2 className="text-xl font-bold text-center">0{index + 1}</h2>
+                <h3 className="text-base sm:text-md font-bold text-center">{item.title}</h3>
+                <p className="text-xs sm:text-sm text-center my-2 sm:my-4 text-slate-600 leading-relaxed">{item.description}</p>
               </div>
             </div>
           ))}
@@ -160,53 +158,53 @@ const BKK = () => {
 
       <section className="bg-accent relative flex min-h-screen w-full flex-col
       items-center overflow-hidden
-      px-6 pb-16 pt-16 sm:px-5 lg:px-16 lg:pb-24 lg:pt-18">
+      px-6 pb-16 pt-16 sm:px-8 lg:px-16 lg:pb-24 lg:pt-18">
         <div className="title w-full flex flex-col items-center justify-center gap-4">
-          <h1 className='text-5xl font-montserrat text-center text-primary font-bold '>
+          <h1 className='text-3xl sm:text-5xl font-montserrat text-center text-primary font-bold'>
             BKK Untuk Siapa ? </h1>
-          <div className="bg-secondary rounded-full w-60 h-0.75 mb-3"></div>
+          <div className="bg-secondary rounded-full w-40 sm:w-60 h-0.75 mb-3"></div>
 
-          <p className='text-slate-600 text-md text-center'>Layanan BKK 26 untuk berbagai pihak yang membutuhkan informasi dan peluang di dunia kerja</p>
+          <p className='text-slate-600 text-sm sm:text-base text-center px-4 max-w-2xl'>Layanan BKK 26 untuk berbagai pihak yang membutuhkan informasi dan peluang di dunia kerja</p>
         </div>
 
-        <div className="container flex flex-row flex-wrap justify-center gap-8 mt-16 w-full">
+        <div className="container flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl">
           {dataPelayanan.map((item, index) => (
-            <div key={index} className="flex flex-row p-0 overflow-hidden rounded-2xl shadow-md bg-white w-3/10 h-60 items-center justify-start gap-4">
-              <div className="w-1/2 h-full">
-                <div className="h-1/3 w-full flex items-center justify-start p-4">
-                  <h1 className="text-xl font-bold text-center">{item.untuk}</h1>
+            <div key={index} className="flex flex-row p-0 overflow-hidden rounded-2xl shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-3/10 min-h-[160px] sm:h-60 items-center justify-start gap-4 border border-slate-100">
+              <div className="w-3/5 sm:w-1/2 h-full flex flex-col justify-center">
+                <div className="w-full flex items-center justify-start px-4 pt-4 pb-1">
+                  <h2 className="text-lg sm:text-xl font-bold">{item.untuk}</h2>
                 </div>
-                <div className="h-1/2 w-full flex items-center justify-center p-4">
-                  <p>{item.keterangan}</p>
+                <div className="w-full flex items-center justify-center px-4 pb-4 pt-1">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.keterangan}</p>
                 </div>
               </div>
-              <div className="w-1/2 h-full bg-[#d9d9d9]"></div>
+              <div className="w-2/5 sm:w-1/2 h-full bg-[#d9d9d9]"></div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="relative flex min-h-screen w-full items-center overflow-hidden bg-white px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-        <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-4xl bg-primary lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="flex flex-col items-start justify-center px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-            <p className=" pb-2  font-montserrat text-md font-semibold text-white sm:text-2xl">
+      <section className="relative flex min-h-screen w-full items-center overflow-hidden bg-white px-4 sm:px-10 lg:px-16 py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-3xl sm:rounded-4xl bg-primary lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="flex flex-col items-start justify-center px-6 py-10 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+            <p className="pb-2 font-montserrat text-base sm:text-2xl font-semibold text-white">
               Hubungi Tim BKK SMKN 26 Jakarta
             </p>
-            <div className="bg-secondary rounded-full w-60 h-0.75 mb-4"></div>
+            <div className="bg-secondary rounded-full w-40 sm:w-60 h-0.75 mb-4"></div>
 
-            <h2 className="max-w-2xl font-montserrat text-xl font-bold leading-wide tracking-tight text-white sm:text-4xl lg:text-4xl">
+            <h2 className="max-w-2xl font-montserrat text-2xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-4xl">
               BUTUH INFORMASI BKK?
             </h2>
-            <p className="pr-30 max-w-md text-sm leading-relaxed font-semibold text-white/90 sm:text-base">
+            <p className="pr-0 sm:pr-8 lg:pr-30 max-w-md text-sm leading-relaxed font-normal sm:font-semibold text-white/90 sm:text-base mt-2">
               Kami siap membantu Anda mendapatkan informasi seputar peluang kerja,
               rekrutmen, pembekalan, dan layanan lainnya.
             </p>
             <a
               href="mailto:smkn26jakarta@gmail.com"
-              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-white/70 bg-secondary px-8 py-4 font-montserrat text-base font-bold text-white transition hover:bg-white hover:text-primary sm:text-xl"
+              className="group mt-6 sm:mt-8 inline-flex items-center gap-2 rounded-full border border-white/70 bg-secondary px-6 sm:px-8 py-3 sm:py-4 font-montserrat text-sm sm:text-xl font-bold text-white transition hover:bg-white hover:text-primary active:scale-95"
             >
               Hubungi Tim BKK
-              <ArrowRight size={22} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
+              <ArrowRight size={20} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
             </a>
           </div>
 

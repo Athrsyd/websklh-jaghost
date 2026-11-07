@@ -75,10 +75,10 @@ const LSP = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-poppins pr-100 text-sm sm:text-md md:text-lg lg:text-xl text-slate-600 tracking-wide">
-            Lembaga Sertifikasi Profesi SMK Negeri 26 Jakarta <br /> mendukung pengakuan kompetensi siswa sesuai bidang <br /> keahliannya.
+          <p className="font-poppins pr-0 sm:pr-12 lg:pr-100 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 tracking-wide">
+            Lembaga Sertifikasi Profesi SMK Negeri 26 Jakarta mendukung pengakuan kompetensi siswa sesuai bidang keahliannya.
           </p>
-          <button className="group inline-flex cursor-pointer items-center justify-center gap-2 rounded-full mt-2 bg-[#0075FF] px-7 py-3 text-[15px] font-medium text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:bg-[#0062db] hover:shadow-blue-500/40 active:scale-[0.98]">
+          <button className="group inline-flex cursor-pointer items-center justify-center gap-2 rounded-full mt-4 bg-[#0075FF] px-7 py-3 text-[15px] font-medium text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:bg-[#0062db] hover:shadow-blue-500/40 active:scale-[0.98]">
             <span>Lihat Skema Sertifikasi</span>
             <span className="text-base font-bold transition-transform duration-300 group-hover:translate-x-1">
               &gt;
@@ -92,51 +92,51 @@ const LSP = () => {
         </div>
       </section>
 
-      <section className="container flex flex-row justify-between items-center bg-white min-h-screen w-full px-18">
-        <div className="w-1/2 flex flex-col">
+      <section className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center bg-white min-h-[auto] lg:min-h-screen w-full px-6 sm:px-10 lg:px-18 py-14 lg:py-20 gap-10 lg:gap-0">
+        <div className="w-full lg:w-1/2 flex flex-col text-center lg:text-left">
           <div className="">
-            <h1 className="text-5xl font-black ">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black">
               <span className="text-primary">Lembaga</span>
-              <br />
+              <br className="hidden sm:inline" />{" "}
               <span className="text-secondary">Sertifikasi</span>
-              <br />
+              <br className="hidden sm:inline" />{" "}
               <span className="text-tertiary">Profesi — P1</span>
             </h1>
           </div>
-          <div className="text-xl text-slate-600 mt-5">
+          <div className="text-base sm:text-lg lg:text-xl text-slate-600 mt-4 sm:mt-5 max-w-xl mx-auto lg:mx-0">
             <p>SMK Negeri 26 Jakarta memiliki Lembaga Sertifikasi Profesi yang menjadi bagian dari proses sertifikasi kompetensi sesuai bidang keahlian.</p>
           </div>
         </div>
-        <div className="pl-16 w-1/2">
-          <DepthCarousel />
+        <div className="w-full lg:w-1/2 pl-0 lg:pl-16 flex justify-center overflow-hidden h-[340px] sm:h-[420px] lg:h-[550px]">
+          <DepthCarousel cardWidth={520} cardHeight={400} />
         </div>
       </section>
 
-      <section className='container flex flex-row bg-accent justify-center gap-28 items-start px-24 py-12 text-primary'>
-        <div className="w-2/5 flex flex-col border-l-2 border-primary p-4">
-          <h1 className='uppercase font-bold text-4xl' >Visi</h1>
-          <p className='text-slate-600'>Menjadi lembaga sertifikasi profesi yang terpercaya dan professional untuk memastikan kompetensi peserta didik yang diakui dunia kerja di tingkat nasional maupun internasional</p>
+      <section className='w-full bg-accent flex flex-col md:flex-row justify-center gap-8 md:gap-14 lg:gap-28 items-start px-6 sm:px-12 lg:px-24 py-12 lg:py-16 text-primary'>
+        <div className="w-full md:w-1/2 lg:w-2/5 flex flex-col border-l-4 sm:border-l-2 border-primary p-4 sm:p-5 bg-white/40 md:bg-transparent rounded-r-xl md:rounded-none">
+          <h1 className='uppercase font-bold text-2xl sm:text-3xl lg:text-4xl' >Visi</h1>
+          <p className='text-slate-600 mt-2 text-sm sm:text-base'>Menjadi lembaga sertifikasi profesi yang terpercaya dan professional untuk memastikan kompetensi peserta didik yang diakui dunia kerja di tingkat nasional maupun internasional</p>
         </div>
-        <div className="w-2/5 flex flex-col border-l-2 border-primary p-4">
-          <h1 className='uppercase font-bold text-4xl'>Misi</h1>
-          <ul>
+        <div className="w-full md:w-1/2 lg:w-2/5 flex flex-col border-l-4 sm:border-l-2 border-primary p-4 sm:p-5 bg-white/40 md:bg-transparent rounded-r-xl md:rounded-none">
+          <h1 className='uppercase font-bold text-2xl sm:text-3xl lg:text-4xl'>Misi</h1>
+          <ul className="mt-2 space-y-1">
             {misi.map((item, index) => (
-              <li key={index} className='text-slate-600 list-decimal ml-5'>{item}</li>
+              <li key={index} className='text-slate-600 list-decimal ml-5 text-sm sm:text-base'>{item}</li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="w-full bg-[#032544] px-10 py-20 text-white sm:px-12 sm:py-14 lg:px-20 lg:py-16">
-        <div className="mx-auto max-w-6xl px-8">
+      <section className="w-full bg-[#032544] px-4 sm:px-10 lg:px-20 py-12 sm:py-14 lg:py-16 text-white">
+        <div className="mx-auto max-w-6xl px-2 sm:px-6 lg:px-8">
           <h2 className="font-montserrat text-xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
             SKEMA SERTIFIKASI
           </h2>
-          <p className="mt-2 font-poppins text-[10px] text-white/85 sm:text-xs lg:text-sm">
+          <p className="mt-2 font-poppins text-xs sm:text-xs lg:text-sm text-white/85">
             Daftar skema kompetensi yang diujikan di LSP-P1 SMK Negeri 26 Jakarta.
           </p>
 
-          <div className="mt-7 border-t border-white/20 px-8 ">
+          <div className="mt-7 border-t border-white/20 px-0 sm:px-4 lg:px-8">
             {skemaSertifikasi.map((skema, index) => (
               <a
                 key={skema[0]}

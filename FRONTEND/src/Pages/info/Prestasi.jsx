@@ -32,7 +32,7 @@ const Prestasi = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-poppins pr-100 text-sm sm:text-md md:text-lg lg:text-xl text-slate-600 tracking-wide">
+          <p className="font-poppins pr-0 sm:pr-12 lg:pr-100 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 tracking-wide">
             Merayakan perjalanan siswa SMK Negeri 26 Jakarta dalam berkarya, berkompetisi, dan mengukir prestasi.
           </p>
         </div>
@@ -44,15 +44,15 @@ const Prestasi = () => {
       <section className="relative w-full bg-white px-6 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-11">
         <div className="mx-auto flex max-w-300 flex-col items-center">
           <div className="text-center">
-            <h2 className="font-montserrat text-4xl font-bold leading-none text-primary sm:text-5xl lg:text-[42px]">
+            <h2 className="font-montserrat text-3xl font-bold leading-none text-primary sm:text-5xl lg:text-[42px]">
               Arsip <span className="text-secondary">Prestasi</span>
             </h2>
-            <p className="mt-3 font-poppins text-[14px] font-normal leading-5 text-slate-600 sm:text-md">
+            <p className="mt-3 font-poppins text-sm font-normal leading-relaxed text-slate-600 sm:text-base">
               Dokumentasi berbagai pencapaian dan momen membanggakan siswa SMK Negeri 26 Jakarta.
             </p>
           </div>
 
-          <div className="mt-6 w-9/10 grid grid-cols-2 gap-4 sm:mt-7 sm:grid-cols-4 sm:gap-5 lg:mt-6 lg:gap-6">
+          <div className="mt-6 w-full max-w-5xl grid grid-cols-2 gap-4 sm:mt-7 sm:grid-cols-4 sm:gap-5 lg:mt-6 lg:gap-6">
             {Array.from({ length: 8 }, (_, index) => (
               <article
                 key={index}

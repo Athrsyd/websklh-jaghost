@@ -24,7 +24,7 @@ const Kontak = () => {
           <h1 className=" px-5 text-center font-montserrat text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl">
             Kontak Kami
           </h1>
-          <div className="bg-white rounded-full w-120 h-1"></div>
+          <div className="bg-white rounded-full w-32 sm:w-60 md:w-120 max-w-[80vw] h-1"></div>
         </div>
       </section>
 

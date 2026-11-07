@@ -109,13 +109,13 @@ const JurusanDetail = () => {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 flex flex-col items-center">
           {/* Section Title */}
-          <h2 className="font-montserrat font-black italic text-5xl sm:text-7xl md:text-8xl lg:text-[90px] text-tertiary text-center tracking-wide uppercase mb-8 sm:mb-12">
+          <h2 className="font-montserrat font-black italic text-4xl sm:text-6xl md:text-8xl lg:text-[90px] text-tertiary text-center tracking-wide uppercase mb-6 sm:mb-12">
             WEARPACK SIJA
           </h2>
 
           {/* Wearpack Uniform Students Image with soft bottom fade */}
           <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl flex justify-center items-center">
-            <div className="relative w-full aspect-4/3] sm:aspect-16/10 flex justify-center items-center overflow-hidden">
+            <div className="relative w-full aspect-4/3 sm:aspect-16/10 flex justify-center items-center overflow-hidden">
               <img
                 src={model}
                 alt="Model Wearpack SIJA"
@@ -137,7 +137,7 @@ const JurusanDetail = () => {
           <div className="mb-8 sm:mb-12">
             <h2 className="font-montserrat font-black text-3xl sm:text-4xl lg:text-[44px] tracking-tight uppercase">
               <span className="text-[#03172E]">KOMPETENSI </span>
-              <span className="text-terbg-tertiary">KEAHLIAN</span>
+              <span className="text-tertiary">KEAHLIAN</span>
             </h2>
             <div className="w-24 sm:w-32 h-0.75 bg-[#03172E] mt-3 mb-3" />
             <p className="text-slate-600 text-xs sm:text-sm md:text-base font-normal max-w-2xl leading-relaxed">
@@ -151,7 +151,7 @@ const JurusanDetail = () => {
             {/* ROW 1: 2 Cards (Wide Left + Regular Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-7">
               {/* Card 1: Large rounded top-left corner */}
-              <div className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-45 sm:min-h-55 p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Infrastruktur Jaringan &amp; Cloud
@@ -164,7 +164,7 @@ const JurusanDetail = () => {
               </div>
 
               {/* Card 2: Large rounded top-right corner */}
-              <div className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[8px_8px_0px_0px_#03172E] min-h-45 sm:min-h-55 p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Keamanan Siber
@@ -180,7 +180,7 @@ const JurusanDetail = () => {
             {/* ROW 2: 3 Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
               {/* Card 3: Large rounded bottom-left corner */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-br-xl rounded-bl-[36px] sm:rounded-bl-[54px] shadow-[8px_8px_0px_0px_#03172E] min-h-[180px] sm:min-h-[220px] p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-br-xl rounded-bl-[36px] sm:rounded-bl-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Pengembangan Web &amp; API
@@ -193,7 +193,7 @@ const JurusanDetail = () => {
               </div>
 
               {/* Card 4: Standard rounded corners */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-xl shadow-[8px_8px_0px_0px_#03172E] min-h-[180px] sm:min-h-[220px] p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Basis Data Terdistribusi
@@ -206,7 +206,7 @@ const JurusanDetail = () => {
               </div>
 
               {/* Card 5: Large rounded bottom-right corner */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-bl-xl rounded-br-[36px] sm:rounded-br-[54px] shadow-[8px_8px_0px_0px_#03172E] min-h-[180px] sm:min-h-[220px] p-6 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-bl-xl rounded-br-[36px] sm:rounded-br-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Aplikasi Mobile &amp; IoT
@@ -231,7 +231,7 @@ const JurusanDetail = () => {
           <div className="mb-8 sm:mb-12">
             <h2 className="font-montserrat font-black text-3xl sm:text-4xl lg:text-[44px] tracking-tight uppercase">
               <span className="text-[#03172E]">PROSPEK </span>
-              <span className="text-terbg-tertiary">DUNIA KERJA</span>
+              <span className="text-tertiary">DUNIA KERJA</span>
             </h2>
             <div className="w-24 sm:w-32 h-[3px] bg-[#03172E] mt-3 mb-3" />
             <p className="text-slate-700 text-xs sm:text-sm md:text-base font-normal max-w-2xl leading-relaxed">
@@ -240,8 +240,8 @@ const JurusanDetail = () => {
             </p>
           </div>
 
-          {/* Pill Badges (4 Columns x 3 Rows = 12 Pills) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+          {/* Pill Badges (Responsive columns) */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
             {defaultJobProspects.map((job, idx) => (
               <a href={`https://www.google.com/search?q=apa+itu+${job.split(" ").join("+")}`} target="_blank" rel="noopener noreferrer" key={idx}
                 title={`Cari tahu lebih lanjut tentang ${job} di Google`} className="group">

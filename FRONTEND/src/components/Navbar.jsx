@@ -114,12 +114,12 @@ const Navbar = () => {
                 <div className="container border-t-white bg-white backdrop-blur-sm flex justify-between shadow-xl items-center
                     rounded-full px-8 mt-4 w-[95%] mx-auto py-2">
 
-                    <a href="">
+                    <Link to="/">
                         <div className="flex justify-center items-center gap-4">
                             <img src={logo} alt="Logo" className="h-12" />
                             <h1 className="text-xl font-bold">SMK Negeri 26 Jakarta</h1>
                         </div>
-                    </a>
+                    </Link>
 
                     {/* Desktop navlinks — unchanged */}
                     <div className="flex gap-8">
@@ -184,23 +184,21 @@ const Navbar = () => {
             </div>
 
             {/* ─── MOBILE / TABLET NAVBAR ─── */}
-            <div className="w-full fixed z-10000 lg:hidden">
-                <div className="bg-white shadow-md flex rounded-full m-4 justify-between items-center px-4 py-3">
+            <div className="w-full fixed top-0 left-0 z-10000 lg:hidden">
+                <div className="bg-white/95 backdrop-blur-md shadow-md flex rounded-full m-3 sm:m-4 justify-between items-center px-4 py-2.5 sm:py-3 border border-gray-100">
                     {/* Logo */}
-                    <a href="">
-                        <div className="flex items-center gap-3">
-                            <img src={logo} alt="Logo" className="h-9" />
-                            <h1 className="text-base font-bold leading-tight">SMK Negeri 26 Jakarta</h1>
+                    <Link to="/" onClick={() => setMobileOpen(false)}>
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                            <img src={logo} alt="Logo" className="h-8 sm:h-9" />
+                            <h1 className="text-sm sm:text-base font-bold leading-tight text-gray-900">SMK Negeri 26 Jakarta</h1>
                         </div>
-                    </a>
+                    </Link>
 
                     {/* Hamburger */}
                     <button
-                        onClick={
-                            () => setMobileOpen(prev => !prev)
-                        }
-                        className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
-                        aria-label="Buka menu"
+                        onClick={() => setMobileOpen(prev => !prev)}
+                        className="p-2 rounded-full text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition cursor-pointer"
+                        aria-label="Buka menu navigasi"
                     >
                         {mobileOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
                     </button>
@@ -210,7 +208,7 @@ const Navbar = () => {
             {/* ─── MOBILE MENU OVERLAY ─── */}
             {/* Backdrop */}
             <div
-                className={`fixed inset-0 z-9999 bg-black/40 transition-opacity duration-300 lg:hidden
+                className={`fixed inset-0 z-9999 bg-black/40 backdrop-blur-xs transition-opacity duration-300 lg:hidden
                     ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 onClick={() => setMobileOpen(false)}
             />
@@ -218,28 +216,13 @@ const Navbar = () => {
             {/* Slide-down panel */}
             <div
                 ref={mobileMenuRef}
-                className={`fixed -top-2 left-0 right-0 z-9999 bg-white rounded-2xl shadow-2xl
-                    transition-all duration-300 ease-in-out lg:hidden flex flex-col w-9/10 mx-auto
-                    ${mobileOpen ? 'translate-y-24 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}
-                style={{ maxHeight: '92vh' }}
+                className={`fixed top-18 sm:top-20 left-0 right-0 z-9999 bg-white rounded-3xl shadow-2xl border border-gray-100
+                    transition-all duration-300 ease-in-out lg:hidden flex flex-col w-[92%] sm:w-[90%] max-w-lg mx-auto
+                    ${mobileOpen ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0 pointer-events-none'}`}
+                style={{ maxHeight: 'calc(100vh - 6rem)' }}
             >
-                {/* Panel header */}
-                {/* <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
-                    <div className="flex items-center gap-3">
-                        <img src={logo} alt="Logo" className="h-9" />
-                        <h1 className="text-base font-bold">SMK Negeri 26 Jakarta</h1>
-                    </div>
-                    <button
-                        onClick={() => setMobileOpen(false)}
-                        className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition"
-                        aria-label="Tutup menu"
-                    >
-                        <IoClose size={24} />
-                    </button>
-                </div> */}
-
                 {/* Scrollable nav links */}
-                <div className="overflow-y-auto flex-1 px-4 py-2">
+                <div className="overflow-y-auto flex-1 px-5 py-3">
                     {navlinks.map((link) => {
                         const subs = subnavlinks.filter(sub => sub.parentName === link.name);
                         const isAccordionOpen = mobileAccordion === link.name;
@@ -251,35 +234,40 @@ const Navbar = () => {
                                     // Item with sublinks → accordion
                                     <>
                                         <div
-
                                             className={`w-full flex items-center justify-between py-3.5
-                                                text-left text-[15px] font-medium border-b border-gray-100
-                                                ${isActive ? 'text-blue-600' : 'text-gray-800'}`}
+                                                text-left text-[15px] sm:text-base font-medium border-b border-gray-100
+                                                ${isActive ? 'text-blue-600 font-semibold' : 'text-gray-800'}`}
                                         >
-                                            <Link className="block w-1/2" to={link.href}>
+                                            <Link
+                                                className="block flex-1 py-1"
+                                                to={link.href}
+                                                onClick={() => setMobileOpen(false)}
+                                            >
                                                 {link.name}
                                             </Link>
-                                            <div
+                                            <button
+                                                type="button"
                                                 onClick={() => toggleAccordion(link.name)}
-                                                className="w-1/2 flex justify-end items-center">
-                                                <span>
-                                                    {isAccordionOpen
-                                                        ? <IoChevronUp size={18} className="text-gray-400" />
-                                                        : <IoChevronDown size={18} className="text-gray-400" />
-                                                    }
-                                                </span>
-                                            </div>
+                                                className="p-2 -mr-2 flex justify-end items-center cursor-pointer text-gray-500 hover:text-blue-600"
+                                                aria-label={`Toggle submenu ${link.name}`}
+                                            >
+                                                {isAccordionOpen
+                                                    ? <IoChevronUp size={18} />
+                                                    : <IoChevronDown size={18} />
+                                                }
+                                            </button>
                                         </div>
                                         {/* Accordion sublinks */}
                                         <div
-                                            className={`overflow-hidden transition-all duration-300 ease-in-out
-                                                ${isAccordionOpen ? 'max-h-100' : 'max-h-0'}`}
+                                            className={`overflow-hidden transition-all duration-300 ease-in-out bg-slate-50/70 rounded-xl px-2
+                                                ${isAccordionOpen ? 'max-h-96 my-2 py-1' : 'max-h-0'}`}
                                         >
                                             {subs.map((sublink) => (
                                                 <Link
                                                     key={sublink.name}
                                                     to={sublink.href}
-                                                    className="block pl-5 py-2.5 text-[14px] text-gray-600 hover:text-blue-500 border-b border-gray-50"
+                                                    onClick={() => setMobileOpen(false)}
+                                                    className="block pl-4 pr-3 py-2.5 text-[14px] font-medium text-gray-600 hover:text-blue-600 hover:bg-white rounded-lg transition-colors border-b border-gray-100/50 last:border-b-0"
                                                 >
                                                     {sublink.name}
                                                 </Link>
@@ -290,8 +278,9 @@ const Navbar = () => {
                                     // Item tanpa sublinks → link biasa
                                     <Link
                                         to={link.href}
-                                        className={`block py-3.5 text-[15px] font-medium border-b border-gray-100
-                                            ${isActive ? 'text-blue-600' : 'text-gray-800'} hover:text-blue-500`}
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`block py-3.5 text-[15px] sm:text-base font-medium border-b border-gray-100
+                                            ${isActive ? 'text-blue-600 font-semibold' : 'text-gray-800'} hover:text-blue-600`}
                                     >
                                         {link.name}
                                     </Link>
@@ -302,26 +291,24 @@ const Navbar = () => {
                 </div>
 
                 {/* Bottom actions */}
-                <div className="px-4 py-4 border-t border-gray-100 flex flex-col gap-3">
+                <div className="px-5 py-4 border-t border-gray-100 flex flex-col gap-3 bg-slate-50/50 rounded-b-3xl">
                     {/* Language toggle */}
-                    <div className="flex rounded-full overflow-hidden border border-blue-500">
+                    <div className="flex rounded-full overflow-hidden border border-blue-500 p-0.5 bg-white">
                         <button
-                            className={`flex-1 py-2.5 text-sm font-semibold rounded-full transition duration-300
-                                ${bahasa === 'ID' ? 'bg-blue-500 text-white' : 'text-blue-500 bg-white'}`}
+                            className={`flex-1 py-2 text-sm font-semibold rounded-full transition duration-300 cursor-pointer
+                                ${bahasa === 'ID' ? 'bg-blue-500 text-white shadow-xs' : 'text-blue-500 bg-transparent'}`}
                             onClick={() => setBahasa('ID')}
                         >
                             ID
                         </button>
                         <button
-                            className={`flex-1 py-2.5 text-sm font-semibold rounded-full transition duration-300
-                                ${bahasa === 'EN' ? 'bg-blue-500 text-white' : 'text-blue-500 bg-white'}`}
+                            className={`flex-1 py-2 text-sm font-semibold rounded-full transition duration-300 cursor-pointer
+                                ${bahasa === 'EN' ? 'bg-blue-500 text-white shadow-xs' : 'text-blue-500 bg-transparent'}`}
                             onClick={() => setBahasa('EN')}
                         >
                             EN
                         </button>
                     </div>
-
-
                 </div>
             </div>
         </>

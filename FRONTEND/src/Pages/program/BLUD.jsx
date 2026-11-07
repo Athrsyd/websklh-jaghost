@@ -218,7 +218,7 @@ const BLUD = () => {
       {/* 1. HERO SECTION */}
       {/* ============================================================ */}
       <section
-        className="w-full relative h-screen flex items-center overflow-hidden 
+        className="w-full relative min-h-[85vh] lg:h-screen flex items-center overflow-hidden 
         bg-linear-to-b from-[#D8E2FF] to-[#F8FAFC]
         pt-28 pb-16 lg:pt-36 lg:pb-24"
       >
@@ -232,7 +232,7 @@ const BLUD = () => {
           className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
         />
         {/* Shape Organik Abu-abu Lembut di Sisi Kiri Bawah */}
-        <div className="absolute bottom-0 left-0 h-100 rounded-tr-full z-0 bg-[#D9D9D9] w-1/5" />
+        <div className="absolute bottom-0 left-0 h-72 sm:h-100 rounded-tr-full z-0 bg-[#D9D9D9] w-1/4 sm:w-1/5" />
 
         {/* Kontainer Utama Hero */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full relative z-10">
@@ -262,7 +262,7 @@ const BLUD = () => {
               </h1>
 
               {/* Paragraf Deskripsi */}
-              <p className="text-slate-800 text-md sm:text-lg lg:text-[20px] leading-relaxed font-normal mb-8 text-left pr-12 lg:pr-20">
+              <p className="text-slate-800 text-base sm:text-lg lg:text-[20px] leading-relaxed font-normal mb-8 text-left pr-0 sm:pr-8 lg:pr-20">
                 Badan Layanan Umum Daerah (BLUD) SMK Negeri 26 Jakarta adalah
                 pola pengelolaan sekolah yang memberi fleksibilitas dalam
                 mengelola layanan, teaching factory, dan aset sekolah.
@@ -417,7 +417,7 @@ const BLUD = () => {
           {/* 2-Column Responsive Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             {/* KOLOM KIRI: Daftar Unit (Tabs) */}
-            <div className="lg:col-span-5 bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-5 sm:p-6 flex flex-col gap-3">
+            <div className="lg:col-span-5 bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-3 sm:p-5 lg:p-6 flex flex-row lg:flex-col gap-2 sm:gap-3 overflow-x-auto lg:overflow-visible pb-3 lg:pb-6 scrollbar-none w-full">
               {teachingFactoryUnits.map((unit, index) => {
                 const isActive = activeUnitIndex === index
                 const UnitIcon = unit.icon
@@ -426,7 +426,7 @@ const BLUD = () => {
                   <button
                     key={unit.id}
                     onClick={() => setActiveUnitIndex(index)}
-                    className={`w-full flex items-center gap-4 p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer
+                    className={`shrink-0 w-auto lg:w-full flex items-center gap-2.5 sm:gap-4 p-2 sm:p-3 rounded-xl sm:rounded-2xl text-left transition-all duration-200 cursor-pointer
                     ${isActive
                         ? 'bg-[#FFF7F5] border border-[#FFD9D0]'
                         : 'hover:bg-slate-50 border border-transparent'
@@ -434,25 +434,25 @@ const BLUD = () => {
                   >
                     {/* Circle Icon Badge */}
                     <div
-                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200
+                      className={`w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200
                       ${isActive ? unit.bgBadge : 'bg-[#CBD5E1]'}`}
                     >
                       <UnitIcon
-                        className="w-7 h-7 sm:w-8 sm:h-8"
+                        className="w-5 h-5 sm:w-7 sm:h-7 lg:w-8 lg:h-8"
                         color={isActive ? unit.activeIconColor : '#334155'}
                       />
                     </div>
 
                     {/* Unit Titles */}
-                    <div className="flex flex-col min-w-0">
+                    <div className="flex flex-col min-w-0 pr-2 lg:pr-0">
                       <h4
-                        className={`text-base sm:text-[17px] font-bold tracking-tight truncate transition-colors duration-200
+                        className={`text-sm sm:text-base lg:text-[17px] font-bold tracking-tight truncate transition-colors duration-200
                         ${isActive ? 'text-[#FF5533]' : 'text-[#0A2540]'}`}
                       >
                         {unit.title}
                       </h4>
                       <p
-                        className={`text-xs sm:text-[13px] font-medium truncate transition-colors duration-200
+                        className={`text-[11px] sm:text-xs lg:text-[13px] font-medium truncate transition-colors duration-200 hidden sm:block
                         ${isActive ? 'text-[#FF7F66]' : 'text-slate-500'}`}
                       >
                         {unit.subtitle}

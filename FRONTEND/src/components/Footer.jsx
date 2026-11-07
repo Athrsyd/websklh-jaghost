@@ -38,7 +38,7 @@ const Footer = () => {
               <svg className="w-4 h-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <span>(021) 4720310</span>
+              <span>(021) 1234567</span>
             </div>
 
             <div className="flex items-start gap-2.5">
@@ -87,13 +87,13 @@ const Footer = () => {
           </div>
 
           {/* Partner Logos Image */}
-          <div className="pt-2">
+          {/* <div className="pt-2">
             <img 
               src={partner} 
               alt="Mitra Industri SMKN 26 Jakarta" 
               className="h-7 w-auto object-contain" 
             />
-          </div>
+          </div> */}
 
           {/* Copyright */}
           <div className="pt-2">
@@ -203,12 +203,10 @@ const Footer = () => {
           <h3 className="text-sm font-bold text-slate-900 tracking-tight">
             Lokasi Sekolah
           </h3>
-          <div className="bg-slate-200 rounded-2xl w-[200px] h-[200px] overflow-hidden shadow-inner border border-slate-200 relative group">
+          <div className="bg-slate-200 rounded-2xl w-full max-w-[280px] sm:max-w-[240px] lg:w-[200px] h-[180px] sm:h-[200px] overflow-hidden shadow-inner border border-slate-200 relative group">
             <iframe 
               title="Lokasi SMKN 26 Jakarta"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.522482086522!2d106.88731419999999!3d-6.1945787999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f49532b5b715%3A0xa4012b68ec698d4e!2sSMK%20Negeri%2026%20Jakarta!5e0!3m2!1sid!2sid!4v1786606693578!5m2!1sid!2sid"
-              width="200"
-              height="200"
               className="w-full h-full border-0 filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
               allowFullScreen=""
               loading="lazy"

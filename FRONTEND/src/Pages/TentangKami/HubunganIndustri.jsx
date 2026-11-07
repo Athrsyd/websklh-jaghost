@@ -93,11 +93,11 @@ const AlurKerjaSama = () => {
     <section className="w-full bg-side-back py-20 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl font-bold text-black mb-4">
+        <div className="text-center mb-10 sm:mb-16 lg:mb-20">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-3 sm:mb-4">
             Alur <span className="text-[#FE5631]">Kerja Sama</span>
           </h1>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-500 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto px-2">
             Prosedur kemitraan yang transparan dan terstruktur untuk memastikan
             keberhasilan kolaborasi jangka panjang.
           </p>
@@ -105,9 +105,8 @@ const AlurKerjaSama = () => {
 
         {/* Timeline Section */}
         <div className="relative w-full">
-          {/* Garis Horizontal Background */}
-          {/* top-10 menyesuaikan agar persis di tengah lingkaran (h-20 = 80px, tengah = 40px/top-10) */}
-          <div className="absolute top-10 left-0 w-full h-0.5 bg-gray-300 z-0"></div>
+          {/* Garis Horizontal Background (Desktop only) */}
+          <div className="hidden md:block absolute top-10 left-0 w-full h-0.5 bg-gray-300 z-0"></div>
 
           {/* Grid Container untuk Item */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
@@ -330,22 +329,21 @@ const HubunganIndustri = () => {
         </div>
       </section>
 
-      <section id="mitra-industri" className='bg-white py-16 min-h-screen'>
+      <section id="mitra-industri" className='bg-white py-14 sm:py-20'>
         <div className="container mx-auto px-4">
-          <h2 className='text-5xl font-bold text-center text-black'>Mitra <span className='text-secondary'>Industri</span></h2>
-          <p className='text-lg mx-auto w-3/5 text-center text-gray-600 px-12 mt-4'>
+          <h2 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-black'>Mitra <span className='text-secondary'>Industri</span></h2>
+          <p className='text-sm sm:text-base lg:text-lg mx-auto max-w-2xl w-full text-center text-gray-600 px-4 sm:px-6 mt-3 sm:mt-4'>
             Kami bekerja sama dengan berbagai pemimpin industri global dan nasional untuk
-            memastikan kurikulum yang relevan dan peluang karir terbaik bagi lulusan kami.          </p>
+            memastikan kurikulum yang relevan dan peluang karir terbaik bagi lulusan kami.
+          </p>
         </div>
         <MitraScroll mitraIndustri={mitraIndustri} />
-
       </section>
-      <section className='bg-side-back py-8 min-h-screen'>
+
+      <section className='bg-side-back py-4 sm:py-8'>
         <div className="container mx-auto px-4">
-          {/* <h2 className='text-5xl font-bold text-center text-black'>Alur <span className='text-secondary'>Kerja Sama</span></h2> */}
           <AlurKerjaSama />
         </div>
-
       </section>
     </>
   )

@@ -248,7 +248,7 @@ const BeritaDetail = () => {
               - Dilengkapi data-lenis-prevent & onWheel stopPropagation
                 agar scroll lancar seperti pada komponen FAQ
              ═══════════════════════════════════════════════════════════ */}
-          <aside className="lg:col-span-4 w-full bg-white rounded-3xl border border-slate-200/80 shadow-md p-5 sm:p-6 sticky top-8">
+          <aside className="order-2 lg:order-1 lg:col-span-4 w-full bg-white rounded-3xl border border-slate-200/80 shadow-md p-5 sm:p-6 static lg:sticky lg:top-8">
             {/* Tombol Kembali */}
             <div>
               <button
@@ -349,7 +349,7 @@ const BeritaDetail = () => {
           {/* ═══════════════════════════════════════════════════════════
               KOLOM KANAN: KARTU ARTIKEL UTAMA LEBIH PANJANG & KAYA GAMBAR
              ═══════════════════════════════════════════════════════════ */}
-          <main className="lg:col-span-8 w-full bg-white rounded-3xl sm:rounded-[32px] border border-slate-200/80 shadow-md p-6 sm:p-10 lg:p-12 relative flex flex-col justify-start">
+          <main className="order-1 lg:order-2 lg:col-span-8 w-full bg-white rounded-3xl sm:rounded-[32px] border border-slate-200/80 shadow-md p-6 sm:p-10 lg:p-12 relative flex flex-col justify-start">
             {/* Baris Badge Header: Prestasi & Berita Terbaru */}
             <div className="flex items-center justify-between w-full">
               <div className="inline-block bg-primary text-white text-xs sm:text-sm font-bold px-6 py-2 rounded-t-full rounded-br-full tracking-wide shadow-xs">

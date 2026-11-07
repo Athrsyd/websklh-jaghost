@@ -217,7 +217,7 @@ const AccordionGallery = ({
   return (
     <div
       ref={rootRef}
-      className={`flex ${vertical ? 'flex-col' : 'flex-row'} w-full max-w-full select-none [perspective:1400px] max-[640px]:!flex-col max-[640px]:[perspective:none] ${className}`}
+      className={`flex ${vertical ? 'flex-col' : 'flex-row'} w-full max-w-full select-none [perspective:1400px] max-[640px]:!flex-col max-[640px]:[perspective:none] max-[640px]:!h-auto max-[640px]:min-h-[580px] ${className}`}
       style={{
         gap: `${gap}px`,
         height: vertical ? `${Math.round(height * 1.6)}px` : `${height}px`
@@ -235,7 +235,9 @@ const AccordionGallery = ({
           <div
             key={item.id || i}
             ref={el => (panelRefs.current[i] = el)}
-            className={`group relative block min-w-0 min-h-0 flex-[1_1_0] cursor-pointer overflow-hidden bg-[#0a0713] outline-none transition-[border-color,box-shadow] duration-200 border-2 [box-shadow:0_10px_25px_-15px_rgba(0,0,0,0.4)] max-[640px]:min-h-[100px] ${
+            className={`group relative block min-w-0 min-h-0 flex-[1_1_0] cursor-pointer overflow-hidden bg-[#0a0713] outline-none transition-[border-color,box-shadow] duration-200 border-2 [box-shadow:0_10px_25px_-15px_rgba(0,0,0,0.4)] max-[640px]:min-h-[70px] ${
+              isActive ? 'max-[640px]:min-h-[220px]' : ''
+            } ${
               isBorderActive
                 ? 'border-[#0088FF] shadow-[0_0_15px_rgba(0,136,255,0.35)]'
                 : 'border-transparent'
@@ -285,11 +287,23 @@ const AccordionGallery = ({
               />
             </span>
 
+            {/* Inactive mobile indicator pill */}
+            {!isActive && (
+              <div className="hidden max-[640px]:flex absolute inset-0 items-center justify-between px-4 z-10 pointer-events-none">
+                <span className="font-montserrat font-bold text-white text-base drop-shadow-md">
+                  {item.singkatan || item.label}
+                </span>
+                <span className="text-white/70 text-xs font-medium truncate max-w-[180px]">
+                  {item.nama || item.subtitle}
+                </span>
+              </div>
+            )}
+
             {/* Active Card Content (Pill Button, Accent Bar, Acronym, and Full Name) */}
             {showLabels && (
               <div
                 ref={el => (contentRefs.current[i] = el)}
-                className={`absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 z-10 flex flex-col items-start select-none transition-all duration-300 ${
+                className={`absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 z-10 flex flex-col items-start select-none transition-all duration-300 ${
                   isActive
                     ? 'opacity-100 translate-x-0 pointer-events-auto'
                     : 'opacity-0 -translate-x-4 pointer-events-none'
@@ -300,16 +314,16 @@ const AccordionGallery = ({
                 <Link
                   to={item.link || '#'}
                   onClick={e => e.stopPropagation()}
-                  className="group/btn inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 hover:border-white/40 text-white text-xs sm:text-[13px] font-medium tracking-wide transition-all duration-300 shadow-sm mb-3.5 cursor-pointer active:scale-95"
+                  className="group/btn inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 hover:border-white/40 text-white text-[11px] sm:text-[13px] font-medium tracking-wide transition-all duration-300 shadow-sm mb-2.5 sm:mb-3.5 cursor-pointer active:scale-95"
                 >
                   <span>Lihat Jurusan</span>
-                  <span className="text-sm font-bold transition-transform duration-300 group-hover/btn:translate-x-1">
+                  <span className="text-xs sm:text-sm font-bold transition-transform duration-300 group-hover/btn:translate-x-1">
                     →
                   </span>
                 </Link>
 
                 {/* Vertical Accent Bar + Title Block */}
-                <div className="flex items-stretch gap-3 sm:gap-3.5 w-full">
+                <div className="flex items-stretch gap-2.5 sm:gap-3.5 w-full">
                   {/* Red Vertical Accent Bar */}
                   <div
                     className="w-1 sm:w-1.2 rounded-full self-stretch flex-none"
@@ -321,11 +335,11 @@ const AccordionGallery = ({
 
                   {/* Major Acronym and Full Name */}
                   <div className="flex flex-col justify-center min-w-0">
-                    <h3 className="font-montserrat font-extrabold text-2xl sm:text-3xl lg:text-[32px] text-white tracking-tight leading-none drop-shadow-md">
+                    <h3 className="font-montserrat font-extrabold text-xl sm:text-3xl lg:text-[32px] text-white tracking-tight leading-none drop-shadow-md">
                       {item.singkatan || item.label || item.title}
                     </h3>
                     <p
-                      className="text-xs sm:text-sm font-medium leading-snug mt-1.5 line-clamp-2 drop-shadow"
+                      className="text-[11px] sm:text-sm font-medium leading-snug mt-1 sm:mt-1.5 line-clamp-2 drop-shadow"
                       style={{ color: textColor }}
                     >
                       {item.nama || item.subtitle}

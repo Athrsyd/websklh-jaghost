@@ -280,7 +280,7 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
         className={`${
           isFourCol
             ? "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
-            : "max-w-[1060px] mx-auto px-6 sm:px-14 lg:px-24"
+            : "max-w-[1060px] mx-auto px-4 sm:px-10 lg:px-24"
         }`}
       >
         {/* Section Title */}
@@ -303,15 +303,15 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
             aria-label="Scroll left"
             className={`absolute ${
               isFourCol
-                ? "-left-3 sm:-left-6 lg:-left-8"
-                : "-left-4 sm:-left-8 lg:-left-12"
-            } z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
+                ? "-left-2 sm:-left-6 lg:-left-8"
+                : "-left-2 sm:-left-6 lg:-left-12"
+            } z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
             style={{
               border: `2px solid ${themeColor}`,
               color: themeColor,
             }}
           >
-            <ChevronLeft size={24} strokeWidth={2.5} />
+            <ChevronLeft size={22} strokeWidth={2.5} />
           </button>
 
           {/* Cards Track */}
@@ -351,15 +351,15 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
             aria-label="Scroll right"
             className={`absolute ${
               isFourCol
-                ? "-right-3 sm:-right-6 lg:-right-8"
-                : "-right-4 sm:-right-8 lg:-right-12"
-            } z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
+                ? "-right-2 sm:-right-6 lg:-right-8"
+                : "-right-2 sm:-right-6 lg:-right-12"
+            } z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
             style={{
               border: `2px solid ${themeColor}`,
               color: themeColor,
             }}
           >
-            <ChevronRight size={24} strokeWidth={2.5} />
+            <ChevronRight size={22} strokeWidth={2.5} />
           </button>
         </div>
       </div>
@@ -449,7 +449,7 @@ const GuruStaf = () => {
           className="absolute left-[48%] sm:left-[50%] lg:left-[48%] top-[38%] -translate-y-1/2 select-none pointer-events-none z-5"
           style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(135px, 15vw, 195px)",
+            fontSize: "clamp(80px, 15vw, 195px)",
             fontWeight: 700,
             lineHeight: 1,
             color: "transparent",
@@ -535,7 +535,7 @@ const GuruStaf = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Sisi Kiri: Foto Melingkar Kepala Sekolah */}
             <div className="lg:col-span-6 flex justify-center lg:justify-end">
-              <div className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[390px] lg:h-[390px] rounded-full p-2.5 bg-gradient-to-tr from-[#FE5631] to-[#FF7B59] shadow-2xl flex items-center justify-center">
+              <div className="relative w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[390px] lg:h-[390px] rounded-full p-2 sm:p-2.5 bg-gradient-to-tr from-[#FE5631] to-[#FF7B59] shadow-2xl flex items-center justify-center">
                 <div className="w-full h-full rounded-full overflow-hidden bg-[#FE5631] flex items-center justify-center relative">
                   <img
                     src={kepsekImg}

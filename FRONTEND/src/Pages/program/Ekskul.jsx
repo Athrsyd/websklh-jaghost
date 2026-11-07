@@ -333,8 +333,8 @@ const Ekskul = () => {
     <div className="w-full bg-[#eef4fd] text-slate-800 relative">
       {/* ─── HERO SECTION (SESUAI DOKUMEN DESAIN 1:1) ─── */}
       <section
-        className="w-full relative h-screen flex items-center overflow-hidden 
-        bg-linear-to-b  from-[#D8E2FF] to-[#F8FAFC]
+        className="w-full relative min-h-[85vh] lg:h-screen flex items-center overflow-hidden 
+        bg-linear-to-b from-[#D8E2FF] to-[#F8FAFC]
         pt-28 pb-16 lg:pt-36 lg:pb-24"
       >
         <div
@@ -379,7 +379,7 @@ const Ekskul = () => {
               {/* Paragraf Deskripsi */}
               <p
                 className="text-slate-800 text-sm sm:text-base lg:text-[16px] leading-relaxed 
-              font-normal mb-8 text-left pr-24"
+              font-normal mb-8 text-left pr-0 sm:pr-8 lg:pr-24"
               >
                 SMK Negeri 26 Jakarta menyediakan wadah yang besar untuk
                 menampung minat dan bakat siswa-siswi yang sangat beragam. Selain
@@ -410,41 +410,41 @@ const Ekskul = () => {
       >
         <div className="max-w-7xl mx-auto">
           {/* Judul Utama */}
-          <div className="title text-center mb-10 sm:mb-12">
-            <h1 className="text-5xl sm:text-7xl lg:text-[88px] font-montserrat font-black text-white tracking-wider leading-[1.1]">
+          <div className="title text-center mb-8 sm:mb-12">
+            <h1 className="text-3xl sm:text-6xl lg:text-[88px] font-montserrat font-black text-white tracking-wider leading-[1.1]">
               EKSTRAKURIKULER
             </h1>
           </div>
 
           {/* Bar Kontrol: Search Bar & Filter Switch INDOOR / OUTDOOR */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5 mb-10 sm:mb-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-5 mb-8 sm:mb-12">
             {/* Search Input Bar */}
-            <div className="bg-white rounded-full flex items-center px-6 py-3.5 sm:py-4 shadow-sm w-full md:flex-1 md:max-w-2xl">
-              <IoSearch className="t text-2xl sm:text-3xl shrink-0" />
-              <div className="w-[1.5px] h-6 sm:h-7 bg-slate-300 mx-3 sm:mx-4 shrink-0" />
+            <div className="bg-white rounded-full flex items-center px-5 sm:px-6 py-3 sm:py-4 shadow-sm w-full md:flex-1 md:max-w-2xl">
+              <IoSearch className="text-xl sm:text-3xl shrink-0 text-slate-500" />
+              <div className="w-[1.5px] h-5 sm:h-7 bg-slate-300 mx-3 sm:mx-4 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari ekstrakurikuler..."
-                className="w-full bg-transparent text-slate-800 placeholder:text-slate-400 font-medium text-base sm:text-lg outline-none border-none"
+                className="w-full bg-transparent text-slate-800 placeholder:text-slate-400 font-medium text-sm sm:text-lg outline-none border-none"
               />
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="shrink-0 t hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center ml-2"
+                className="shrink-0 text-slate-400 hover:text-slate-600 transition-opacity cursor-pointer flex items-center justify-center ml-2"
                 aria-label="Hapus pencarian"
               >
-                <IoClose className="text-2xl sm:text-3xl" />
+                <IoClose className="text-xl sm:text-3xl" />
               </button>
             </div>
 
             {/* Toggle INDOOR / OUTDOOR */}
-            <div className="bg-white/20 backdrop-blur-xs p-1.5 rounded-full flex items-center shrink-0 border border-white/10">
+            <div className="bg-white/20 backdrop-blur-xs p-1.5 rounded-full flex items-center shrink-0 border border-white/10 w-full sm:w-auto justify-center">
               <button
                 type="button"
                 onClick={() => setFilterType("INDOOR")}
-                className={`rounded-full px-7 sm:px-9 py-2.5 sm:py-3 text-sm sm:text-base font-extrabold tracking-wider transition-all duration-200 cursor-pointer ${
+                className={`rounded-full px-5 sm:px-9 py-2 sm:py-3 text-xs sm:text-base font-extrabold tracking-wider transition-all duration-200 cursor-pointer flex-1 sm:flex-initial text-center ${
                   filterType === "INDOOR"
                     ? "bg-secondary text-white shadow-sm"
                     : "bg-transparent text-white hover:text-white/80"
@@ -455,7 +455,7 @@ const Ekskul = () => {
               <button
                 type="button"
                 onClick={() => setFilterType("OUTDOOR")}
-                className={`rounded-full px-7 sm:px-9 py-2.5 sm:py-3 text-sm sm:text-base font-extrabold tracking-wider transition-all duration-200 cursor-pointer ${
+                className={`rounded-full px-5 sm:px-9 py-2 sm:py-3 text-xs sm:text-base font-extrabold tracking-wider transition-all duration-200 cursor-pointer flex-1 sm:flex-initial text-center ${
                   filterType === "OUTDOOR"
                     ? "bg-secondary text-white shadow-sm"
                     : "bg-transparent text-white hover:text-white/80"

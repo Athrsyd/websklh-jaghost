@@ -67,14 +67,14 @@ const Jurusan = () => {
         </div>
       </section>
 
-      <section className="relative flex flex-col min-h-screen w-full items-center overflow-hidden bg-linear-to-b px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
-        <div className="title flex w-full flex-col items-center justify-center gap-4">
-          <h1 className="text-5xl font-montserrat text-center text-tertiary font-black">
+      <section className="relative flex flex-col min-h-screen w-full items-center overflow-hidden bg-linear-to-b px-4 sm:px-10 lg:px-16 pb-16 pt-24 sm:pt-32 lg:pb-24 lg:pt-36">
+        <div className="title flex w-full flex-col items-center justify-center gap-3 sm:gap-4 px-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-montserrat text-center text-tertiary font-black leading-tight">
             Program Keahlian <span className="text-secondary">SMK Negeri 26 Jakarta</span>
           </h1>
         </div>
 
-        <div className="w-full max-w-6xl p-6 sm:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)] border border-slate-100 mt-8 sm:mt-12">
+        <div className="w-full max-w-6xl p-4 sm:p-6 md:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)] border border-slate-100 mt-6 sm:mt-10 lg:mt-12">
           <AccrodionGallery items={showcaseJurusan} defaultIndex={0} />
         </div>
       </section>

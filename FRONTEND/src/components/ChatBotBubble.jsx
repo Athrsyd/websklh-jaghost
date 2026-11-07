@@ -249,7 +249,7 @@ const BUBBLE_HOVERED = "p-3 rotate-0";
 const BUBBLE_DEFAULT = "p-2 rotate-360";
 
 const PANEL_BASE =
-  "container pr-8 overflow-hidden pl-4 py-3 flex gap-4 flex-row bg-secondary/30 backdrop-blur-xs rounded-l-full -mr-5 shadow-lg transition-all duration-300 ease-in-out items-center";
+  "pr-7 sm:pr-8 overflow-hidden pl-3 sm:pl-4 py-2.5 sm:py-3 flex gap-2 sm:gap-4 flex-row bg-secondary/30 backdrop-blur-md rounded-l-full -mr-5 shadow-lg transition-all duration-300 ease-in-out items-center max-w-[calc(100vw-5rem)]";
 
 const INITIAL_MESSAGES = [
   { id: 1, text: "Halo! Ada yang bisa saya bantu?", isUser: false },
@@ -961,7 +961,7 @@ const ChatBotBubble = () => {
     [handleSend],
   );
 
-  const STYLE_CONTAINER = "fixed bottom-24 right-10 flex flex-col rounded-lg bg-secondary/30 shadow-lg backdrop-blur-xs w-78 h-90 overflow-hidden transition-all duration-300 ease-in-out";
+  const STYLE_CONTAINER = "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 lg:right-10 flex flex-col rounded-2xl bg-secondary/30 shadow-2xl backdrop-blur-md w-[calc(100vw-2rem)] sm:w-80 max-w-sm h-[70vh] sm:h-96 max-h-[460px] overflow-hidden transition-all duration-300 ease-in-out border border-white/20";
 
   return (
     <div onMouseLeave={isActive ? handleMouseLeave : undefined}>
@@ -1041,7 +1041,7 @@ const ChatBotBubble = () => {
       </div>
 
       {/* Floating button + hover panel */}
-      <div className="fixed bottom-7 right-7 z-50 flex flex-row-reverse items-center">
+      <div className="fixed bottom-4 right-4 sm:bottom-7 sm:right-7 z-50 flex flex-row-reverse items-center max-w-[calc(100vw-2rem)]">
         <button
           type="button"
           aria-label={isActive ? "Tutup chat" : "Buka chat"}
@@ -1053,7 +1053,7 @@ const ChatBotBubble = () => {
         </button>
 
         <div
-          className={`${PANEL_BASE} ${isHovered ? "opacity-100 w-70" : "opacity-0 w-0"}`}
+          className={`${PANEL_BASE} ${isHovered ? "opacity-100 w-56 sm:w-70" : "opacity-0 w-0"}`}
         >
           <svg
             onClick={setIsHovered.bind(null, false)}

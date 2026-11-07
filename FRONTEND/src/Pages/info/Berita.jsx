@@ -115,7 +115,7 @@ const Berita = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-poppins pr-100 text-sm sm:text-md md:text-lg lg:text-xl text-slate-600 tracking-wide">
+          <p className="font-poppins pr-0 sm:pr-12 lg:pr-100 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 tracking-wide">
             Informasi terkini tentang kegiatan dan prestasi SMK Negeri 26 Jakarta. Dapatkan berita terbaru, pengumuman penting, dan sorotan prestasi siswa kami di sini.
           </p>
 

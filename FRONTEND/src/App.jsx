@@ -16,7 +16,9 @@ const App = () => {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      allowNestedScroll: true,
     });
+    window.__lenis = lenis;
 
     // Fix: simpan RAF id agar bisa di-cancel
     let rafId;

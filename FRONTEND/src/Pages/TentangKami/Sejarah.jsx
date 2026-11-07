@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { ScrollReveal } from "../../components/ScrollReveal";
 import foto1 from '../../assets/sejarah/1.avif';
 import foto2 from '../../assets/sejarah/2.jpg';
 import foto3 from '../../assets/sejarah/3.jpg';
@@ -152,9 +153,9 @@ const TimelineItem = ({ item }) => {
     <motion.div
       variants={slowVariants}
       initial="hidden"
-      // animate={isInView ? "visible" : "hidden"}
       whileInView="visible"
-      transition={{duration:1, delay:0.5, ease:'easeInOut'}}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
       style={{ width: TEXT_W, flexShrink: 0, boxSizing: "border-box" }}
     >
       <p
@@ -203,7 +204,8 @@ const TimelineItem = ({ item }) => {
       variants={fastVariants}
       initial="hidden"
       whileInView="visible"
-      transition={{duration:1, delay:0.5, ease:'easeInOut'}}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
       // animate={isInView ? "visible" : "hidden"}
       style={{ width: IMAGE_W, flexShrink: 0, boxSizing: "border-box" }}
     >
@@ -326,33 +328,35 @@ const Sejarah = () => {
           }}
           className="absolute inset-0 pointer-events-none"
         />
-        <h1
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(2.4rem, 5.5vw, 4.5rem)",
-            color: "#000",
-            lineHeight: 1.1,
-            margin: 0,
-          }}
-        >
-          MELANGKAH DARI <br />
-          <span style={{ color: "#0ea5e9" }}>MASA</span> KE{" "}
-          <span style={{ color: "#f97316" }}>MASA</span>
-        </h1>
-        <p
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "1.05rem",
-            color: "#4b5563",
-            maxWidth: "460px",
-            marginTop: "18px",
-            lineHeight: 1.75,
-          }}
-        >
-          Menelusuri perjalanan dan langkah SMK Negeri 26 Jakarta dalam
-          membangun pendidikan vokasi.
-        </p>
+        <ScrollReveal direction="up" duration={0.6}>
+          <h1
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 900,
+              fontSize: "clamp(2.4rem, 5.5vw, 4.5rem)",
+              color: "#000",
+              lineHeight: 1.1,
+              margin: 0,
+            }}
+          >
+            MELANGKAH DARI <br />
+            <span style={{ color: "#0ea5e9" }}>MASA</span> KE{" "}
+            <span style={{ color: "#f97316" }}>MASA</span>
+          </h1>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "1.05rem",
+              color: "#4b5563",
+              maxWidth: "460px",
+              marginTop: "18px",
+              lineHeight: 1.75,
+            }}
+          >
+            Menelusuri perjalanan dan langkah SMK Negeri 26 Jakarta dalam
+            membangun pendidikan vokasi.
+          </p>
+        </ScrollReveal>
 
         <div
           style={{

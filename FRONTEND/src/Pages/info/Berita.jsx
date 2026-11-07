@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Calendar, Search } from 'lucide-react'
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '../../components/ScrollReveal'
 import depanSekolah from '../../assets/depanSekolah.jpeg'
 import profilImg from '../../assets/profil_img.jpg'
 import visimisiImg from '../../assets/visimisi_img.jpg'
@@ -100,7 +101,7 @@ const Berita = () => {
         <div className="w-full" />
 
         {/* Main Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 w-full my-auto">
+        <ScrollReveal direction="up" duration={0.6} className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 w-full my-auto">
           {/* Badge */}
           <div className="mb-5 sm:mb-6">
             <span className="inline-block bg-tertiary text-white px-8 sm:px-9 py-1 sm:py-1.25 rounded-t-full rounded-br-full text-md sm:text-base md:text-xl font-medium tracking-wide shadow-sm">
@@ -125,7 +126,7 @@ const Berita = () => {
               &gt;
             </span>
           </button>
-        </div>
+        </ScrollReveal>
 
         {/* Bottom Scroll Indicator */}
         <div className="relative z-10 flex justify-center items-center pt-6">
@@ -135,15 +136,15 @@ const Berita = () => {
 
       <section className="w-full relative min-h-screen flex flex-col justify-start items-center pt-20 sm:pt-24 pb-16 sm:pb-24 bg-side-back">
         {/* Title Section */}
-        <div className="title text-center mx-auto flex flex-col justify-center items-center">
+        <ScrollReveal direction="up" duration={0.5} className="title text-center mx-auto flex flex-col justify-center items-center">
           <h2 className="text-3xl sm:text-5xl lg:text-[56px] font-montserrat font-black text-tertiary tracking-wider leading-[1.1]">
             BERITA TERKINI
           </h2>
           <div className="w-28 sm:w-40 h-1 bg-tertiary rounded-full mt-2.5 sm:mt-3" />
-        </div>
+        </ScrollReveal>
 
         {/* Search Bar */}
-        <div className="w-full max-w-xl mx-auto px-4 mt-8 sm:mt-10">
+        <ScrollReveal direction="up" delay={0.06} duration={0.5} className="w-full max-w-xl mx-auto px-4 mt-8 sm:mt-10">
           <div className="relative flex items-center shadow-[0_2px_8px_rgba(0,0,0,0.04)] rounded-full">
             <input
               type="text"
@@ -154,10 +155,10 @@ const Berita = () => {
             />
             <span className='absolute left-4 text-tertiary'>< Search /></span>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Category Tabs Card */}
-        <div className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 mt-7 sm:mt-8">
+        <ScrollReveal direction="up" delay={0.1} duration={0.5} className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 mt-7 sm:mt-8">
           <div className="bg-white rounded-2xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.08),0_8px_10px_-6px_rgba(0,0,0,0.03)] border border-slate-100/80 p-2 sm:p-2.5 flex items-center justify-between gap-1 sm:gap-2 overflow-x-auto">
             {categories.map((cat, index) => {
               const isActive = activeCategory === index
@@ -177,13 +178,13 @@ const Berita = () => {
               )
             })}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Cards 3-Column Grid */}
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-14">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" staggerDelay={0.07}>
             {filteredNews.map((item) => (
-              <div
+              <ScrollStaggerItem
                 key={item.id}
                 onClick={() => navigate(`/informasi/berita/${item.id}`)}
                 className="group bg-white rounded-[28px] sm:rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border border-slate-100/80 cursor-pointer"
@@ -225,9 +226,9 @@ const Berita = () => {
                     <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </div>
-              </div>
+              </ScrollStaggerItem>
             ))}
-          </div>
+          </ScrollStagger>
 
           {filteredNews.length === 0 && (
             <div className="text-center py-16">

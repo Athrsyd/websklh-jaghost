@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import model from '../../../assets/modelJurusan/sija.png'
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from "../../../components/ScrollReveal";
 
 // Data untuk Prospek Karir / Dunia Kerja
 const defaultJobProspects = [
@@ -49,7 +50,7 @@ const JurusanDetail = () => {
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-end">
             {/* Left Content */}
-            <div className="lg:col-span-7  flex flex-col items-start pb-12 sm:pb-16 lg:pb-24">
+            <ScrollReveal direction="up" duration={0.6} className="lg:col-span-7  flex flex-col items-start pb-12 sm:pb-16 lg:pb-24">
               {/* Badge */}
               <div className="mb-4 sm:mb-6">
                 <span className="inline-block bg-[#03172E] text-white px-5 sm:px-6 py-2 rounded-t-full rounded-br-full text-xs sm:text-sm md:text-base font-semibold tracking-wide shadow-sm">
@@ -82,10 +83,10 @@ const JurusanDetail = () => {
                   &gt;
                 </span>
               </button>
-            </div>
+            </ScrollReveal>
 
             {/* Right Image (Curved mask corner) */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end items-end w-full">
+            <ScrollReveal direction="up" delay={0.12} duration={0.6} className="lg:col-span-5 flex justify-center lg:justify-end items-end w-full">
               <div className="w-full max-w-md lg:max-w-none aspect-4/3 sm:aspect-16/11 bg-[#03172E]/20 rounded-tl-[140px] sm:rounded-tl-[200px] overflow-hidden shadow-2xl relative">
                 {/* Fallback coding photo illustration */}
                 <img
@@ -95,26 +96,28 @@ const JurusanDetail = () => {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 2 — WEARPACK SIJA (100% MATCH DESIGN)
-       ═══════════════════════════════════════════════════════════ */}
+        ═══════════════════════════════════════════════════════════ */}
       <section
         id="wearpack-section"
         className="w-full bg-white py-16 sm:py-20 lg:py-24"
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 flex flex-col items-center">
           {/* Section Title */}
-          <h2 className="font-montserrat font-black italic text-4xl sm:text-6xl md:text-8xl lg:text-[90px] text-tertiary text-center tracking-wide uppercase mb-6 sm:mb-12">
-            WEARPACK SIJA
-          </h2>
+          <ScrollReveal direction="up" duration={0.5}>
+            <h2 className="font-montserrat font-black italic text-4xl sm:text-6xl md:text-8xl lg:text-[90px] text-tertiary text-center tracking-wide uppercase mb-6 sm:mb-12">
+              WEARPACK SIJA
+            </h2>
+          </ScrollReveal>
 
           {/* Wearpack Uniform Students Image with soft bottom fade */}
-          <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl flex justify-center items-center">
+          <ScrollReveal direction="up" delay={0.08} duration={0.6} className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl flex justify-center items-center">
             <div className="relative w-full aspect-4/3 sm:aspect-16/10 flex justify-center items-center overflow-hidden">
               <img
                 src={model}
@@ -124,17 +127,17 @@ const JurusanDetail = () => {
               {/* Bottom gradient fade to white */}
               <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-white via-white/80 to-transparent pointer-events-none" />
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3 — KOMPETENSI KEAHLIAN (100% MATCH DESIGN)
-       ═══════════════════════════════════════════════════════════ */}
+        ═══════════════════════════════════════════════════════════ */}
       <section className="w-full bg-white py-14 sm:py-18 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
           {/* Header */}
-          <div className="mb-8 sm:mb-12">
+          <ScrollReveal direction="up" duration={0.5} className="mb-8 sm:mb-12">
             <h2 className="font-montserrat font-black text-3xl sm:text-4xl lg:text-[44px] tracking-tight uppercase">
               <span className="text-[#03172E]">KOMPETENSI </span>
               <span className="text-tertiary">KEAHLIAN</span>
@@ -144,14 +147,14 @@ const JurusanDetail = () => {
               Materi pembelajaran berbasis industri yang dirancang untuk
               memenuhi standar teknologi global terkini.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Cards Grid with exact corner roundings & solid hard shadow */}
           <div className="flex flex-col gap-6 sm:gap-7">
             {/* ROW 1: 2 Cards (Wide Left + Regular Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-7">
+            <ScrollStagger className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-7" staggerDelay={0.08}>
               {/* Card 1: Large rounded top-left corner */}
-              <div className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <ScrollStaggerItem className="lg:col-span-7 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tl-[36px] sm:rounded-tl-[54px] rounded-tr-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Infrastruktur Jaringan &amp; Cloud
@@ -161,10 +164,10 @@ const JurusanDetail = () => {
                     routing switching, serta virtualisasi cloud computing modern.
                   </p>
                 </div>
-              </div>
+              </ScrollStaggerItem>
 
               {/* Card 2: Large rounded top-right corner */}
-              <div className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <ScrollStaggerItem className="lg:col-span-5 bg-[#FFAE9D] border-2 border-[#03172E] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-tl-xl rounded-b-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-55 p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-xl sm:text-2xl text-[#03172E] mb-2">
                     Keamanan Siber
@@ -174,13 +177,13 @@ const JurusanDetail = () => {
                     keamanan transmisi data terenkripsi.
                   </p>
                 </div>
-              </div>
-            </div>
+              </ScrollStaggerItem>
+            </ScrollStagger>
 
             {/* ROW 2: 3 Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
+            <ScrollStagger className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7" staggerDelay={0.08}>
               {/* Card 3: Large rounded bottom-left corner */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-br-xl rounded-bl-[36px] sm:rounded-bl-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <ScrollStaggerItem className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-br-xl rounded-bl-[36px] sm:rounded-bl-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Pengembangan Web &amp; API
@@ -190,10 +193,10 @@ const JurusanDetail = () => {
                     skala industri.
                   </p>
                 </div>
-              </div>
+              </ScrollStaggerItem>
 
               {/* Card 4: Standard rounded corners */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <ScrollStaggerItem className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-xl shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Basis Data Terdistribusi
@@ -203,10 +206,10 @@ const JurusanDetail = () => {
                     dan kueri teroptimasi.
                   </p>
                 </div>
-              </div>
+              </ScrollStaggerItem>
 
               {/* Card 5: Large rounded bottom-right corner */}
-              <div className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-bl-xl rounded-br-[36px] sm:rounded-br-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
+              <ScrollStaggerItem className="bg-[#FFAE9D] border-2 border-[#03172E] rounded-t-xl rounded-bl-xl rounded-br-[36px] sm:rounded-br-[54px] shadow-[5px_5px_0px_0px_#03172E] sm:shadow-[8px_8px_0px_0px_#03172E] min-h-[auto] sm:min-h-[220px] p-5 sm:p-8 flex flex-col justify-between transition-transform hover:-translate-y-1">
                 <div>
                   <h3 className="font-montserrat font-black text-lg sm:text-xl text-[#03172E] mb-2">
                     Aplikasi Mobile &amp; IoT
@@ -216,19 +219,19 @@ const JurusanDetail = () => {
                     sensor pintar cerdas.
                   </p>
                 </div>
-              </div>
-            </div>
+              </ScrollStaggerItem>
+            </ScrollStagger>
           </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 4 — PROSPEK DUNIA KERJA (100% MATCH DESIGN)
-       ═══════════════════════════════════════════════════════════ */}
+        ═══════════════════════════════════════════════════════════ */}
       <section className="w-full bg-[#DCE7FD] rounded-t-[40px] sm:rounded-t-[60px] pt-14 sm:pt-18 pb-20 sm:pb-28">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
           {/* Header */}
-          <div className="mb-8 sm:mb-12">
+          <ScrollReveal direction="up" duration={0.5} className="mb-8 sm:mb-12">
             <h2 className="font-montserrat font-black text-3xl sm:text-4xl lg:text-[44px] tracking-tight uppercase">
               <span className="text-[#03172E]">PROSPEK </span>
               <span className="text-tertiary">DUNIA KERJA</span>
@@ -238,23 +241,23 @@ const JurusanDetail = () => {
               Kompetensi di bidang sistem informasi, jaringan, dan aplikasi
               membuka peluang untuk berkarier di berbagai bidang teknologi digital.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Pill Badges (Responsive columns) */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+          <ScrollStagger className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5" staggerDelay={0.04}>
             {defaultJobProspects.map((job, idx) => (
-              <a href={`https://www.google.com/search?q=apa+itu+${job.split(" ").join("+")}`} target="_blank" rel="noopener noreferrer" key={idx}
-                title={`Cari tahu lebih lanjut tentang ${job} di Google`} className="group">
-
-                <div
-                  key={idx}
-                  className="bg-tertiary  cursor-pointer  hover:bg-[#ff451d] text-white rounded-full py-3.5 sm:py-4 px-5 sm:px-6 flex items-center justify-center text-center font-bold text-xs sm:text-sm shadow-md shadow-orange-950/10 transition-all duration-200 hover:scale-[1.03] "
-                >
-                  <span>{job}</span>
-                </div>
-              </a>
+              <ScrollStaggerItem key={idx}>
+                <a href={`https://www.google.com/search?q=apa+itu+${job.split(" ").join("+")}`} target="_blank" rel="noopener noreferrer"
+                  title={`Cari tahu lebih lanjut tentang ${job} di Google`} className="group block">
+                  <div
+                    className="bg-tertiary cursor-pointer hover:bg-[#ff451d] text-white rounded-full py-3.5 sm:py-4 px-5 sm:px-6 flex items-center justify-center text-center font-bold text-xs sm:text-sm shadow-md shadow-orange-950/10 transition-all duration-200 hover:scale-[1.03]"
+                  >
+                    <span>{job}</span>
+                  </div>
+                </a>
+              </ScrollStaggerItem>
             ))}
-          </div>
+          </ScrollStagger>
         </div>
       </section>
     </div>

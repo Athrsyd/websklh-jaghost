@@ -1,6 +1,7 @@
 import React from 'react'
 import AccrodionGallery from '../../components/AccrodionGallery'
 import showcaseJurusan from './data/showcaseJurusan'
+import { ScrollReveal } from '../../components/ScrollReveal'
 
 const Jurusan = () => {
   return (
@@ -16,14 +17,9 @@ const Jurusan = () => {
           }}
         />
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-40 z-0 h-[470px] w-[430px] rounded-bl-[170px] bg-[#d9d9d9] sm:-right-24 sm:-top-52 lg:h-[560px] lg:w-[510px]"
-        />
-
         <div className="relative z-10 mx-auto w-full max-w-7xl">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-4">
-            <div className="flex max-w-xl flex-col items-start lg:col-span-7">
+            <ScrollReveal direction="up" duration={0.55} className="flex max-w-xl flex-col items-start lg:col-span-7">
               <nav
                 aria-label="Breadcrumb"
                 className="mb-3 flex items-center gap-2 text-sm font-medium tracking-wide md:text-[15px]"
@@ -52,31 +48,21 @@ const Jurusan = () => {
                   &gt;
                 </span>
               </button>
-            </div>
-
-            <div className="pointer-events-none relative hidden h-64 select-none items-center justify-center lg:col-span-5 lg:flex">
-              <span
-                aria-hidden="true"
-                className="font-montserrat text-[210px] font-extrabold leading-none text-transparent"
-                style={{ WebkitTextStroke: '1px #74a9ff' }}
-              >
-                26
-              </span>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       <section className="relative flex flex-col min-h-screen w-full items-center overflow-hidden bg-linear-to-b px-4 sm:px-10 lg:px-16 pb-16 pt-24 sm:pt-32 lg:pb-24 lg:pt-36">
-        <div className="title flex w-full flex-col items-center justify-center gap-3 sm:gap-4 px-2">
+        <ScrollReveal direction="up" duration={0.5} className="title flex w-full flex-col items-center justify-center gap-3 sm:gap-4 px-2">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-montserrat text-center text-tertiary font-black leading-tight">
             Program Keahlian <span className="text-secondary">SMK Negeri 26 Jakarta</span>
           </h1>
-        </div>
+        </ScrollReveal>
 
-        <div className="w-full max-w-6xl p-4 sm:p-6 md:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)] border border-slate-100 mt-6 sm:mt-10 lg:mt-12">
+        <ScrollReveal direction="up" delay={0.1} duration={0.55} className="w-full max-w-6xl p-4 sm:p-6 md:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.08)] border border-slate-100 mt-6 sm:mt-10 lg:mt-12">
           <AccrodionGallery items={showcaseJurusan} defaultIndex={0} />
-        </div>
+        </ScrollReveal>
       </section>
     </>
   )

@@ -34,6 +34,7 @@ import modelSija from "./../assets/modelJurusan/sija.png";
 import modelTbkr from "./../assets/modelJurusan/tbkr.png";
 import briefcase from "./../assets/briefcase.svg?react";
 import { Link } from "react-router-dom";
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from "../components/ScrollReveal";
 
 const Beranda = () => {
   const [jurusanId, setJurusanId] = useState(1);
@@ -49,38 +50,85 @@ const Beranda = () => {
         "SMKN 26 Jakarta memiliki berbagai kompetensi keahlian unggulan di bidang teknik industri seperti Konstruksi Gedung dan Sanitasi (KGS), Teknik Elektronika (TEK), Teknik Ketenagalistrikan (TITL), Teknik Fabrikasi Logam & Manufaktur (TFLM), dan Teknik Kendaraan Ringan (TKR).",
     },
     {
-    id: 2,
-    question: "Di mana lokasi SMKN 26 Jakarta?",
-    answer:
-      "SMKN 26 Jakarta berlokasi di Jl. Balai Pustaka Baru I No.2, RT.2/RW.7, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta"
-  },
-  {
-    id: 3,
-    question: "Bagaimana proses pendaftaran PPDB di SMKN 26 Jakarta?",
-    answer:
-      "Pendaftaran dilakukan melalui portal resmi SPMB/PPDB DKI Jakarta sesuai jalur dan jadwal yang telah ditetapkan."
-  },
-  {
-    id: 4,
-    question: "Apakah SMKN 26 Jakarta memiliki program PKL?",
-    answer:
-      "Ya, seluruh siswa mengikuti Praktik Kerja Lapangan (PKL) di perusahaan mitra sesuai kompetensi keahliannya."
-  },
-  {
-    id: 5,
-    question: "Apakah lulusan SMKN 26 Jakarta memiliki peluang kerja?",
-    answer:
-      "Ya, sekolah memiliki Bursa Kerja Khusus (BKK) yang membantu penyaluran informasi lowongan, rekrutmen, dan kemitraan dengan dunia industri."
-  },
-  {
-    id: 6,
-    question: "Fasilitas apa saja yang tersedia di SMKN 26 Jakarta?",
-    answer:
-      "Sekolah menyediakan laboratorium praktik, bengkel sesuai jurusan, ruang komputer, perpustakaan, serta fasilitas penunjang kegiatan belajar."
-  }
+      id: 2,
+      question: "Di mana lokasi SMKN 26 Jakarta?",
+      answer:
+        "SMKN 26 Jakarta berlokasi di Jl. Balai Pustaka Baru I No.2, RT.2/RW.7, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta"
+    },
+    {
+      id: 3,
+      question: "Bagaimana proses pendaftaran PPDB di SMKN 26 Jakarta?",
+      answer:
+        "Pendaftaran dilakukan melalui portal resmi SPMB/PPDB DKI Jakarta sesuai jalur dan jadwal yang telah ditetapkan."
+    },
+    {
+      id: 4,
+      question: "Apakah SMKN 26 Jakarta memiliki program PKL?",
+      answer:
+        "Ya, seluruh siswa mengikuti Praktik Kerja Lapangan (PKL) di perusahaan mitra sesuai kompetensi keahliannya."
+    },
+    {
+      id: 5,
+      question: "Apakah lulusan SMKN 26 Jakarta memiliki peluang kerja?",
+      answer:
+        "Ya, sekolah memiliki Bursa Kerja Khusus (BKK) yang membantu penyaluran informasi lowongan, rekrutmen, dan kemitraan dengan dunia industri."
+    },
+    {
+      id: 6,
+      question: "Fasilitas apa saja yang tersedia di SMKN 26 Jakarta?",
+      answer:
+        "Sekolah menyediakan laboratorium praktik, bengkel sesuai jurusan, ruang komputer, perpustakaan, serta fasilitas penunjang kegiatan belajar."
+    }
   ];
 
   const [activeKategori, setActiveKategori] = useState("Semua");
+
+  const handleFaqWheel = (e) => {
+    const el = e.currentTarget;
+    if (!el) return;
+
+    const isDown = e.deltaY > 0;
+    const maxScroll = el.scrollHeight - el.clientHeight;
+
+    // Jika konten FAQ muat (tidak perlu scroll FAQ), langsung teruskan scroll ke web
+    if (maxScroll <= 2) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(
+          (window.__lenis.targetScroll ?? window.__lenis.scroll) + e.deltaY,
+          {
+            programmatic: false,
+            duration: window.__lenis.options?.duration,
+            easing: window.__lenis.options?.easing,
+            lerp: window.__lenis.options?.lerp,
+          }
+        );
+      } else {
+        window.scrollBy(0, e.deltaY);
+      }
+      return;
+    }
+
+    const atBottom = el.scrollTop >= maxScroll - 2;
+    const atTop = el.scrollTop <= 2;
+
+    // Jika scroll ke bawah dan sudah mentok bawah, atau scroll ke atas dan sudah mentok atas:
+    if ((isDown && atBottom) || (!isDown && atTop)) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(
+          (window.__lenis.targetScroll ?? window.__lenis.scroll) + e.deltaY,
+          {
+            programmatic: false,
+            duration: window.__lenis.options?.duration,
+            easing: window.__lenis.options?.easing,
+            lerp: window.__lenis.options?.lerp,
+          }
+        );
+      } else {
+        window.scrollBy(0, e.deltaY);
+      }
+    }
+    // Jika belum mentok, biarkan browser men-scroll isi FAQ secara native dan mulus
+  };
 
   const kategoriList = [
     "Semua",
@@ -300,9 +348,9 @@ const Beranda = () => {
       id: 3,
       nama: "Teknik Instalasi Tenaga Listrik",
       singkatan: "TITL",
-      color: "#FFDD00",
+      color: "#FFE500",
       backgroundIconColor: "#FFDD004D",
-      iconColor: "#FFDD00",
+      iconColor: "#FFE500",
       icon: briefcase,
       deskripsi:
         "Program keahlian yang mempelajari perencanaan, pemasangan, dan pemeliharaan sistem kelistrikan bangunan, industri, serta panel kontrol otomasi.",
@@ -338,7 +386,7 @@ const Beranda = () => {
       id: 5,
       nama: "Teknik Kendaraan Ringan",
       singkatan: "TKR",
-      color: "#DED8E5",
+      color: "#999797",
       backgroundIconColor: "#1E1E1E26",
       iconColor: "#434655",
       icon: briefcase,
@@ -546,49 +594,50 @@ const Beranda = () => {
           </div>
 
           {/* Heading - BELAJAR, BEKERJA, MEMBANGUN */}
-          <h1
-            className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[70px] xl:text-[80px] uppercase font-extrabold mt-2 leading-[0.95] sm:leading-[0.92] tracking-tight"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800 }}
-          >
-            <span className="text-white">BELAJAR,</span> <br />
-            <span className="text-secondary ">BEKERJA,</span> <br />
-            <span className="text-tertiary">MEMBANGUN</span>
-          </h1>
+          <ScrollReveal direction="up" delay={0.05} duration={0.6}>
+            <h1
+              className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[70px] xl:text-[80px] uppercase font-extrabold mt-2 leading-[0.95] sm:leading-[0.92] tracking-tight"
+              style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800 }}
+            >
+              <span className="text-white">BELAJAR,</span> <br />
+              <span className="text-secondary ">BEKERJA,</span> <br />
+              <span className="text-tertiary">MEMBANGUN</span>
+            </h1>
+          </ScrollReveal>
 
-          {/* Banner Card Statistik Putih dengan Garis Oren */}
-          <div
-            className="mt-6 sm:mt-8 md:mt-10 w-full lg:w-[90%] max-w-5xl bg-white
-        rounded-2xl sm:rounded-3xl md:rounded-[36px] py-4 sm:py-5 px-4 sm:px-6 md:px-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col md:flex-row
-        items-center justify-between gap-4 md:gap-0"
-          >
-            {deskripsi.map((item, index) => (
-              <React.Fragment key={item.id}>
-                <div className="flex items-center gap-4 flex-1 justify-center w-full py-2 md:py-0">
-                  <div className="shrink-0 text-tertiary scale-90 sm:scale-100">{item.icon}</div>
-                  <div>
-                    <h3
-                      className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-black font-poppins"
-                      style={{ fontWeight: 600 }}
-                    >
-                      {item.qty}
-                    </h3>
-                    <p
-                      className="text-xs md:text-sm font-semibold text-gray-800"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      {item.desc}
-                    </p>
+          {/* Banner Card Statistik: Di Laptop/Desktop tetap 1 banner card orisinal, di HP menjadi beberapa badge putih terpisah */}
+          <ScrollReveal direction="up" delay={0.12} duration={0.6}>
+            <div
+              className="mt-6 sm:mt-8 md:mt-10 w-full lg:w-[90%] max-w-5xl flex flex-col md:flex-row gap-2.5 sm:gap-3 md:gap-0
+                md:bg-white md:rounded-[36px] md:py-5 md:px-10 md:shadow-[0_20px_50px_rgba(0,0,0,0.15)] md:items-center md:justify-between"
+            >
+              {deskripsi.map((item, index) => (
+                <React.Fragment key={item.id}>
+                  {/* Di HP: badge putih terpisah dengan padding rapi dan shadow. Di desktop: tampilan flat di dalam container */}
+                  <div className="flex items-center gap-3.5 sm:gap-4 flex-1 justify-start md:justify-center w-full bg-white md:bg-transparent rounded-2xl md:rounded-none py-3 px-4 md:p-0 shadow-[0_8px_20px_rgba(0,0,0,0.08)] md:shadow-none border border-slate-100/80 md:border-none">
+                    <div className="shrink-0 text-tertiary scale-90 sm:scale-100">{item.icon}</div>
+                    <div>
+                      <h3
+                        className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-black font-poppins"
+                        style={{ fontWeight: 600 }}
+                      >
+                        {item.qty}
+                      </h3>
+                      <p
+                        className="text-xs md:text-sm font-semibold text-gray-800"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                {index < deskripsi.length - 1 && (
-                  <>
+                  {index < deskripsi.length - 1 && (
                     <div className="hidden md:block w-0.5 h-12 bg-tertiary mx-3" />
-                    <div className="block md:hidden w-3/4 h-[1px] bg-gray-200" />
-                  </>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -598,15 +647,15 @@ const Beranda = () => {
           className="container lg:w-4/5 w-[90%] mx-auto flex flex-col 
         md:flex-row gap-8 lg:gap-12 items-center justify-center"
         >
-          <div className="w-4/5 sm:w-3/5 lg:w-1/2 flex justify-center">
+          <ScrollReveal direction="up" delay={0.05} duration={0.55} className="w-4/5 sm:w-3/5 lg:w-1/2 flex justify-center">
             <img
               src={kepsek}
               alt="Kepala Sekolah"
               className="w-full max-w-[320px] md:max-w-none lg:w-4/5 h-auto object-contain"
             />
-          </div>
+          </ScrollReveal>
 
-          <div className="w-full md:w-4/5 lg:w-1/2 flex flex-col gap-4">
+          <ScrollReveal direction="up" delay={0.12} duration={0.55} className="w-full md:w-4/5 lg:w-1/2 flex flex-col gap-4">
             <div className="flex flex-row items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -646,15 +695,17 @@ const Beranda = () => {
                 <span className="text-xl sm:text-2xl lg:text-3xl font-serif">"</span>
               </p>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Program keahlian */}
       <div className="flex flex-col justify-center">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-6 sm:pb-10 pt-2 px-4">
-          PROGRAM <span className='text-secondary'>KEAHLIAN</span>
-        </h1>
+        <ScrollReveal direction="up" duration={0.5}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-6 sm:pb-10 pt-2 px-4">
+            PROGRAM <span className='text-secondary'>KEAHLIAN</span>
+          </h1>
+        </ScrollReveal>
 
         {/* ─── DESKTOP VERSION (100% ORIGINAL & UNCHANGED) ─── */}
         <div className="hidden lg:block">
@@ -827,19 +878,19 @@ const Beranda = () => {
         {/* ─── MOBILE / TABLET RESPONSIVE VERSION (< lg) ─── */}
         <div className="block lg:hidden px-4 sm:px-8 pb-12">
           <div
-            className="w-full rounded-3xl p-6 sm:p-8 transition-colors duration-500 shadow-lg border border-slate-100 flex flex-col items-center"
+            className="w-full h-[500px] rounded-3xl p-5 sm:p-7 transition-colors duration-500 shadow-lg border border-slate-100 flex flex-col justify-between items-center overflow-hidden"
             style={{
               background: `color-mix(in srgb, ${activeJurusan.color} 12%, #f8fafc)`,
             }}
           >
             {/* Quick Major Selector Pills */}
-            <div className="w-full flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+            {/* <div className="w-full flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
               {jurusanData.map((j) => (
                 <button
                   key={j.id}
                   type="button"
                   onClick={() => setJurusanId(j.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold font-montserrat shrink-0 transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-full text-xs font-bold font-montserrat shrink-0 transition-all cursor-pointer ${
                     j.id === jurusanId
                       ? "text-white shadow-sm scale-105"
                       : "bg-white/80 text-gray-700 hover:bg-white"
@@ -849,9 +900,9 @@ const Beranda = () => {
                   {j.singkatan}
                 </button>
               ))}
-            </div>
+            </div> */}
 
-            {/* Title & Badge */}
+            {/* Title (No Description) */}
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={jurusanId}
@@ -863,84 +914,60 @@ const Beranda = () => {
                 transition={{ duration: 0.3 }}
                 className="w-full flex flex-col items-center text-center"
               >
-                <span
-                  className="text-xs font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-2 bg-white/90 shadow-xs"
-                  style={{ color: activeJurusan.color }}
-                >
-                  {activeJurusan.singkatan}
-                </span>
-
                 <h2
                   style={{ color: activeJurusan.color }}
-                  className="text-2xl sm:text-3xl font-black font-montserrat mb-3 leading-tight"
+                  className="text-xl sm:text-2xl font-black font-montserrat leading-tight"
                 >
                   {activeJurusan.nama}
                 </h2>
 
-                <p className="text-xs sm:text-sm font-medium text-slate-600 max-w-lg mb-6 leading-relaxed">
+                <p className="text-xs font-poppins font-semibold mt-2 text-center text-black/50 px-4">
                   {activeJurusan.deskripsi}
                 </p>
+              </motion.div>
+            </AnimatePresence>
 
-                {/* Model Image */}
+            {/* Model Image with button covering the bottom */}
+            <div className="relative flex flex-col items-center justify-end w-full flex-1 min-h-0 my-1">
+              <div className="relative flex justify-center items-end h-[260px] sm:h-[280px] w-full">
                 {activeJurusan.img && (
-                  <div className="w-full max-w-[280px] sm:max-w-[340px] h-60 sm:h-72 flex justify-center items-center my-2">
-                    <img
+                  <AnimatePresence mode="wait" custom={direction}>
+                    <motion.img
+                      key={jurusanId}
                       src={activeJurusan.img}
                       alt={activeJurusan.nama}
-                      className="w-full h-full object-contain filter drop-shadow-lg"
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                      className="h-[260px] sm:h-[280px] max-w-full object-contain filter drop-shadow-md select-none pointer-events-none"
                     />
-                  </div>
+                  </AnimatePresence>
                 )}
 
-                {/* Prospek Kerja Box */}
-                <div className="w-full bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 my-4 text-left">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div
-                      className="p-1.5 rounded-full"
-                      style={{ backgroundColor: activeJurusan.backgroundIconColor }}
-                    >
-                      <activeJurusan.icon
-                        style={{ color: activeJurusan.iconColor }}
-                        className="w-4 h-4"
-                      />
-                    </div>
-                    <span className="text-xs sm:text-sm font-bold text-gray-800 font-montserrat">
-                      Prospek Kerja Lulusan:
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {activeJurusan.prospekKerja.map((prospek, pIdx) => (
-                      <span
-                        key={pIdx}
-                        className="text-[11px] sm:text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700"
-                      >
-                        {prospek}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA Link Button */}
+                {/* Button covering the cut-off bottom of student model */}
                 <Link
                   to="/program/jurusan"
-                  style={{ backgroundColor: activeJurusan.color }}
-                  className="inline-flex items-center gap-2 text-white font-montserrat font-bold text-sm px-6 py-2.5 rounded-full shadow-md hover:brightness-95 active:scale-95 transition-all mt-2"
+                  style={{ color: activeJurusan.color }}
+                  className="absolute -bottom-2 z-20 inline-flex items-center gap-1.5 bg-white font-montserrat font-bold text-xs sm:text-sm px-6 py-2.5 rounded-full shadow-lg hover:brightness-95 active:scale-95 transition-all border-2 border-white"
                 >
                   <span>Pelajari Selengkapnya</span>
                   <span>&gt;</span>
                 </Link>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            </div>
 
             {/* Bottom Controls: Prev / Next & Indicators */}
-            <div className="flex items-center justify-between w-full max-w-xs mt-6 pt-4 border-t border-slate-200/60">
+            <div className="flex items-center justify-between w-full max-w-xs pt-3 border-t border-slate-200/60">
               <button
                 type="button"
                 onClick={handleJurusanInc}
-                className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 active:scale-95 cursor-pointer"
+                className="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 active:scale-95 cursor-pointer"
                 aria-label="Jurusan sebelumnya"
               >
-                <RowKiri style={{ color: activeJurusan.iconColor }} className="h-5 pr-0.5" />
+                <RowKiri style={{ color: activeJurusan.iconColor }} className="h-4.5 pr-0.5" />
               </button>
 
               <div className="flex items-center gap-1.5">
@@ -951,9 +978,8 @@ const Beranda = () => {
                       key={index}
                       type="button"
                       onClick={() => handleDot(index + 1)}
-                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                        index + 1 === jurusanId ? "w-5" : "w-2.5 bg-gray-300"
-                      }`}
+                      className={`h-2 rounded-full transition-all cursor-pointer ${index + 1 === jurusanId ? "w-4.5" : "w-2 bg-gray-300"
+                        }`}
                       style={index + 1 === jurusanId ? { backgroundColor: activeJurusan.color } : {}}
                       aria-label={`Ke jurusan ${index + 1}`}
                     />
@@ -963,10 +989,10 @@ const Beranda = () => {
               <button
                 type="button"
                 onClick={handleJurusanDec}
-                className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 active:scale-95 cursor-pointer"
+                className="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 active:scale-95 cursor-pointer"
                 aria-label="Jurusan berikutnya"
               >
-                <RowKanan style={{ color: activeJurusan.iconColor }} className="h-5 pl-0.5" />
+                <RowKanan style={{ color: activeJurusan.iconColor }} className="h-4.5 pl-0.5" />
               </button>
             </div>
           </div>
@@ -977,49 +1003,56 @@ const Beranda = () => {
       {/* Hubungan Industri */}
       <section className="w-full min-h-[60vh] lg:min-h-screen bg-white py-14 sm:py-20">
         <div className="w-full mx-auto flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-1 pt-2 px-4">
-            HUBUNGAN <span className='text-secondary uppercase'>Industri</span>
-          </h1>
+          <ScrollReveal direction="up" duration={0.5}>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-black tracking-wide text-center text-tertiary pb-1 pt-2 px-4">
+              HUBUNGAN <span className='text-secondary uppercase'>Industri</span>
+            </h1>
+          </ScrollReveal>
 
-          <div className="h-60 sm:h-80 w-full flex flex-row items-center">
-            <div className="hidden md:flex pl-4 w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
-              <p className="text-black font-montserrat text-base lg:text-lg leading-5 text-justify">
-                Bekerja sama dengan berbagai perusahaan dan instansi untuk
-                mendukung pembelajaran, PKL, serta penyerapan lulusan.
-              </p>
-            </div>
-            <div className="w-full h-46 overflow-hidden border-t-2 border-b-2 border-[#0037B080]/30">
-              <div
-                className="h-full flex items-center group"
-                style={{
-                  maskImage:
-                    "linear-gradient(to right, transparent 0%, black 15%)",
-                  WebkitMaskImage:
-                    "linear-gradient(to right, transparent 0%, black 15%)",
-                }}
-              >
-                <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
-                  {partners.map((partner, index) => (
-                    <div
-                      key={`${partner.id}-${index}`}
-                      className="flex items-center justify-center w-40 sm:w-50 h-36 sm:h-46 shrink-0 border-t-[1.75px] border-b-[1.75px] border-l border-r border-[#0037B080]/80 px-4"
-                    >
-                      <img
-                        src={partner.logo}
-                        alt={partner.nama}
-                        className="max-h-24 sm:max-h-30 max-w-32 sm:max-w-40 object-contain"
-                      />
-                    </div>
-                  ))}
+          <ScrollReveal direction="up" delay={0.1} duration={0.55} className="w-full">
+            <div className="h-60 sm:h-80 w-full flex flex-row items-center">
+              <div className="hidden md:flex pl-4 w-1/3 h-46 border-t-[1.75px] border-r-[1.75px] border-b-[1.75px] px-4  flex-col items-center justify-center border-[#0037B080]/30">
+                <p className="text-black font-montserrat text-base lg:text-lg leading-5 text-justify">
+                  Bekerja sama dengan berbagai perusahaan dan instansi untuk
+                  mendukung pembelajaran, PKL, serta penyerapan lulusan.
+                </p>
+              </div>
+              <div className="w-full h-46 overflow-hidden border-t-2 border-b-2 border-[#0037B080]/30">
+                <div
+                  className="h-full flex items-center group"
+                  style={{
+                    maskImage:
+                      "linear-gradient(to right, transparent 0%, black 15%)",
+                    WebkitMaskImage:
+                      "linear-gradient(to right, transparent 0%, black 15%)",
+                  }}
+                >
+                  <div className="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused]">
+                    {partners.map((partner, index) => (
+                      <div
+                        key={`${partner.id}-${index}`}
+                        className="flex items-center justify-center w-40 sm:w-50 h-36 sm:h-46 shrink-0 border-t-[1.75px] border-b-[1.75px] border-l border-r border-[#0037B080]/80 px-4"
+                      >
+                        <img
+                          src={partner.logo}
+                          alt={partner.nama}
+                          className="max-h-24 sm:max-h-30 max-w-32 sm:max-w-40 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <Link to="/tentang-kami/hubungan-industri">
-            <button className="bg-secondary text-base sm:text-xl text-white py-2.5 sm:py-3 px-6 sm:px-8 rounded-full hover:bg-blue-600 active:scale-95 transition-all cursor-pointer shadow-md">
-              Lihat Selengkapnya
-            </button>
-          </Link>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.15} duration={0.5}>
+            <Link to="/tentang-kami/hubungan-industri">
+              <button className="bg-secondary text-base sm:text-xl text-white py-2.5 sm:py-3 px-6 sm:px-8 rounded-full hover:bg-blue-600 active:scale-95 transition-all cursor-pointer shadow-md">
+                Lihat Selengkapnya
+              </button>
+            </Link>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -1028,7 +1061,7 @@ const Beranda = () => {
         <div className="w-full max-w-310 bg-white rounded-3xl md:rounded-[40px] p-6 sm:p-10 md:p-12 lg:p-16 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             {/* Sisi Kiri: Badge & Judul */}
-            <div className="lg:col-span-5 flex flex-col items-start text-left">
+            <ScrollReveal direction="up" duration={0.5} className="lg:col-span-5 flex flex-col items-start text-left">
               <span className="bg-tertiary text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-1.5 sm:py-2 rounded-t-full rounded-br-full mb-4 sm:mb-5 shadow-sm inline-block">
                 Pertanyaan Umum
               </span>
@@ -1039,14 +1072,14 @@ const Beranda = () => {
               <p className="text-slate-500 text-sm sm:text-base md:text-lg leading-relaxed max-w-md">
                 Temukan jawaban singkat seputar SMKN 26 Jakarta, program, dan informasi sekolah.
               </p>
-            </div>
+            </ScrollReveal>
 
             {/* Sisi Kanan: List Accordion FAQ dengan Custom Scrollbar */}
-            <div className="lg:col-span-7">
+            <ScrollReveal direction="up" delay={0.1} duration={0.55} className="lg:col-span-7">
               <div
                 data-lenis-prevent
-                onWheel={(e) => e.stopPropagation()}
-                className="max-h-105 md:max-h-112.5 overflow-y-auto pr-2 sm:pr-3 md:pr-4 space-y-3 sm:space-y-3.5 md:space-y-4 faq-scrollbar overscroll-contain"
+                onWheel={handleFaqWheel}
+                className="max-h-105 md:max-h-112.5 overflow-y-auto pr-2 sm:pr-3 md:pr-4 space-y-3 sm:space-y-3.5 md:space-y-4 faq-scrollbar overscroll-auto"
               >
                 {faqData.map((item, index) => {
                   const isOpen = openFaq === index;
@@ -1106,7 +1139,7 @@ const Beranda = () => {
                   );
                 })}
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -1115,21 +1148,21 @@ const Beranda = () => {
       <section className="w-full bg-linear-to-b from-side-back/35 via-white to-white py-14 sm:py-16 md:py-24 px-4 sm:px-8 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
           {/* Judul Section */}
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <ScrollReveal direction="up" duration={0.5} className="text-center mb-8 sm:mb-12 md:mb-16">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[80px] font-montserrat font-black tracking-wide">
               <span className="text-tertiary">BERITA</span>{" "}
               <span className="text-secondary">TERKINI</span>
             </h1>
-          </div>
+          </ScrollReveal>
 
           {/* Konten 2 Kolom: Kategori & List Berita */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Sidebar Kategori */}
-            <div className="lg:col-span-3 flex flex-col items-start w-full">
+            <ScrollReveal direction="up" delay={0.05} duration={0.5} className="lg:col-span-3 flex flex-col items-start w-full">
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-3 sm:mb-4">
                 Kategori Berita
               </h3>
-              
+
               {/* Category Pills (horizontal scroll on mobile, vertical list on desktop) */}
               <div className="flex flex-row overflow-x-auto pb-2 scrollbar-none gap-2 w-full lg:flex-col lg:space-y-3.5 lg:overflow-visible">
                 {kategoriList.map((kategori) => {
@@ -1163,13 +1196,13 @@ const Beranda = () => {
                   </button>
                 </Link>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* List Berita (Fixed ml-0 on mobile, lg:ml-12 on desktop!) */}
-            <div className="ml-0 lg:ml-12 lg:col-span-9 flex flex-col space-y-6 sm:space-y-8 w-full">
+            <ScrollStagger className="ml-0 lg:ml-12 lg:col-span-9 flex flex-col space-y-6 sm:space-y-8 w-full" staggerDelay={0.08}>
               {filteredBerita.length > 0 ? (
                 filteredBerita.map((item) => (
-                  <div
+                  <ScrollStaggerItem
                     key={item.id}
                     className="flex flex-col sm:flex-row gap-5 sm:gap-6 md:gap-8 items-start group bg-white/60 p-3 sm:p-0 rounded-2xl sm:rounded-none border border-slate-100 sm:border-none shadow-xs sm:shadow-none"
                   >
@@ -1215,14 +1248,14 @@ const Beranda = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </ScrollStaggerItem>
                 ))
               ) : (
                 <div className="py-12 text-center text-slate-400">
                   Tidak ada berita di kategori ini.
                 </div>
               )}
-            </div>
+            </ScrollStagger>
           </div>
         </div>
       </section>

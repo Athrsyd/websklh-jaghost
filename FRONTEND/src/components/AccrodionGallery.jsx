@@ -191,6 +191,7 @@ const AccordionGallery = ({
   const handleClick = (i, item, e) => {
     if (i !== active) {
       e.preventDefault();
+      e.stopPropagation();
       setActive(i);
     } else if (item.link) {
       navigate(item.link);
@@ -236,7 +237,7 @@ const AccordionGallery = ({
             key={item.id || i}
             ref={el => (panelRefs.current[i] = el)}
             className={`group relative block min-w-0 min-h-0 flex-[1_1_0] cursor-pointer overflow-hidden bg-[#0a0713] outline-none transition-[border-color,box-shadow] duration-200 border-2 [box-shadow:0_10px_25px_-15px_rgba(0,0,0,0.4)] max-[640px]:min-h-[70px] ${
-              isActive ? 'max-[640px]:min-h-[220px]' : ''
+              isActive ? 'max-[640px]:min-h-[200px]' : ''
             } ${
               isBorderActive
                 ? 'border-[#0088FF] shadow-[0_0_15px_rgba(0,136,255,0.35)]'
@@ -311,16 +312,21 @@ const AccordionGallery = ({
                 aria-hidden={!isActive}
               >
                 {/* "Lihat Jurusan →" Pill Button */}
-                <Link
-                  to={item.link || '#'}
-                  onClick={e => e.stopPropagation()}
-                  className="group/btn inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 hover:border-white/40 text-white text-[11px] sm:text-[13px] font-medium tracking-wide transition-all duration-300 shadow-sm mb-2.5 sm:mb-3.5 cursor-pointer active:scale-95"
-                >
-                  <span>Lihat Jurusan</span>
-                  <span className="text-xs sm:text-sm font-bold transition-transform duration-300 group-hover/btn:translate-x-1">
-                    →
+                <div className="flex items-center gap-2 mb-2 sm:mb-3.5">
+                  <Link
+                    to={item.link || '#'}
+                    onClick={e => e.stopPropagation()}
+                    className="group/btn inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 hover:border-white/40 text-white text-[11px] sm:text-[13px] font-medium tracking-wide transition-all duration-300 shadow-sm cursor-pointer active:scale-95"
+                  >
+                    <span>Lihat Jurusan</span>
+                    <span className="text-xs sm:text-sm font-bold transition-transform duration-300 group-hover/btn:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                  <span className="hidden max-[640px]:inline-block text-[10.5px] font-semibold text-white/90 bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
+                    Ketuk lagi untuk buka
                   </span>
-                </Link>
+                </div>
 
                 {/* Vertical Accent Bar + Title Block */}
                 <div className="flex items-stretch gap-2.5 sm:gap-3.5 w-full">

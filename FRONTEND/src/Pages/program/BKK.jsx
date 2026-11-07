@@ -1,5 +1,6 @@
 import React from 'react'
 import { ArrowRight, Mail, MapPin, PhoneCall } from 'lucide-react'
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '../../components/ScrollReveal'
 
 
 const BKK = () => {
@@ -70,14 +71,9 @@ const BKK = () => {
           }}
         />
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-40 z-0 h-107.5 w-107.5 rounded-bl-[170px] bg-[#d9d9d9] sm:-right-24 sm:-top-52 lg:h-140 lg:w-127.5"
-        />
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
+        <ScrollReveal direction="up" duration={0.6} className="relative z-10 mx-auto w-full max-w-7xl">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-4">
-            <div className="flex max-w-xl flex-col items-start lg:col-span-7">
+            <div className="flex max-w-2xl flex-col items-start lg:col-span-12">
               <nav
                 aria-label="Breadcrumb"
                 className="mb-3 flex items-center gap-2 text-sm font-medium tracking-wide md:text-[15px]"
@@ -93,7 +89,7 @@ const BKK = () => {
                 Bursa Kerja Khusus
               </h1>
 
-              <p className="mb-8 max-w-110 text-left text-sm leading-relaxed text-slate-700 sm:text-base lg:text-[16px]">
+              <p className="mb-8 max-w-2xl text-left text-sm leading-relaxed text-slate-700 sm:text-base lg:text-[16px]">
                 Bursa Kerja Khusus SMK Negeri 26 Jakarta hadir sebagai pusat
                 layanan informasi dan fasilitasi ketenagakerjaan yang menghubungkan
                 lulusan dengan berbagai peluang karier. Bersama jaringan dunia usaha
@@ -108,35 +104,25 @@ const BKK = () => {
                 </span>
               </button>
             </div>
-
-            <div className="pointer-events-none relative hidden h-64 select-none items-center justify-center lg:col-span-5 lg:flex">
-              <span
-                aria-hidden="true"
-                className="font-montserrat text-[210px] font-extrabold leading-none text-transparent"
-                style={{ WebkitTextStroke: '1px #74a9ff' }}
-              >
-                26
-              </span>
-            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="bg-white relative flex min-h-screen w-full flex-col
       items-center overflow-hidden
       px-6 pb-16 pt-24 sm:px-10 lg:px-16 lg:pb-24 lg:pt-36">
 
-        <div className="title w-full flex flex-col items-center justify-center gap-4">
+        <ScrollReveal direction="up" duration={0.5} className="title w-full flex flex-col items-center justify-center gap-4">
           <h1 className='text-3xl sm:text-5xl font-montserrat text-center text-black font-bold'>
             Bursa Kerja Khusus </h1>
           <div className="bg-secondary rounded-full w-40 sm:w-60 h-0.75"></div>
 
           <p className='text-slate-600 text-sm sm:text-base px-4 sm:px-12 lg:px-60 text-center max-w-5xl'>Bursa Kerja Khusus menyediakan berbagai layanan untuk mendukung dalam menemukan peluang karier terbaik.</p>
-        </div>
+        </ScrollReveal>
 
-        <div className="flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl">
+        <ScrollStagger className="flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl" staggerDelay={0.08}>
           {dataBkk.map((item, index) => (
-            <div key={index} className="flex flex-col shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-1/5 rounded-2xl items-center justify-center gap-4 p-6 sm:p-8 min-h-[280px] sm:h-80 border border-slate-100 hover:shadow-lg transition-shadow">
+            <ScrollStaggerItem key={index} className="flex flex-col shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-1/5 rounded-2xl items-center justify-center gap-4 p-6 sm:p-8 min-h-[280px] sm:h-80 border border-slate-100 hover:shadow-lg transition-shadow">
               <div className={`w-14 h-14 sm:w-15 sm:h-15 flex rounded-full p-3 sm:p-4 items-center justify-center`}
                 style={{
                   backgroundColor: (index + 1) % 2 === 0
@@ -151,25 +137,25 @@ const BKK = () => {
                 <h3 className="text-base sm:text-md font-bold text-center">{item.title}</h3>
                 <p className="text-xs sm:text-sm text-center my-2 sm:my-4 text-slate-600 leading-relaxed">{item.description}</p>
               </div>
-            </div>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStagger>
       </section>
 
       <section className="bg-accent relative flex min-h-screen w-full flex-col
       items-center overflow-hidden
       px-6 pb-16 pt-16 sm:px-8 lg:px-16 lg:pb-24 lg:pt-18">
-        <div className="title w-full flex flex-col items-center justify-center gap-4">
+        <ScrollReveal direction="up" duration={0.5} className="title w-full flex flex-col items-center justify-center gap-4">
           <h1 className='text-3xl sm:text-5xl font-montserrat text-center text-primary font-bold'>
             BKK Untuk Siapa ? </h1>
           <div className="bg-secondary rounded-full w-40 sm:w-60 h-0.75 mb-3"></div>
 
           <p className='text-slate-600 text-sm sm:text-base text-center px-4 max-w-2xl'>Layanan BKK 26 untuk berbagai pihak yang membutuhkan informasi dan peluang di dunia kerja</p>
-        </div>
+        </ScrollReveal>
 
-        <div className="container flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl">
+        <ScrollStagger className="container flex flex-row flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 w-full max-w-7xl" staggerDelay={0.08}>
           {dataPelayanan.map((item, index) => (
-            <div key={index} className="flex flex-row p-0 overflow-hidden rounded-2xl shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-3/10 min-h-[160px] sm:h-60 items-center justify-start gap-4 border border-slate-100">
+            <ScrollStaggerItem key={index} className="flex flex-row p-0 overflow-hidden rounded-2xl shadow-md bg-white w-full sm:w-[calc(50%-1rem)] lg:w-3/10 min-h-[160px] sm:h-60 items-center justify-start gap-4 border border-slate-100">
               <div className="w-3/5 sm:w-1/2 h-full flex flex-col justify-center">
                 <div className="w-full flex items-center justify-start px-4 pt-4 pb-1">
                   <h2 className="text-lg sm:text-xl font-bold">{item.untuk}</h2>
@@ -179,13 +165,13 @@ const BKK = () => {
                 </div>
               </div>
               <div className="w-2/5 sm:w-1/2 h-full bg-[#d9d9d9]"></div>
-            </div>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStagger>
       </section>
 
       <section className="relative flex min-h-screen w-full items-center overflow-hidden bg-white px-4 sm:px-10 lg:px-16 py-14 sm:py-16 lg:py-24">
-        <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-3xl sm:rounded-4xl bg-primary lg:grid-cols-[1.15fr_0.85fr]">
+        <ScrollReveal direction="up" duration={0.6} className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-3xl sm:rounded-4xl bg-primary lg:grid-cols-[1.15fr_0.85fr]">
           <div className="flex flex-col items-start justify-center px-6 py-10 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
             <p className="pb-2 font-montserrat text-base sm:text-2xl font-semibold text-white">
               Hubungi Tim BKK SMKN 26 Jakarta
@@ -241,7 +227,7 @@ const BKK = () => {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
     </>
   )

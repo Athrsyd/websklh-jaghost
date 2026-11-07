@@ -6,6 +6,7 @@ import depanSekolah from '../../../assets/depanSekolah.jpeg'
 import profilImg from '../../../assets/profil_img.jpg'
 import visimisiImg from '../../../assets/visimisi_img.jpg'
 import heroBg from '../../../assets/hero-bg.webp'
+import { ScrollReveal } from '../../../components/ScrollReveal'
 
 const BeritaDetail = () => {
   const { id } = useParams()
@@ -349,9 +350,10 @@ const BeritaDetail = () => {
           {/* ═══════════════════════════════════════════════════════════
               KOLOM KANAN: KARTU ARTIKEL UTAMA LEBIH PANJANG & KAYA GAMBAR
              ═══════════════════════════════════════════════════════════ */}
-          <main className="order-1 lg:order-2 lg:col-span-8 w-full bg-white rounded-3xl sm:rounded-[32px] border border-slate-200/80 shadow-md p-6 sm:p-10 lg:p-12 relative flex flex-col justify-start">
-            {/* Baris Badge Header: Prestasi & Berita Terbaru */}
-            <div className="flex items-center justify-between w-full">
+          <main className="order-1 lg:order-2 lg:col-span-8 w-full">
+            <ScrollReveal direction="up" duration={0.55} className="w-full bg-white rounded-3xl sm:rounded-[32px] border border-slate-200/80 shadow-md p-6 sm:p-10 lg:p-12 relative flex flex-col justify-start">
+              {/* Baris Badge Header: Prestasi & Berita Terbaru */}
+              <div className="flex items-center justify-between w-full">
               <div className="inline-block bg-primary text-white text-xs sm:text-sm font-bold px-6 py-2 rounded-t-full rounded-br-full tracking-wide shadow-xs">
                 {currentArticle.category || 'Prestasi'}
               </div>
@@ -478,6 +480,7 @@ const BeritaDetail = () => {
                 Kategori: <strong className="text-primary">{currentArticle.category}</strong>
               </div>
             </div>
+            </ScrollReveal>
           </main>
         </div>
       </div>

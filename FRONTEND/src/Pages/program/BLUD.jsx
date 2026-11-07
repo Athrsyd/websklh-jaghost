@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '../../components/ScrollReveal'
 
 // --- Custom SVGs matching the design mockup precisely ---
 
@@ -231,8 +232,6 @@ const BLUD = () => {
           }}
           className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
         />
-        {/* Shape Organik Abu-abu Lembut di Sisi Kiri Bawah */}
-        <div className="absolute bottom-0 left-0 h-72 sm:h-100 rounded-tr-full z-0 bg-[#D9D9D9] w-1/4 sm:w-1/5" />
 
         {/* Kontainer Utama Hero */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full relative z-10">
@@ -241,7 +240,7 @@ const BLUD = () => {
             <div className="lg:col-span-5 flex justify-center lg:justify-end items-center select-none pointer-events-none pr-0 lg:pr-6" />
 
             {/* Kolom Kanan: Teks Konten */}
-            <div className="lg:col-span-7 flex flex-col justify-center items-start pl-0 lg:pl-6 max-w-2xl">
+            <ScrollReveal direction="up" duration={0.55} className="lg:col-span-7 flex flex-col justify-center items-start pl-0 lg:pl-6 max-w-2xl">
               {/* Breadcrumb: Program > BLUD */}
               <nav
                 aria-label="Breadcrumb"
@@ -278,7 +277,7 @@ const BLUD = () => {
                   &gt;
                 </span>
               </button>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -289,28 +288,28 @@ const BLUD = () => {
       <section ref={visiMisiRef} className="w-full py-16 sm:py-24 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           {/* Section Heading */}
-          <div className="text-center mb-12 sm:mb-16">
+          <ScrollReveal direction="up" duration={0.5} className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0A2540] tracking-tight font-montserrat">
               Visi, Misi, dan Tujuan
             </h2>
             {/* Blue underline */}
             <div className="w-24 h-1 bg-[#0075FF] mx-auto mt-4 rounded-full" />
-          </div>
+          </ScrollReveal>
 
           {/* 3 Cards Container */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <ScrollStagger className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch" staggerDelay={0.08}>
             {/* CARD 1: VISI */}
-            <div className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
+            <ScrollStaggerItem className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
               <h3 className="text-2xl sm:text-[28px] font-bold text-[#0075FF] font-montserrat text-center mb-8">
                 Visi
               </h3>
               <p className="text-slate-600 font-poppins text-[15px] sm:text-[16px] leading-[1.8] text-center sm:text-justify px-1">
                 Menjadi pusat layanan teaching factory teknik yang profesional, akuntabel, dan bermanfaat bagi industri serta masyarakat.
               </p>
-            </div>
+            </ScrollStaggerItem>
 
             {/* CARD 2: MISI */}
-            <div className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
+            <ScrollStaggerItem className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
               <h3 className="text-2xl sm:text-[28px] font-bold text-[#0075FF] font-montserrat text-center mb-8">
                 Misi
               </h3>
@@ -332,10 +331,10 @@ const BLUD = () => {
                   <span>Menjalankan tata kelola yang transparan</span>
                 </li>
               </ol>
-            </div>
+            </ScrollStaggerItem>
 
             {/* CARD 3: TUJUAN */}
-            <div className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
+            <ScrollStaggerItem className="bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-8 sm:p-10 flex flex-col items-center">
               <h3 className="text-2xl sm:text-[28px] font-bold text-[#0075FF] font-montserrat text-center mb-8">
                 Tujuan
               </h3>
@@ -357,8 +356,8 @@ const BLUD = () => {
                   <span>Memanfaatkan fasilitas sekolah secara produktif</span>
                 </li>
               </ul>
-            </div>
-          </div>
+            </ScrollStaggerItem>
+          </ScrollStagger>
         </div>
       </section>
 
@@ -368,35 +367,36 @@ const BLUD = () => {
       <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-[#EBF2FF] via-[#F4F8FF] to-[#EDF4FF]">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           {/* Section Heading */}
-          <div className="text-center mb-14 sm:mb-18">
+          <ScrollReveal direction="up" duration={0.5} className="text-center mb-14 sm:mb-18">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0A2540] tracking-tight font-montserrat">
               Unit Teaching Factory
             </h2>
             {/* Blue underline */}
             <div className="w-24 h-1 bg-[#0075FF] mx-auto mt-4 rounded-full" />
-          </div>
+          </ScrollReveal>
 
           {/* 6 Circular Icons Row */}
-          <div className="flex flex-wrap justify-center items-center gap-5 sm:gap-7 md:gap-9 lg:gap-11">
+          <ScrollStagger className="flex flex-wrap justify-center items-center gap-5 sm:gap-7 md:gap-9 lg:gap-11" staggerDelay={0.06}>
             {teachingFactoryUnits.map((unit, index) => {
               const UnitIcon = unit.icon
               return (
-                <button
-                  key={unit.id}
-                  onClick={() => handleSelectUnitFromSection2(index)}
-                  title={unit.title + ' - ' + unit.subtitle}
-                  className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full flex items-center justify-center 
-                  transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-                  ${unit.bgBadge}`}
-                >
-                  <UnitIcon
-                    className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 transition-transform duration-300"
-                    color={unit.activeIconColor}
-                  />
-                </button>
+                <ScrollStaggerItem key={unit.id}>
+                  <button
+                    onClick={() => handleSelectUnitFromSection2(index)}
+                    title={unit.title + ' - ' + unit.subtitle}
+                    className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full flex items-center justify-center 
+                    transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    ${unit.bgBadge}`}
+                  >
+                    <UnitIcon
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 transition-transform duration-300"
+                      color={unit.activeIconColor}
+                    />
+                  </button>
+                </ScrollStaggerItem>
               )
             })}
-          </div>
+          </ScrollStagger>
         </div>
       </section>
 
@@ -406,16 +406,16 @@ const BLUD = () => {
       <section ref={produkJasaRef} className="w-full py-16 sm:py-24 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           {/* Section Heading (Left Aligned) */}
-          <div className="mb-10 sm:mb-12">
+          <ScrollReveal direction="up" duration={0.5} className="mb-10 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#0A2540] tracking-tight font-montserrat">
               Produk & Jasa
             </h2>
             {/* Blue underline (Left Aligned) */}
             <div className="w-24 h-1 bg-[#0075FF] mt-3 sm:mt-4 rounded-full" />
-          </div>
+          </ScrollReveal>
 
           {/* 2-Column Responsive Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          <ScrollReveal direction="up" delay={0.08} duration={0.55} className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             {/* KOLOM KIRI: Daftar Unit (Tabs) */}
             <div className="lg:col-span-5 bg-white rounded-[24px] shadow-[0_10px_35px_rgba(0,0,0,0.04)] border border-slate-100 p-3 sm:p-5 lg:p-6 flex flex-row lg:flex-col gap-2 sm:gap-3 overflow-x-auto lg:overflow-visible pb-3 lg:pb-6 scrollbar-none w-full">
               {teachingFactoryUnits.map((unit, index) => {
@@ -497,7 +497,7 @@ const BLUD = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </div>

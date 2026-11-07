@@ -2,6 +2,7 @@ import React from 'react'
 import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import { IoLogoFacebook, IoLogoInstagram, IoLogoLinkedin, IoLogoYoutube } from 'react-icons/io5'
 import depanSekolah from '../../assets/depanSekolah.jpeg'
+import { ScrollReveal } from '../../components/ScrollReveal'
 
 const mapUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.522482086522!2d106.88731419999999!3d-6.1945787999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f49532b5b715%3A0xa4012b68ec698d4e!2sSMK%20Negeri%2026%20Jakarta!5e0!3m2!1sid!2sid!4v1786606693578!5m2!1sid!2sid'
 
@@ -19,17 +20,17 @@ const Kontak = () => {
           className="absolute inset-be-22 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-primary/75 flex " />
-        <div className=" flex flex-col relative bottom-10 z-10 justify-center items-center gap-8 text-center">
+        <ScrollReveal direction="up" duration={0.6} className=" flex flex-col relative bottom-10 z-10 justify-center items-center gap-8 text-center">
 
           <h1 className=" px-5 text-center font-montserrat text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl">
             Kontak Kami
           </h1>
           <div className="bg-white rounded-full w-32 sm:w-60 md:w-120 max-w-[80vw] h-1"></div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="relative bg-white pb-0 pt-0 ">
-        <div className="relative -top-20 z-10 mx-auto -mt-29 max-w-5xl px-5 sm:-mt-20 sm:px-8 lg:-mt-24">
+        <ScrollReveal direction="up" delay={0.08} duration={0.6} className="relative -top-20 z-10 mx-auto -mt-29 max-w-5xl px-5 sm:-mt-20 sm:px-8 lg:-mt-24">
           <div className="grid overflow-hidden rounded-xl bg-[#a9cef4] shadow-[0_2px_5px_rgba(0,0,0,0.28)] md:grid-cols-2">
 
             <div className="px-7 py-8 sm:px-10 sm:py-10 flex flex-col gap-10">
@@ -144,7 +145,7 @@ const Kontak = () => {
               </form>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         <div className="h-97.5 w-full sm:h-107.5 lg:h-127.5">
           <iframe

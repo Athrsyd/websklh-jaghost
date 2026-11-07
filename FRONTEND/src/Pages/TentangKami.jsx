@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import akreditasi from '../assets/akre.png';
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '../components/ScrollReveal';
 
 const TentangKami = () => {
 
@@ -21,18 +22,19 @@ const TentangKami = () => {
     { id: 3, number: "29", label: "JUMLAH TENAGA KEPENDIDIKAN", textColor: "text-orange-500" },
     { id: 4, number: "1971", label: "TAHUN BERDIRI", textColor: "text-blue-600" },
     { id: 5, number: "A", label: "Terakreditasi", textColor: "text-blue-600" },
-  ]
+  ];
+
   return (
     <>
       {/* hero */}
-      <section className="w-full min-h-[auto] lg:min-h-screen bg-side-back py-20 lg:py-28">
+      <section className="w-full min-h-[auto] lg:min-h-screen bg-side-back py-20 lg:py-28 overflow-hidden">
         <div className="w-[90%] sm:w-4/5 mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-          <div className="w-full lg:w-1/2 flex justify-center">
+          <ScrollReveal direction="up" delay={0.05} duration={0.55} className="w-full lg:w-1/2 flex justify-center">
             <div className="h-64 sm:h-96 lg:h-110 rounded-3xl w-full max-w-lg bg-gray-300">
               {/* bikin img pake object-cover */}
             </div>
-          </div>
-          <div className="w-full lg:w-1/2 py-4 lg:py-8 flex flex-col gap-6 lg:gap-8">
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.12} duration={0.55} className="w-full lg:w-1/2 py-4 lg:py-8 flex flex-col gap-6 lg:gap-8">
             <h3 className="text-sm font-bold">
               <span className='text-gray-500'>Tentang Kami</span> {' '}
               &gt; {' '} <span className='text-tertiary'>Profil Sekolah</span>
@@ -43,14 +45,14 @@ const TentangKami = () => {
                 SMK Negeri 26 Jakarta merupakan salah satu institusi pendidikan kejuruan terkemuka yang berdedikasi untuk menghasilkan lulusan yang kompeten, inovatif, dan siap bersaing di pasar kerja global. Dengan fasilitas modern dan tenaga pengajar profesional, kami berkomitmen membentuk karakter bangsa melalui pendidikan vokasi yang bermutu.
               </p>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Visi Misi */}
-      <section className="w-full min-h-[auto] lg:min-h-screen py-14 lg:py-20">
+      <section className="w-full min-h-[auto] lg:min-h-screen py-14 lg:py-20 overflow-hidden">
         <div className="w-[90%] sm:w-4/5 mx-auto flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
-          <div className="w-full lg:w-1/2 py-4 lg:py-8 flex flex-col gap-6 lg:gap-8">
+          <ScrollReveal direction="up" delay={0.05} duration={0.55} className="w-full lg:w-1/2 py-4 lg:py-8 flex flex-col gap-6 lg:gap-8">
             <h1 className="text-3xl sm:text-4xl text-secondary font-bold">Visi & Misi Sekolah</h1>
             <div className="bg-[#ffffff] p-5 sm:p-6 rounded-3xl shadow-lg border border-slate-100">
               <h2 className='text-tertiary text-lg font-bold mb-2'>Misi Sekolah</h2>
@@ -60,8 +62,8 @@ const TentangKami = () => {
                 ))}
               </ol>
             </div>
-          </div>
-          <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-6">
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.12} duration={0.55} className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-6">
             <div className="h-64 sm:h-96 lg:h-110 rounded-3xl w-full max-w-lg bg-gray-300"></div>
             <div className="w-full max-w-lg h-auto bg-[#ffffff] p-6 sm:p-7 rounded-3xl shadow-lg flex flex-col gap-3 border border-slate-100">
               <h2 className='text-tertiary text-lg font-bold'>Visi Sekolah</h2>
@@ -69,16 +71,16 @@ const TentangKami = () => {
                 "SMK teknologi unggul yang menghasilkan lulusan berkarakter, kompeten, inovatif, dan berdaya saing global"
               </h3>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       <div className="w-full py-12 px-4 space-y-16">
 
         {/* 1. Baris 4 Kartu Statistik */}
-        <div className="max-w-6xl mx-auto flex flex-row flex-wrap gap-4 sm:gap-6 justify-center">
+        <ScrollStagger className="max-w-6xl mx-auto flex flex-row flex-wrap gap-4 sm:gap-6 justify-center" staggerDelay={0.08}>
           {stats.map((item) => (
-            <div
+            <ScrollStaggerItem
               onClick={() => {
                 if (item.id === 5) {
                   window.open(akreditasi, '_blank');
@@ -107,12 +109,12 @@ const TentangKami = () => {
                   <p className='text-slate-500 text-xs mt-4'>(klik untuk melihat sertifikat akreditasi)</p>
                 </div>
               )}
-            </div>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStagger>
 
         {/* 2. Bagian Video Mars SMK Negeri 26 Jakarta */}
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl p-6 sm:p-12 border border-gray-100 text-center">
+        <ScrollReveal direction="up" duration={0.55} className="max-w-5xl mx-auto bg-white rounded-3xl p-6 sm:p-12 border border-gray-100 text-center shadow-xs">
           <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-orange-500 to-orange-600 mb-6 sm:mb-8 inline-block">
             Mars SMK Negeri 26 Jakarta
           </h2>
@@ -126,10 +128,10 @@ const TentangKami = () => {
             picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen></iframe>
           </div>
-        </div >
+        </ScrollReveal>
 
         {/* 3. Banner Call-to-Action (CTA) */}
-        <div className="max-w-5xl mx-auto bg-blue-600 rounded-3xl p-6 sm:p-12 text-center text-white shadow-xl shadow-blue-500/20">
+        <ScrollReveal direction="up" duration={0.55} delay={0.1} className="max-w-5xl mx-auto bg-blue-600 rounded-3xl p-6 sm:p-12 text-center text-white shadow-xl shadow-blue-500/20">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-wide">
             Jelajahi Program dan Keunggulan <br className="hidden sm:inline" /> SMK Negeri 26 Jakarta
           </h2>
@@ -142,9 +144,9 @@ const TentangKami = () => {
               Hubungi Kami
             </Link>
           </div>
-        </div >
+        </ScrollReveal>
 
-      </div >
+      </div>
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from "../../components/ScrollReveal";
 import {
   IoSearch,
   IoClose,
@@ -346,8 +347,6 @@ const Ekskul = () => {
           }}
           className="absolute top-0 left-0 w-full h-full z-0"
         ></div>
-        {/* Shape Organik Abu-abu Lembut di Sisi Kiri Bawah */}
-        <div className="absolute bottom-0 left-0 h-100 rounded-tr-full z-0 bg-[#D9D9D9] w-1/5"></div>
 
         {/* Kontainer Utama Hero */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full relative z-10">
@@ -356,7 +355,7 @@ const Ekskul = () => {
             <div className="lg:col-span-5 flex justify-center lg:justify-end items-center select-none pointer-events-none pr-0 lg:pr-6"></div>
 
             {/* Kolom Kanan: Teks Konten Ekstrakurikuler */}
-            <div className="lg:col-span-7 flex flex-col justify-center items-start pl-0 lg:pl-6 max-w-2xl">
+            <ScrollReveal direction="up" duration={0.55} className="lg:col-span-7 flex flex-col justify-center items-start pl-0 lg:pl-6 max-w-2xl">
               {/* Breadcrumb: Program > Ekstrakurikuler */}
               <nav
                 aria-label="Breadcrumb"
@@ -398,7 +397,7 @@ const Ekskul = () => {
                   &gt;
                 </span>
               </button>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -410,14 +409,14 @@ const Ekskul = () => {
       >
         <div className="max-w-7xl mx-auto">
           {/* Judul Utama */}
-          <div className="title text-center mb-8 sm:mb-12">
+          <ScrollReveal direction="up" duration={0.5} className="title text-center mb-8 sm:mb-12">
             <h1 className="text-3xl sm:text-6xl lg:text-[88px] font-montserrat font-black text-white tracking-wider leading-[1.1]">
               EKSTRAKURIKULER
             </h1>
-          </div>
+          </ScrollReveal>
 
           {/* Bar Kontrol: Search Bar & Filter Switch INDOOR / OUTDOOR */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-5 mb-8 sm:mb-12">
+          <ScrollReveal direction="up" delay={0.06} duration={0.5} className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-5 mb-8 sm:mb-12">
             {/* Search Input Bar */}
             <div className="bg-white rounded-full flex items-center px-5 sm:px-6 py-3 sm:py-4 shadow-sm w-full md:flex-1 md:max-w-2xl">
               <IoSearch className="text-xl sm:text-3xl shrink-0 text-slate-500" />
@@ -464,12 +463,12 @@ const Ekskul = () => {
                 OUTDOOR
               </button>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Grid Kartu Ekstrakurikuler (3 Kolom x 2 Baris = 6 Kartu) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={0.06}>
             {filteredEkskul.map((item) => (
-              <div
+              <ScrollStaggerItem
                 key={item.id}
                 className="bg-white rounded-4xl sm:rounded-4xl overflow-hidden flex flex-col shadow-lg shadow-black/5"
               >
@@ -499,9 +498,9 @@ const Ekskul = () => {
                     <span className="text-sm font-bold">&gt;</span>
                   </button>
                 </div>
-              </div>
+              </ScrollStaggerItem>
             ))}
-          </div>
+          </ScrollStagger>
         </div>
       </section>
     </div>

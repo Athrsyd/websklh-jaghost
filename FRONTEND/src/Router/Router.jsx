@@ -33,11 +33,13 @@ import BeritaDetail from '../Pages/info/Detail/BeritaDetail'
 
 const Router = () => {
     const location = useLocation();
-        useEffect(() => {
-            const lenis = new Lenis();
-
-            lenis.scrollTo(0, { immediate: true });
-        }, [location.pathname]);
+    useEffect(() => {
+        if (window.__lenis) {
+            window.__lenis.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location.pathname]);
 
         return (
             <Routes>

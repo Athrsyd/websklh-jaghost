@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import kepsekImg from "../../assets/kepsek.webp";
+import { ScrollReveal } from "../../components/ScrollReveal";
 
 // ─── DATA GURU & STAFF SMKN 26 JAKARTA ────────────────────────
 
@@ -212,8 +213,8 @@ function TeacherCard({ item, themeColor = "#FE5631", isCompact = false }) {
   return (
     <div
       className={`group relative w-full ${
-        isCompact ? "h-[370px] sm:h-[395px]" : "h-[390px] sm:h-[415px]"
-      } rounded-tl-none rounded-tr-[46px] rounded-b-2xl overflow-hidden bg-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_10px_26px_rgba(0,0,0,0.12)] transition-all 
+        isCompact ? "h-[245px] sm:h-[370px] lg:h-[395px]" : "h-[255px] sm:h-[390px] lg:h-[415px]"
+      } rounded-tl-none rounded-tr-[28px] sm:rounded-tr-[46px] rounded-b-2xl overflow-hidden bg-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_10px_26px_rgba(0,0,0,0.12)] transition-all 
       duration-300 hover:-translate-y-1.5 flex flex-col justify-end select-none border border-slate-200/80`}
     >
       {/* Background Image Portrait */}
@@ -225,12 +226,12 @@ function TeacherCard({ item, themeColor = "#FE5631", isCompact = false }) {
       />
 
       {/* Subtle Top Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/55 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 pointer-events-none" />
 
       {/* Top Badge */}
-      <div className="absolute top-3 left-3 z-10">
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
         <span
-          className="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full backdrop-blur-md shadow-sm text-white"
+          className="inline-block px-2 py-0.5 sm:px-2.5 sm:py-0.5 text-[9px] sm:text-[11px] font-bold rounded-full backdrop-blur-md shadow-sm text-white"
           style={{ backgroundColor: `${themeColor}E6` }}
         >
           {item.badge}
@@ -238,15 +239,15 @@ function TeacherCard({ item, themeColor = "#FE5631", isCompact = false }) {
       </div>
 
       {/* Sweeping Organic White Bottom Plate */}
-      <div className="relative z-10 bg-white/95 backdrop-blur-md rounded-tr-[38px] px-4 py-3 shadow-md border-t border-white/60">
+      <div className="relative z-10 bg-white/95 backdrop-blur-md rounded-tr-[24px] sm:rounded-tr-[38px] px-2.5 py-2 sm:px-4 sm:py-3 shadow-md border-t border-white/60">
         <div className="flex flex-col">
-          <h3 className="font-bold text-slate-900 text-[14px] sm:text-[15px] leading-snug tracking-tight line-clamp-1 group-hover:text-[#FE5631] transition-colors">
+          <h3 className="font-bold text-slate-900 text-[11px] sm:text-[15px] leading-snug tracking-tight line-clamp-1 group-hover:text-[#FE5631] transition-colors">
             {item.name}
           </h3>
-          <p className="text-[12px] font-semibold text-slate-700 mt-0.5 line-clamp-1">
+          <p className="text-[9.5px] sm:text-[12px] font-semibold text-slate-700 mt-0.5 line-clamp-1">
             {item.role}
           </p>
-          <p className="text-[10px] text-slate-500 line-clamp-1">
+          <p className="text-[8.5px] sm:text-[10px] text-slate-500 line-clamp-1">
             {item.subRole}
           </p>
         </div>
@@ -284,7 +285,7 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
         }`}
       >
         {/* Section Title */}
-        <div className="text-center mb-8 sm:mb-12">
+        <ScrollReveal direction="up" duration={0.5} className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight">
             {titleParts.map((part, idx) => (
               <span key={idx} style={{ color: part.color }}>
@@ -292,10 +293,10 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
               </span>
             ))}
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* Carousel Container with Arrows */}
-        <div className="relative flex items-center justify-center">
+        <ScrollReveal direction="up" delay={0.08} duration={0.55} className="relative flex items-center justify-center">
           {/* Left Arrow Button */}
           <button
             type="button"
@@ -305,20 +306,20 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
               isFourCol
                 ? "-left-2 sm:-left-6 lg:-left-8"
                 : "-left-2 sm:-left-6 lg:-left-12"
-            } z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
+            } z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
             style={{
               border: `2px solid ${themeColor}`,
               color: themeColor,
             }}
           >
-            <ChevronLeft size={22} strokeWidth={2.5} />
+            <ChevronLeft size={20} strokeWidth={2.5} />
           </button>
 
-          {/* Cards Track */}
+          {/* Cards Track (2 cards in frame on mobile) */}
           <div
             ref={sliderRef}
             className={`w-full flex ${
-              isFourCol ? "gap-4 sm:gap-5" : "gap-5 sm:gap-7 justify-start"
+              isFourCol ? "gap-2.5 sm:gap-5" : "gap-3 sm:gap-7 justify-start"
             } overflow-x-auto py-3 px-1 scroll-smooth scrollbar-none`}
             style={{
               scrollbarWidth: "none",
@@ -331,8 +332,8 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
                 key={item.id}
                 className={`flex-shrink-0 ${
                   isFourCol
-                    ? "w-[240px] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3*1.25rem)/4)]"
-                    : "w-[230px] sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.75rem)/3)] max-w-[275px]"
+                    ? "w-[calc((100%-0.65rem)/2)] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3*1.25rem)/4)]"
+                    : "w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.75rem)/3)] max-w-[275px]"
                 }`}
               >
                 <TeacherCard
@@ -353,15 +354,15 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
               isFourCol
                 ? "-right-2 sm:-right-6 lg:-right-8"
                 : "-right-2 sm:-right-6 lg:-right-12"
-            } z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
+            } z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/95 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer`}
             style={{
               border: `2px solid ${themeColor}`,
               color: themeColor,
             }}
           >
-            <ChevronRight size={22} strokeWidth={2.5} />
+            <ChevronRight size={20} strokeWidth={2.5} />
           </button>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -372,8 +373,6 @@ function TeacherCarousel({ titleParts, data, themeColor = "#FE5631", columns = 3
 const GuruStaf = () => {
   const heroRef = useRef(null);
   const heroContentRef = useRef(null);
-  const numberRef = useRef(null);
-  const curveRef = useRef(null);
   const kepsekSectionRef = useRef(null);
 
   useEffect(() => {
@@ -391,34 +390,6 @@ const GuruStaf = () => {
           }
         );
       }
-
-      if (numberRef.current) {
-        gsap.fromTo(
-          numberRef.current,
-          { opacity: 0, scale: 0.95 },
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.9,
-            delay: 0.1,
-            ease: "power2.out",
-          }
-        );
-      }
-
-      if (curveRef.current) {
-        gsap.fromTo(
-          curveRef.current,
-          { opacity: 0, x: 30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.9,
-            delay: 0.05,
-            ease: "power2.out",
-          }
-        );
-      }
     }, heroRef);
 
     return () => ctx.revert();
@@ -432,59 +403,16 @@ const GuruStaf = () => {
 
   return (
     <div className="w-full bg-white text-slate-800 font-sans antialiased overflow-x-hidden">
-      {/* ─── 1. HERO SECTION (100% MATCH MOCKUP IMAGE 4 TOP) ─── */}
+      {/* ─── 1. HERO SECTION ─── */}
       <section
         ref={heroRef}
-        className="relative w-full min-h-[560px] lg:min-h-[620px] flex items-center overflow-hidden pt-28 lg:pt-32 pb-16"
+        className="relative w-full min-h-[500px] lg:min-h-[560px] flex items-center overflow-hidden pt-28 lg:pt-32 pb-16"
         style={{
           backgroundColor: "#FAF4F0",
           backgroundImage: "radial-gradient(circle, #E6D5CE 1.25px, transparent 1.25px)",
           backgroundSize: "28px 28px",
         }}
       >
-        {/* Giant Outline "26" Number */}
-        <div
-          ref={numberRef}
-          aria-hidden="true"
-          className="absolute left-[48%] sm:left-[50%] lg:left-[48%] top-[38%] -translate-y-1/2 select-none pointer-events-none z-5"
-          style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(80px, 15vw, 195px)",
-            fontWeight: 700,
-            lineHeight: 1,
-            color: "transparent",
-            WebkitTextStroke: "1.5px #FE5631",
-            letterSpacing: "-0.04em",
-          }}
-        >
-          26
-        </div>
-
-        {/* Right Organic Curved Shape */}
-        <div
-          ref={curveRef}
-          aria-hidden="true"
-          className="absolute top-0 right-0 h-full w-[42vw] min-w-[280px] pointer-events-none z-10"
-        >
-          <svg
-            viewBox="0 0 450 700"
-            preserveAspectRatio="none"
-            className="w-full h-full"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M 120 0 
-                 C 75 160, 50 280, 75 400 
-                 C 100 520, 190 620, 320 700 
-                 L 450 700 
-                 L 450 0 
-                 Z"
-              fill="#D4D7DC"
-            />
-          </svg>
-        </div>
-
         {/* Content Container */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div ref={heroContentRef} className="max-w-xl flex flex-col items-start">
